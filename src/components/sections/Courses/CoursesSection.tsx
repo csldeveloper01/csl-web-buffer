@@ -41,7 +41,7 @@ const trendingWorkshopsData = [
   {
     id: '03',
     title: 'Data Analyst with AI & Automation',
-    deepLinkId: 'data-science',
+    deepLinkId: 'data-analyst',
     count: '6 Workshops',
   },
   {

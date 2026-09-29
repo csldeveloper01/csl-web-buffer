@@ -129,24 +129,31 @@ export function WorkshopVideos() {
                   <span>{landscapeVideo.collegeOrEvent}</span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-extrabold text-csl-text mb-3 leading-tight">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-csl-text mb-1 leading-tight">
                   {landscapeVideo.title}
                 </h3>
+
+                <span className="text-xs sm:text-sm font-semibold text-csl-blue mb-3 block">
+                  Celebrating Independence Through Giving
+                </span>
 
                 <p className="text-xs sm:text-sm text-csl-muted font-medium leading-relaxed mb-6">
                   {landscapeVideo.caption}
                 </p>
 
-                <div className="space-y-3 pt-4 border-t border-csl-gold/15">
+                <div className="space-y-2.5 pt-4 border-t border-csl-gold/15">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-csl-muted font-medium">Session Focus:</span>
+                    <span className="text-csl-muted font-medium">Event Focus:</span>
                     <span className="font-bold text-csl-text">Independence Day Celebration</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-csl-muted font-medium">Environment:</span>
-                    <span className="font-bold text-csl-text">Community & Student Outreach</span>
+                    <span className="text-csl-muted font-medium">Community:</span>
+                    <span className="font-bold text-csl-text">Student & Community Outreach</span>
                   </div>
-
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-csl-muted font-medium">Impact:</span>
+                    <span className="font-bold text-csl-text">Stationery Donation & Community Engagement</span>
+                  </div>
                 </div>
 
                 <div className="mt-6">
@@ -157,12 +164,12 @@ export function WorkshopVideos() {
                     {playingId === landscapeVideo.id ? (
                       <>
                         <Pause className="w-4 h-4" />
-                        <span>Pause Session Video</span>
+                        <span>Pause Video</span>
                       </>
                     ) : (
                       <>
                         <Play className="w-4 h-4 fill-white" />
-                        <span>Watch Session Video</span>
+                        <span>Watch Video</span>
                       </>
                     )}
                   </button>
