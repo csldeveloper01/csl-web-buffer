@@ -140,16 +140,13 @@ export function WorkshopVideos() {
                 <div className="space-y-3 pt-4 border-t border-csl-gold/15">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-csl-muted font-medium">Session Focus:</span>
-                    <span className="font-bold text-csl-text">Hands-On Code Execution</span>
+                    <span className="font-bold text-csl-text">Independence Day Celebration</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-csl-muted font-medium">Environment:</span>
-                    <span className="font-bold text-csl-text">Computer Labs & Real Hardware</span>
+                    <span className="font-bold text-csl-text">Community & Student Outreach</span>
                   </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-csl-muted font-medium">Mentorship:</span>
-                    <span className="font-bold text-csl-text">Live 1-on-1 Debugging</span>
-                  </div>
+
                 </div>
 
                 <div className="mt-6">

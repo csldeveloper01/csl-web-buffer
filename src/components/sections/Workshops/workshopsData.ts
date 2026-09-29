@@ -1330,12 +1330,12 @@ export const WORKSHOP_PROGRESSION = [
 export const WORKSHOP_VIDEOS: WorkshopVideoItem[] = [
   {
     id: 'wk-vid-1',
-    title: 'College Campus Workshop & Lab Session',
-    collegeOrEvent: 'Campus Auditorium & Labs',
+    title: 'Independence Day Celebration',
+    collegeOrEvent: 'Community & Student Outreach',
     aspectRatio: 'landscape',
     src: '/workshops/videos/workshop_video_1.mp4',
     poster: '/workshops/posters/poster_1.jpg',
-    caption: 'Hands-on coding, live demonstrations, and interactive problem solving in the college computer lab.',
+    caption: 'A special Independence Day celebration with children, bringing the CSL community together through meaningful interactions and a stationery donation initiative.',
     tag: 'Auditorium & Lab Session',
   },
   {
