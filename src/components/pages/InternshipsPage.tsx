@@ -14,6 +14,7 @@ import { InternshipDetails } from '../sections/Internships/InternshipDetails';
 import { InternshipGallery } from '../sections/Internships/InternshipGallery';
 import { InternshipReviewsMarquee } from '../sections/Internships/InternshipReviewsMarquee';
 import { InternshipVideoTestimonials } from '../sections/Internships/InternshipVideoTestimonials';
+import { CustomDropdown } from '../ui/CustomDropdown';
 
 // Local type for enquiry
 interface InternshipEnquiryPayload {
@@ -51,7 +52,7 @@ const tracksData = [
     id: '02',
     title: 'Generative AI & Prompt Engineering',
     description: 'Master advanced prompt architecture, contextual Retrieval-Augmented Generation (RAG), and LLM application development.',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&q=80&w=600&h=450',
+    image: 'https://images.unsplash.com/photo-1677691824188-3e266886cb27?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     techs: ['LLMs', 'Prompt Engineering', 'RAG Pipelines', 'OpenAI API', 'LangChain', 'Vector DBs'],
     duration: '15 or 30 Days',
     mode: 'Online / Offline',
@@ -738,23 +739,25 @@ Message: ${formData.message || 'N/A'}`;
                         <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
                           Current Year <span className="text-red-500">*</span>
                         </label>
-                        <select
+                        <CustomDropdown
                           name="pursuing_year"
                           value={formData.year}
-                          onChange={e => setFormData({ ...formData, year: e.target.value })}
-                          className={`w-full px-4 py-3 rounded-xl bg-white border ${
-                            errors.year ? 'border-red-400 focus:ring-red-400' : 'border-csl-gold/30 focus:border-csl-blue focus:ring-csl-blue/20'
-                          } text-sm font-medium text-csl-text focus:outline-none focus:ring-2 transition-all`}
-                        >
-                          <option value="">Select Current Year</option>
-                          <option value="1st Year">1st Year</option>
-                          <option value="2nd Year">2nd Year</option>
-                          <option value="3rd Year">3rd Year</option>
-                          <option value="4th Year">4th Year</option>
-                          <option value="Final Year">Final Year</option>
-                          <option value="Graduate">Graduate</option>
-                          <option value="Postgraduate">Postgraduate</option>
-                        </select>
+                          onChange={(val) => {
+                            setFormData((prev) => ({ ...prev, year: val }));
+                            setErrors((prev) => ({ ...prev, year: '' }));
+                          }}
+                          options={[
+                            '1st Year',
+                            '2nd Year',
+                            '3rd Year',
+                            '4th Year',
+                            'Final Year',
+                            'Graduate',
+                            'Postgraduate',
+                          ]}
+                          placeholder="Select Current Year"
+                          error={errors.year}
+                        />
                         {errors.year && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.year}</span>}
                       </div>
 
@@ -768,24 +771,26 @@ Message: ${formData.message || 'N/A'}`;
                         <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
                           Interested Internship Domain <span className="text-red-500">*</span>
                         </label>
-                        <select
+                        <CustomDropdown
                           name="domain"
                           value={formData.domain}
-                          onChange={e => setFormData({ ...formData, domain: e.target.value })}
-                          className={`w-full px-4 py-3 rounded-xl bg-white border ${
-                            errors.domain ? 'border-red-400 focus:ring-red-400' : 'border-csl-gold/30 focus:border-csl-blue focus:ring-csl-blue/20'
-                          } text-sm font-medium text-csl-text focus:outline-none focus:ring-2 transition-all`}
-                        >
-                          <option value="">Select Domain</option>
-                          <option value="Artificial Intelligence & Machine Learning Engineering">Artificial Intelligence & Machine Learning Engineering</option>
-                          <option value="Generative AI & Prompt Engineering">Generative AI & Prompt Engineering</option>
-                          <option value="Agentic AI & Intelligent Automation">Agentic AI & Intelligent Automation</option>
-                          <option value="Full Stack Web & Mobile Application Development">Full Stack Web & Mobile Application Development</option>
-                          <option value="DevOps & Cloud Engineering">DevOps & Cloud Engineering</option>
-                          <option value="Software Testing & QA Automation">Software Testing & QA Automation</option>
-                          <option value="UI/UX Product Design">UI/UX Product Design</option>
-                          <option value="Data Analytics & Business Intelligence">Data Analytics & Business Intelligence</option>
-                        </select>
+                          onChange={(val) => {
+                            setFormData((prev) => ({ ...prev, domain: val }));
+                            setErrors((prev) => ({ ...prev, domain: '' }));
+                          }}
+                          options={[
+                            'Artificial Intelligence & Machine Learning Engineering',
+                            'Generative AI & Prompt Engineering',
+                            'Agentic AI & Intelligent Automation',
+                            'Full Stack Web & Mobile Application Development',
+                            'DevOps & Cloud Engineering',
+                            'Software Testing & QA Automation',
+                            'UI/UX Product Design',
+                            'Data Analytics & Business Intelligence',
+                          ]}
+                          placeholder="Select Domain"
+                          error={errors.domain}
+                        />
                         {errors.domain && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.domain}</span>}
                       </div>
 
@@ -794,19 +799,21 @@ Message: ${formData.message || 'N/A'}`;
                         <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
                           Preferred Internship Duration <span className="text-red-500">*</span>
                         </label>
-                        <select
+                        <CustomDropdown
                           name="duration"
                           value={formData.duration}
-                          onChange={e => setFormData({ ...formData, duration: e.target.value })}
-                          className={`w-full px-4 py-3 rounded-xl bg-white border ${
-                            errors.duration ? 'border-red-400 focus:ring-red-400' : 'border-csl-gold/30 focus:border-csl-blue focus:ring-csl-blue/20'
-                          } text-sm font-medium text-csl-text focus:outline-none focus:ring-2 transition-all`}
-                        >
-                          <option value="">Select Preferred Duration</option>
-                          <option value="15 Days (₹1,000)">15 Days (₹1,000)</option>
-                          <option value="30 Days (₹2,000)">30 Days (₹2,000)</option>
-                          <option value="Flexible / Open to Discussion">Flexible / Open to Discussion</option>
-                        </select>
+                          onChange={(val) => {
+                            setFormData((prev) => ({ ...prev, duration: val }));
+                            setErrors((prev) => ({ ...prev, duration: '' }));
+                          }}
+                          options={[
+                            '15 Days (₹1,000)',
+                            '30 Days (₹2,000)',
+                            'Flexible / Open to Discussion',
+                          ]}
+                          placeholder="Select Preferred Duration"
+                          error={errors.duration}
+                        />
                         {errors.duration && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.duration}</span>}
                       </div>
 

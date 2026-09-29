@@ -14,12 +14,12 @@ import {
   Code2, 
   Cpu,
   Users,
-  ChevronDown,
   Layers
 } from 'lucide-react';
 import { YellowBox } from '../effects/YellowBox';
 import { openWhatsApp } from '../../lib/whatsapp';
 import { useDeepLinkHighlight } from '../../hooks/useDeepLinkHighlight';
+import { CustomDropdown } from '../ui/CustomDropdown';
 
 // @ts-ignore
 import iconAI from '../../../Elements/COURSES/AI and Machine Learning.png';
@@ -1871,26 +1871,9 @@ export function CoursesPage() {
 {/* CALLBACK MODAL COMPONENT */}
 function CallbackModal({ course, onClose }: { course: CourseItem; onClose: () => void }) {
   const [selectedCourseId, setSelectedCourseId] = useState(course.id);
-  const [isCourseOpen, setIsCourseOpen] = useState(false);
 
   const selectedCourse =
     coursesCatalog.find((item) => item.id === selectedCourseId) ?? course;
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-
-      if (!target.closest('[data-course-dropdown]')) {
-        setIsCourseOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -2008,76 +1991,13 @@ function CallbackModal({ course, onClose }: { course: CourseItem; onClose: () =>
             Selected Course
           </label>
 
-          <div className="relative" data-course-dropdown>
-            <button
-              type="button"
-              onClick={() => setIsCourseOpen((prev) => !prev)}
-              className={`relative w-full flex items-center text-left bg-white/90 backdrop-blur-md border ${
-                isCourseOpen
-                  ? 'border-csl-blue ring-1 ring-csl-blue/20'
-                  : 'border-csl-gold/30 hover:border-csl-gold/50'
-              } rounded-2xl py-3.5 pl-4 pr-11 text-sm font-bold text-csl-text shadow-sm hover:shadow-md transition-all duration-200`}
-            >
-              <span className="truncate">
-                {selectedCourse.title}
-              </span>
-
-              <ChevronDown
-                className={`w-4 h-4 absolute right-4 text-csl-blue transition-transform duration-300 ${
-                  isCourseOpen ? 'rotate-180' : 'rotate-0'
-                }`}
-              />
-            </button>
-
-            <AnimatePresence>
-              {isCourseOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -6, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 4, scale: 1 }}
-                  exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                  transition={{
-                    duration: 0.18,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                  className="absolute z-50 left-0 right-0 mt-1 overflow-hidden rounded-xl border border-white/70 bg-white/95 backdrop-blur-xl shadow-[0_15px_40px_rgba(20,85,184,0.14)]"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-csl-blue/5 via-transparent to-csl-gold/10 pointer-events-none" />
-
-                  <div className="relative p-1.5 max-h-64 overflow-y-auto">
-                    {coursesCatalog.map((item) => {
-                      const isSelected = selectedCourseId === item.id;
-
-                      return (
-                        <motion.button
-                          key={item.id}
-                          type="button"
-                          whileHover={{ x: 2 }}
-                          transition={{ duration: 0.15 }}
-                          onClick={() => {
-                            setSelectedCourseId(item.id);
-                            setIsCourseOpen(false);
-                          }}
-                          className={`w-full flex items-center justify-between rounded-lg px-4 py-2.5 text-xs md:text-sm font-medium text-left transition-all duration-200 ${
-                            isSelected
-                              ? 'bg-csl-blue text-white shadow-sm'
-                              : 'text-csl-text hover:bg-csl-gold/10 hover:text-csl-deep-blue'
-                          }`}
-                        >
-                          <span className="truncate pr-3">
-                            {item.title}
-                          </span>
-
-                          {isSelected && (
-                            <CheckCircle2 className="w-4 h-4 shrink-0" />
-                          )}
-                        </motion.button>
-                      );
-                    })}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          <CustomDropdown
+            value={selectedCourseId}
+            onChange={(val) => setSelectedCourseId(val)}
+            options={coursesCatalog.map((item) => ({ value: item.id, label: item.title }))}
+            placeholder="Select Course"
+            rounded="rounded-2xl"
+          />
 
           <div className="flex items-center justify-between mt-2 px-1">
             <span className="text-[11px] text-csl-muted font-medium">

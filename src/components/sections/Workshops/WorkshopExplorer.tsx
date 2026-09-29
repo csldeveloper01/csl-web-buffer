@@ -10,20 +10,45 @@ import {
   BookOpen, 
   Users, 
   ChevronRight,
-  Filter
+  Layers
 } from 'lucide-react';
 import { 
   ALL_WORKSHOPS, 
-  WORKSHOP_DOMAINS, 
   WorkshopItem, 
   WorkshopLevel 
 } from './workshopsData';
+import { CustomDropdown, DropdownOption } from '../../ui/CustomDropdown';
 
 interface WorkshopExplorerProps {
   selectedDomainId: string;
   onSelectDomain: (domainId: string) => void;
   onNavigateToContact: () => void;
 }
+
+const DOMAIN_OPTIONS: DropdownOption[] = [
+  { value: 'all', label: 'All Domains' },
+  { value: 'ai-ml', label: 'AI/ML with Automation' },
+  { value: 'full-stack', label: 'Full Stack Development with AI & Automation' },
+  { value: 'data-analyst', label: 'Data Analyst with AI & Automation' },
+  { value: 'data-science', label: 'Data Science & Machine Learning' },
+  { value: 'cyber-security', label: 'Cybersecurity & Ethical Hacking' },
+  { value: 'cloud-devops', label: 'DevOps with AWS' },
+  { value: 'mobile-dev', label: 'Full Stack + Mobile Development' },
+  { value: 'software-testing', label: 'Software Testing with Automation' },
+  { value: 'business-analyst', label: 'Business Analyst' },
+  { value: 'crm-cloud', label: 'ServiceNow, Salesforce & CRM' },
+  { value: 'ui-ux', label: 'UI/UX Design' },
+  { value: 'game-dev', label: 'Game Development' },
+  { value: 'blockchain', label: 'Blockchain & Web3' },
+  { value: 'iot-embedded', label: 'Internet of Things (IoT) & Embedded Systems' },
+];
+
+const LEVEL_OPTIONS: DropdownOption[] = [
+  { value: 'All', label: 'All Levels' },
+  { value: 'Basic', label: 'Basic' },
+  { value: 'Intermediate', label: 'Intermediate' },
+  { value: 'Advanced', label: 'Advanced' },
+];
 
 export function WorkshopExplorer({
   selectedDomainId,
@@ -38,13 +63,51 @@ export function WorkshopExplorer({
   const filteredWorkshops = useMemo(() => {
     return ALL_WORKSHOPS.filter((item) => {
       // Domain filter
-      if (selectedDomainId !== 'all' && item.domainId !== selectedDomainId) {
-        return false;
+      if (selectedDomainId !== 'all') {
+        if (selectedDomainId === 'ai-ml' && item.domainId !== 'ai-ml') {
+          return false;
+        } else if (selectedDomainId === 'full-stack' && item.domainId !== 'full-stack') {
+          return false;
+        } else if (selectedDomainId === 'data-analyst') {
+          const isAnalyst = item.domainId === 'data-science' && (
+            item.title.toLowerCase().includes('data') ||
+            item.title.toLowerCase().includes('pandas') ||
+            item.title.toLowerCase().includes('visualization') ||
+            item.title.toLowerCase().includes('tableau')
+          );
+          if (!isAnalyst) return false;
+        } else if (selectedDomainId === 'data-science' && item.domainId !== 'data-science') {
+          return false;
+        } else if (selectedDomainId === 'cyber-security' && item.domainId !== 'cyber-security') {
+          return false;
+        } else if (selectedDomainId === 'cloud-devops' && item.domainId !== 'cloud-devops') {
+          return false;
+        } else if (selectedDomainId === 'mobile-dev' && item.domainId !== 'mobile-dev') {
+          return false;
+        } else if (selectedDomainId === 'software-testing' && item.domainId !== 'software-testing') {
+          return false;
+        } else if (selectedDomainId === 'business-analyst') {
+          const isBusiness = item.domainId === 'data-science' || item.keyTopics.some(t => t.toLowerCase().includes('analysis') || t.toLowerCase().includes('statistics'));
+          if (!isBusiness) return false;
+        } else if (selectedDomainId === 'crm-cloud') {
+          const isCRM = item.domainId === 'cloud-devops' || item.title.toLowerCase().includes('cloud');
+          if (!isCRM) return false;
+        } else if (selectedDomainId === 'ui-ux' && item.domainId !== 'ui-ux') {
+          return false;
+        } else if (selectedDomainId === 'game-dev' && item.domainId !== 'game-dev') {
+          return false;
+        } else if (selectedDomainId === 'blockchain' && item.domainId !== 'blockchain') {
+          return false;
+        } else if (selectedDomainId === 'iot-embedded' && item.domainId !== 'iot-embedded') {
+          return false;
+        }
       }
+
       // Level filter
       if (selectedLevel !== 'All' && item.level !== selectedLevel) {
         return false;
       }
+
       // Search query
       if (searchQuery.trim() !== '') {
         const query = searchQuery.toLowerCase();
@@ -76,6 +139,8 @@ export function WorkshopExplorer({
     }
   };
 
+  const activeDomainLabel = DOMAIN_OPTIONS.find((d) => d.value === selectedDomainId)?.label || 'All Domains';
+
   return (
     <section id="workshop-explorer" className="relative w-full py-16 md:py-24 bg-[#FAF7F3] border-y border-csl-gold/25">
       <div className="section-container">
@@ -97,95 +162,74 @@ export function WorkshopExplorer({
         </div>
 
         {/* ==================================================
-            FILTERS & SEARCH BAR
+            CUSTOM DROPDOWN FILTERS & SEARCH BAR
            ================================================== */}
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl p-5 border border-csl-gold/30 shadow-md mb-10">
-          
-          {/* Top row: Search input + Level pills */}
-          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-5">
-            {/* Search Input */}
-            <div className="relative flex-1">
-              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-csl-muted" />
-              <input
-                type="text"
-                placeholder="Search by topic, keyword, or technology (e.g. React, Docker, PyTorch, SQL, Figma)..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-csl-bg/60 border border-csl-gold/30 text-sm text-csl-text focus:outline-none focus:ring-2 focus:ring-csl-gold/50 focus:border-csl-gold transition-all"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-csl-muted hover:text-csl-text p-1"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
-            </div>
-
-            {/* Level Filter Buttons */}
-            <div className="flex items-center gap-1.5 p-1 bg-csl-bg rounded-xl border border-csl-gold/20 overflow-x-auto shrink-0">
-              {(['All', 'Basic', 'Intermediate', 'Advanced'] as const).map((lvl) => (
-                <button
-                  key={lvl}
-                  onClick={() => setSelectedLevel(lvl)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-                    selectedLevel === lvl
-                      ? 'bg-csl-blue text-white shadow-xs'
-                      : 'text-csl-muted hover:text-csl-text hover:bg-white/60'
-                  }`}
-                >
-                  {lvl === 'All' ? 'All Levels' : lvl}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom row: Domain filter buttons (Horizontal scrollable chips) */}
-          <div className="border-t border-csl-gold/15 pt-4">
-            <div className="flex items-center gap-2 mb-2 text-xs font-semibold text-csl-muted">
-              <Filter className="w-3.5 h-3.5 text-csl-gold" />
-              <span>Select Domain:</span>
-            </div>
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-csl-gold/30 shadow-md mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
             
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
-              <button
-                onClick={() => onSelectDomain('all')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer border ${
-                  selectedDomainId === 'all'
-                    ? 'bg-csl-text text-white border-csl-text shadow-xs'
-                    : 'bg-white text-csl-muted border-csl-gold/25 hover:border-csl-gold hover:text-csl-text'
-                }`}
-              >
-                All 11 Domains ({ALL_WORKSHOPS.length})
-              </button>
-
-              {WORKSHOP_DOMAINS.map((domain) => (
-                <button
-                  key={domain.id}
-                  onClick={() => onSelectDomain(domain.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer border flex items-center gap-1.5 ${
-                    selectedDomainId === domain.id
-                      ? 'bg-csl-blue text-white border-csl-blue shadow-xs'
-                      : 'bg-white text-csl-muted border-csl-gold/25 hover:border-csl-gold hover:text-csl-text'
-                  }`}
-                >
-                  <span>{domain.shortTitle}</span>
-                  {domain.trending && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  )}
-                </button>
-              ))}
+            {/* 1. Domain Dropdown */}
+            <div className="md:col-span-5 flex flex-col">
+              <label className="text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Layers className="w-3.5 h-3.5 text-csl-blue" />
+                <span>Domain</span>
+              </label>
+              <CustomDropdown
+                value={selectedDomainId}
+                onChange={(val) => onSelectDomain(val)}
+                options={DOMAIN_OPTIONS}
+                placeholder="All Domains"
+                icon={Layers}
+              />
             </div>
-          </div>
 
+            {/* 2. Level Dropdown */}
+            <div className="md:col-span-3 flex flex-col">
+              <label className="text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-csl-gold" />
+                <span>Level</span>
+              </label>
+              <CustomDropdown
+                value={selectedLevel}
+                onChange={(val) => setSelectedLevel(val as WorkshopLevel | 'All')}
+                options={LEVEL_OPTIONS}
+                placeholder="All Levels"
+              />
+            </div>
+
+            {/* 3. Search Input */}
+            <div className="md:col-span-4 flex flex-col">
+              <label className="text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Search className="w-3.5 h-3.5 text-csl-blue" />
+                <span>Search Keywords</span>
+              </label>
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-csl-muted pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Search topics, tools..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-9 py-3.5 rounded-xl bg-white/90 border border-csl-gold/30 text-xs md:text-sm text-csl-text focus:outline-none focus:ring-1 focus:ring-csl-blue focus:border-csl-blue shadow-xs transition-all"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-csl-muted hover:text-csl-text p-1 cursor-pointer"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+          </div>
         </div>
 
         {/* Results count indicator */}
         <div className="flex items-center justify-between mb-6 px-1">
           <p className="text-xs font-semibold text-csl-muted font-mono">
             Showing <span className="font-bold text-csl-text">{filteredWorkshops.length}</span> workshops
-            {selectedDomainId !== 'all' && ` in ${WORKSHOP_DOMAINS.find(d => d.id === selectedDomainId)?.title}`}
+            {selectedDomainId !== 'all' && ` in ${activeDomainLabel}`}
             {selectedLevel !== 'All' && ` (${selectedLevel} level)`}
           </p>
           {(selectedDomainId !== 'all' || selectedLevel !== 'All' || searchQuery !== '') && (
@@ -353,7 +397,7 @@ export function WorkshopExplorer({
 
                 <button
                   onClick={() => setActiveModalWorkshop(null)}
-                  className="p-2 rounded-full hover:bg-csl-bg text-csl-muted hover:text-csl-text transition-colors shrink-0"
+                  className="p-2 rounded-full hover:bg-csl-bg text-csl-muted hover:text-csl-text transition-colors shrink-0 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
