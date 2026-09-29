@@ -1,18 +1,5 @@
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronRight, Flame } from 'lucide-react';
 import { YellowBox } from '../../effects/YellowBox';
-
-// @ts-ignore
-import iconAI from '../../../../Elements/COURSES/AI and Machine Learning.png';
-// @ts-ignore
-import iconCloud from '../../../../Elements/COURSES/Cloud and AWS Development.png';
-// @ts-ignore
-import iconFullStack from '../../../../Elements/COURSES/Full Stack Development.png';
-// @ts-ignore
-import iconCyber from '../../../../Elements/COURSES/Cybersecurity and Ethical Hacking.png';
-// @ts-ignore
-import iconUIUX from '../../../../Elements/COURSES/UIUX Front End design.png';
-// @ts-ignore
-import iconBanner from '../../../../Elements/COURSES/AI + Cloud + AWS = Future Skills.png';
 
 const coursesData = [
   {
@@ -38,12 +25,43 @@ const coursesData = [
   }
 ];
 
-const workshopsData = [
-  { title: 'AI / Machine Learning', icon: iconAI, deepLinkId: 'ai-ml' },
-  { title: 'Cloud & AWS Deployment', icon: iconCloud, deepLinkId: 'cloud-aws' },
-  { title: 'Full Stack Development', icon: iconFullStack, deepLinkId: 'full-stack' },
-  { title: 'Cybersecurity & Ethical Hacking', icon: iconCyber, deepLinkId: 'cybersecurity' },
-  { title: 'UI/UX & Frontend Design', icon: iconUIUX, deepLinkId: 'ui-ux' }
+const trendingWorkshopsData = [
+  {
+    id: '01',
+    title: 'AI/ML with Automation',
+    deepLinkId: 'ai-ml',
+    count: '6 Workshops',
+  },
+  {
+    id: '02',
+    title: 'Full Stack Development with AI & Automation (Java/Python)',
+    deepLinkId: 'full-stack',
+    count: '6 Workshops',
+  },
+  {
+    id: '03',
+    title: 'Data Analyst with AI & Automation',
+    deepLinkId: 'data-science',
+    count: '6 Workshops',
+  },
+  {
+    id: '04',
+    title: 'Data Science & Machine Learning',
+    deepLinkId: 'data-science',
+    count: '6 Workshops',
+  },
+  {
+    id: '05',
+    title: 'Cybersecurity & Ethical Hacking',
+    deepLinkId: 'cyber-security',
+    count: '6 Workshops',
+  },
+  {
+    id: '06',
+    title: 'DevOps with AWS (AI & Automation Deployment)',
+    deepLinkId: 'cloud-devops',
+    count: '6 Workshops',
+  },
 ];
 
 export function CoursesSection() {
@@ -59,6 +77,9 @@ export function CoursesSection() {
     window.history.pushState({}, '', path);
     window.dispatchEvent(new PopStateEvent('popstate'));
     window.dispatchEvent(new HashChangeEvent('hashchange'));
+    if (!path.includes('#')) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
   };
 
   return (
@@ -177,43 +198,51 @@ export function CoursesSection() {
             High-Demand Domains
           </h3>
 
-          {/* Workshop Items List */}
-          <div className="border border-csl-gold/25 rounded-2xl bg-white/40 backdrop-blur-sm divide-y divide-csl-gold/20 overflow-hidden mb-8">
-            {workshopsData.map((workshop, idx) => (
+          {/* Workshop Items List: Top 6 Trending Domains */}
+          <div className="flex flex-col gap-3 w-full mb-8">
+            {trendingWorkshopsData.map((workshop) => (
               <a 
-                key={idx} 
-                href={`/workshops#${workshop.deepLinkId}`}
-                onClick={(e) => handleNavigateToPath(e, `/workshops#${workshop.deepLinkId}`)}
-                className="group flex items-center px-6 py-4 hover:bg-white/60 transition-colors cursor-pointer"
+                key={workshop.id} 
+                href={`/workshops#domains`}
+                onClick={(e) => handleNavigateToPath(e, `/workshops#domains`)}
+                className="group relative flex flex-col p-3.5 sm:p-4 bg-white/75 backdrop-blur-sm border border-csl-gold/25 rounded-2xl hover:border-csl-gold/60 hover:bg-white/95 hover:shadow-md transition-all duration-300 cursor-pointer"
               >
-                <div className="w-12 h-12 flex items-center justify-center shrink-0 mr-6">
-                  <img src={workshop.icon} alt={workshop.title} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-sm" />
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div className="flex items-center gap-3">
+                    <span className="w-7 h-7 rounded-lg bg-csl-gold/15 text-csl-text font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-csl-gold/30">
+                      {workshop.id}
+                    </span>
+                    <h4 className="text-sm sm:text-[15px] font-bold text-csl-text group-hover:text-csl-blue transition-colors leading-snug">
+                      {workshop.title}
+                    </h4>
+                  </div>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 border border-amber-500/30">
+                      <Flame className="w-2.5 h-2.5 text-amber-600 fill-amber-500" />
+                      TRENDING
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-csl-muted group-hover:text-csl-blue group-hover:translate-x-1 transition-all" />
+                  </div>
                 </div>
-                <h4 className="flex-1 text-[15px] font-bold text-csl-text group-hover:text-csl-blue transition-colors">
-                  {workshop.title}
-                </h4>
-                <ChevronRight className="w-5 h-5 text-csl-muted group-hover:text-csl-blue group-hover:translate-x-1 transition-all" />
+
+                <div className="flex items-center justify-between pt-2 border-t border-csl-gold/15 text-xs">
+                  <span className="font-bold text-csl-blue text-[11px]">
+                    {workshop.count}
+                  </span>
+                  <div className="flex items-center gap-1.5 text-[10px] font-mono font-semibold text-csl-muted">
+                    <span className="text-emerald-700 font-bold">BASIC</span>
+                    <span>•</span>
+                    <span className="text-blue-700 font-bold">INTERMEDIATE</span>
+                    <span>•</span>
+                    <span className="text-purple-700 font-bold">ADVANCED</span>
+                  </div>
+                </div>
               </a>
             ))}
           </div>
 
-          {/* Banner Card */}
-          <div className="w-full border border-csl-gold/20 rounded-2xl p-6 md:p-8 bg-white/60 backdrop-blur-sm flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-8 hover:shadow-md transition-shadow">
-            <div className="w-20 h-20 shrink-0">
-              <img src={iconBanner} alt="AI Cloud AWS" className="w-full h-full object-contain drop-shadow-md" />
-            </div>
-            <div className="flex-1">
-              <h4 className="text-[15px] font-bold text-csl-text mb-2">
-                AI + Cloud + AWS = Future Skills
-              </h4>
-              <p className="text-csl-muted text-[13px] font-medium leading-relaxed">
-                Learn from industry experts, work on real-world projects and explore emerging technologies.
-              </p>
-            </div>
-          </div>
-
           {/* Desktop CTA (Explore Workshops) */}
-          <div className="hidden lg:flex mt-">
+          <div className="hidden lg:flex">
             <a
               href="/workshops"
               onClick={(e) => handleNavigateToPath(e, '/workshops')}
@@ -225,19 +254,16 @@ export function CoursesSection() {
           </div>
 
           {/* Mobile CTA (Explore Workshops button) */}
-        <div className="flex lg:hidden w-full flex-col gap-3 mt-8">
-
-
-          {/* Explore Workshops */}
-          <a
-            href="/workshops"
-            onClick={(e) => handleNavigateToPath(e, '/workshops')}
-            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-8 py-3.5 rounded-xl font-bold text-sm transition-transform hover:scale-105 hover:shadow-lg hover:shadow-csl-blue/20 active:scale-95 shadow-sm cursor-pointer"
-          >
-            Explore Workshops
-            <ArrowRight className="w-4 h-4" />
-          </a>
-        </div>
+          <div className="flex lg:hidden w-full flex-col gap-3">
+            <a
+              href="/workshops"
+              onClick={(e) => handleNavigateToPath(e, '/workshops')}
+              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-8 py-3.5 rounded-xl font-bold text-sm transition-transform hover:scale-105 hover:shadow-lg hover:shadow-csl-blue/20 active:scale-95 shadow-sm cursor-pointer"
+            >
+              Explore Workshops
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
         </div>
 
       </div>
