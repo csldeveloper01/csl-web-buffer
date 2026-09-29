@@ -103,7 +103,7 @@ export function CustomDropdown({
   return (
     <div
       ref={dropdownRef}
-      className={`relative w-full ${className}`}
+      className={`relative w-full ${isOpen ? 'z-50' : 'z-10'} ${className}`}
       data-csl-dropdown
     >
       {/* Hidden input for standard form submission compatibility */}

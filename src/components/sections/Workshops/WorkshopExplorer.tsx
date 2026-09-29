@@ -134,22 +134,22 @@ export function WorkshopExplorer({
   const getLevelBadgeClass = (level: WorkshopLevel) => {
     switch (level) {
       case 'Basic':
-        return 'bg-emerald-500/10 text-emerald-700 border-emerald-500/25';
+        return 'bg-emerald-500/10 text-emerald-800 border-emerald-500/30';
       case 'Intermediate':
-        return 'bg-blue-500/10 text-blue-700 border-blue-500/25';
+        return 'bg-blue-500/10 text-blue-800 border-blue-500/30';
       case 'Advanced':
-        return 'bg-purple-500/10 text-purple-700 border-purple-500/25';
+        return 'bg-purple-500/10 text-purple-800 border-purple-500/30';
     }
   };
 
   return (
-    <section id="workshop-explorer" className="relative w-full py-12 md:py-16 bg-[#FAF7F3] border-y border-csl-gold/25">
+    <section id="workshop-explorer" className="relative w-full py-14 md:py-20 bg-[#FAF7F3] border-y border-csl-gold/25">
       <div className="section-container">
         
         {/* ==================================================
             1. SECTION HEADER
            ================================================== */}
-        <div className="mb-8 text-center flex flex-col items-center">
+        <div className="mb-10 text-center flex flex-col items-center">
           <div className="section-eyebrow justify-center">
             <span>CURRICULUM DIRECTORY</span>
             <div></div>
@@ -163,19 +163,19 @@ export function WorkshopExplorer({
         </div>
 
         {/* ==================================================
-            2. PROGRESSION MINI-BANNER (Compressed Pipeline)
+            2. PROGRESSION MINI-BANNER (Clear 3-Tier Treatment)
            ================================================== */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 sm:px-6 bg-white/90 border border-csl-gold/30 rounded-2xl mb-8 shadow-xs">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 sm:px-6 bg-white/95 border border-csl-gold/30 rounded-2xl mb-8 shadow-xs">
           <div className="flex items-center gap-2 text-xs font-mono font-extrabold text-csl-text">
-            <span className="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-700 border border-emerald-500/25">
+            <span className="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-800 border border-emerald-500/30">
               BASIC
             </span>
             <span className="text-csl-gold font-bold">→</span>
-            <span className="px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-700 border border-blue-500/25">
+            <span className="px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-800 border border-blue-500/30">
               INTERMEDIATE
             </span>
             <span className="text-csl-gold font-bold">→</span>
-            <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-700 border border-purple-500/25">
+            <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-800 border border-purple-500/30">
               ADVANCED
             </span>
           </div>
@@ -185,16 +185,32 @@ export function WorkshopExplorer({
         </div>
 
         {/* ==================================================
-            3. CUSTOM DROPDOWN FILTERS & SEARCH
+            3. WORKSHOP FILTER AREA (Enhanced Hierarchy & Proper Stacking)
            ================================================== */}
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-csl-gold/30 shadow-sm mb-8">
+        <div className="relative z-30 bg-white/95 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-csl-gold/30 shadow-md mb-8">
+          
+          {/* Filter Area Title & Supporting Text */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-4 pb-3 border-b border-csl-gold/15">
+            <div>
+              <span className="text-[10px] sm:text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider block">
+                EXPLORE BY DOMAIN & LEVEL
+              </span>
+              <h3 className="text-sm sm:text-base font-extrabold text-csl-text">
+                Filter by Technology Domain and Skill Level
+              </h3>
+            </div>
+            <span className="text-xs text-csl-muted font-medium">
+              11 Domains • 66 Specialized Modules
+            </span>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
             
-            {/* Domain Dropdown */}
-            <div className="md:col-span-5 flex flex-col">
+            {/* Domain Dropdown Column (relative z-20 to layer above level dropdown) */}
+            <div className="md:col-span-5 flex flex-col relative z-20">
               <label className="text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <Layers className="w-3.5 h-3.5 text-csl-blue" />
-                <span>Filter By Domain</span>
+                <span>Domain</span>
               </label>
               <CustomDropdown
                 value={selectedDomainId}
@@ -205,8 +221,8 @@ export function WorkshopExplorer({
               />
             </div>
 
-            {/* Level Dropdown */}
-            <div className="md:col-span-3 flex flex-col">
+            {/* Level Dropdown Column (relative z-10) */}
+            <div className="md:col-span-3 flex flex-col relative z-10">
               <label className="text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-csl-gold" />
                 <span>Level</span>
@@ -219,8 +235,8 @@ export function WorkshopExplorer({
               />
             </div>
 
-            {/* Search Input */}
-            <div className="md:col-span-4 flex flex-col">
+            {/* Search Input Column */}
+            <div className="md:col-span-4 flex flex-col relative">
               <label className="text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <Search className="w-3.5 h-3.5 text-csl-blue" />
                 <span>Search Topics</span>
@@ -248,9 +264,9 @@ export function WorkshopExplorer({
           </div>
         </div>
 
-        {/* Quick Domain Switcher Ribbon (when in a domain) */}
+        {/* Quick Domain Switcher Ribbon (when inside a specific domain) */}
         {selectedDomainId !== 'all' && searchQuery.trim() === '' && (
-          <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
+          <div className="relative z-10 flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
             <button
               onClick={() => onSelectDomain('all')}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-csl-gold/30 bg-white text-csl-text hover:text-csl-blue hover:border-csl-gold shrink-0 transition-colors cursor-pointer"
@@ -280,7 +296,7 @@ export function WorkshopExplorer({
 
         {/* CASE A: USER SEARCHED KEYWORD */}
         {searchQuery.trim() !== '' ? (
-          <div>
+          <div className="relative z-10">
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs font-mono font-bold text-csl-muted">
                 Found {filteredWorkshops.length} workshops matching "{searchQuery}"
@@ -320,7 +336,7 @@ export function WorkshopExplorer({
           </div>
         ) : selectedDomainId !== 'all' && activeDomain && groupedActiveWorkshops ? (
           /* CASE B: ACTIVE DOMAIN EXPANDED (6 Workshops grouped by Basic, Intermediate, Advanced) */
-          <div>
+          <div className="relative z-10">
             {/* Active Domain Header Card */}
             <div className="bg-white rounded-2xl p-5 sm:p-6 border border-csl-gold/30 shadow-md mb-8">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -337,7 +353,7 @@ export function WorkshopExplorer({
                         DOMAIN 0{activeDomain.domainNumber}
                       </span>
                       {activeDomain.trending && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 border border-amber-500/30">
+                        <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/15 to-csl-gold/20 text-amber-800 border border-amber-500/35 shadow-2xs">
                           <Flame className="w-2.5 h-2.5 text-amber-600 fill-amber-500" />
                           TRENDING
                         </span>
@@ -349,13 +365,18 @@ export function WorkshopExplorer({
                   </div>
                 </div>
 
-                <button
-                  onClick={() => onSelectDomain('all')}
-                  className="self-start sm:self-center inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-csl-gold/30 hover:border-csl-gold bg-csl-bg text-csl-text text-xs font-bold transition-all cursor-pointer"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>View All 11 Domains</span>
-                </button>
+                <div className="flex items-center gap-2.5">
+                  <span className="text-xs font-bold text-csl-blue hidden sm:inline-block">
+                    6 Workshops (2 Basic • 2 Int • 2 Adv)
+                  </span>
+                  <button
+                    onClick={() => onSelectDomain('all')}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-csl-gold/30 hover:border-csl-gold bg-csl-bg text-csl-text text-xs font-bold transition-all cursor-pointer"
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                    <span>View All 11 Domains</span>
+                  </button>
+                </div>
               </div>
 
               <p className="text-xs sm:text-sm text-csl-muted font-medium mt-3 pt-3 border-t border-csl-gold/15 leading-relaxed">
@@ -369,10 +390,10 @@ export function WorkshopExplorer({
               {/* BASIC TIER */}
               {(selectedLevel === 'All' || selectedLevel === 'Basic') && (
                 <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between pb-2 border-b border-emerald-500/30">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-emerald-700">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                      BASIC TIER (2 WORKSHOPS)
+                  <div className="flex items-center justify-between pb-2.5 border-b border-emerald-500/30">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-emerald-800">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                      BASIC TIER (2 MODULES)
                     </span>
                     <span className="text-[11px] font-semibold text-csl-muted">Fundamentals</span>
                   </div>
@@ -391,10 +412,10 @@ export function WorkshopExplorer({
               {/* INTERMEDIATE TIER */}
               {(selectedLevel === 'All' || selectedLevel === 'Intermediate') && (
                 <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between pb-2 border-b border-blue-500/30">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-blue-700">
-                      <span className="w-2 h-2 rounded-full bg-blue-500" />
-                      INTERMEDIATE TIER (2 WORKSHOPS)
+                  <div className="flex items-center justify-between pb-2.5 border-b border-blue-500/30">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-blue-800">
+                      <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+                      INTERMEDIATE TIER (2 MODULES)
                     </span>
                     <span className="text-[11px] font-semibold text-csl-muted">Applied Workflows</span>
                   </div>
@@ -413,10 +434,10 @@ export function WorkshopExplorer({
               {/* ADVANCED TIER */}
               {(selectedLevel === 'All' || selectedLevel === 'Advanced') && (
                 <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between pb-2 border-b border-purple-500/30">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-purple-700">
-                      <span className="w-2 h-2 rounded-full bg-purple-500" />
-                      ADVANCED TIER (2 WORKSHOPS)
+                  <div className="flex items-center justify-between pb-2.5 border-b border-purple-500/30">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-purple-800">
+                      <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
+                      ADVANCED TIER (2 MODULES)
                     </span>
                     <span className="text-[11px] font-semibold text-csl-muted">Production & AI</span>
                   </div>
@@ -435,71 +456,86 @@ export function WorkshopExplorer({
             </div>
           </div>
         ) : (
-          /* CASE C: 11 DOMAIN DIRECTORY CARDS (Compact overview, no 66-card vertical scroll) */
-          <div>
-            <div className="flex items-center justify-between mb-4 px-1">
-              <span className="text-xs font-mono font-extrabold uppercase text-csl-gold tracking-wider">
-                11 SPECIALIZATION DOMAINS
-              </span>
-              <span className="text-xs font-medium text-csl-muted">
-                Click any domain to inspect workshops
+          /* CASE C: 11 DOMAIN DIRECTORY CARDS (Enhanced Visual Hierarchy) */
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-5 px-1">
+              <div>
+                <span className="text-xs font-mono font-extrabold uppercase text-csl-gold tracking-wider block">
+                  11 SPECIALIZATION DOMAINS
+                </span>
+                <span className="text-xs text-csl-muted font-medium">
+                  Click any domain to inspect its 6 structured workshops
+                </span>
+              </div>
+              <span className="text-xs font-mono font-bold text-csl-blue">
+                11 Domains
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
               {WORKSHOP_DOMAINS.map((domain) => {
                 const IconComponent = DOMAIN_ICONS[domain.id] || Cpu;
                 return (
                   <div
                     key={domain.id}
                     onClick={() => onSelectDomain(domain.id)}
-                    className="group relative flex flex-col justify-between p-5 bg-white/80 backdrop-blur-sm border border-csl-gold/25 rounded-2xl hover:border-csl-gold/60 hover:bg-white hover:shadow-lg hover:shadow-csl-gold/10 transition-all duration-300 cursor-pointer"
+                    className="group relative flex flex-col justify-between p-6 bg-white/90 backdrop-blur-sm border border-csl-gold/25 rounded-2xl hover:border-csl-gold/70 hover:bg-white hover:shadow-xl hover:shadow-csl-gold/10 transition-all duration-300 cursor-pointer"
                   >
                     <div>
-                      {/* Top Header of Card */}
-                      <div className="flex items-start justify-between gap-3 mb-3">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-csl-blue/[0.07] border border-csl-blue/15 flex items-center justify-center text-csl-blue group-hover:bg-csl-blue group-hover:text-white transition-all duration-300">
-                            <IconComponent className="w-5 h-5 stroke-[1.8]" />
+                      {/* 1. Small Domain Number / Index + Trending Badge */}
+                      <div className="flex items-center justify-between gap-2 mb-3.5">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-csl-blue/[0.08] text-csl-blue font-mono font-extrabold text-xs flex items-center justify-center border border-csl-blue/15 group-hover:bg-csl-blue group-hover:text-white transition-all duration-300">
+                            <IconComponent className="w-4 h-4 stroke-[1.8]" />
                           </div>
-                          <div>
-                            <span className="text-[11px] font-mono font-bold text-csl-muted block">
-                              DOMAIN 0{domain.domainNumber}
-                            </span>
-                          </div>
+                          <span className="text-[11px] font-mono font-extrabold text-csl-gold tracking-wider">
+                            DOMAIN 0{domain.domainNumber}
+                          </span>
                         </div>
 
                         {domain.trending && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 border border-amber-500/30 shrink-0">
-                            <Flame className="w-2.5 h-2.5 text-amber-600 fill-amber-500" />
-                            TRENDING
+                          <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/15 to-csl-gold/20 text-amber-800 border border-amber-500/35 shadow-2xs">
+                            <Flame className="w-3 h-3 text-amber-600 fill-amber-500" />
+                            <span>TRENDING</span>
                           </span>
                         )}
                       </div>
 
-                      {/* Domain Title */}
-                      <h3 className="text-sm sm:text-base font-extrabold text-csl-text group-hover:text-csl-blue transition-colors leading-snug mb-2">
+                      {/* 2. Large Domain Title */}
+                      <h3 className="text-base sm:text-lg font-extrabold text-csl-text group-hover:text-csl-blue transition-colors leading-snug mb-2.5">
                         {domain.title}
                       </h3>
 
-                      <p className="text-xs text-csl-muted line-clamp-2 leading-relaxed font-medium mb-3">
-                        {domain.description}
+                      {/* 3. Short Metadata / Tagline */}
+                      <p className="text-xs text-csl-muted line-clamp-2 leading-relaxed font-medium mb-4">
+                        {domain.tagline || domain.description}
                       </p>
                     </div>
 
-                    {/* Bottom stats and action */}
-                    <div className="pt-3 border-t border-csl-gold/15 flex items-center justify-between">
-                      <div className="flex items-center gap-1 text-[10px] font-mono font-bold">
-                        <span className="text-emerald-700">2 Basic</span>
-                        <span className="text-csl-muted">•</span>
-                        <span className="text-blue-700">2 Int</span>
-                        <span className="text-csl-muted">•</span>
-                        <span className="text-purple-700">2 Adv</span>
+                    {/* 4. Basic / Intermediate / Advanced Level Indicators + Workshop Count */}
+                    <div className="pt-3.5 border-t border-csl-gold/15 flex flex-col gap-2.5">
+                      <div className="flex items-center justify-between gap-1 text-[10px] font-mono font-bold">
+                        <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-800 border border-emerald-500/25">
+                          2 Basic
+                        </span>
+                        <span className="text-csl-gold font-bold">→</span>
+                        <span className="px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-800 border border-blue-500/25">
+                          2 Int
+                        </span>
+                        <span className="text-csl-gold font-bold">→</span>
+                        <span className="px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-800 border border-purple-500/25">
+                          2 Adv
+                        </span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1 text-xs font-bold text-csl-blue group-hover:translate-x-0.5 transition-transform">
-                        <span>View Workshops</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
+                      <div className="flex items-center justify-between pt-1">
+                        <span className="text-xs font-bold text-csl-blue">
+                          6 Workshops
+                        </span>
+                        <div className="inline-flex items-center gap-1 text-xs font-bold text-csl-deep-blue group-hover:text-csl-blue group-hover:translate-x-0.5 transition-all">
+                          <span>View Modules</span>
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </div>
                       </div>
                     </div>
                   </div>

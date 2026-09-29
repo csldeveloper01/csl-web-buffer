@@ -111,46 +111,46 @@ export function InternshipVideoTestimonials() {
       <div className="relative z-10 section-container">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-12">
-          <div className="max-w-2xl">
-            <div className="section-eyebrow">
-              <Video className="w-3.5 h-3.5 text-csl-gold" />
-              <span>Video Testimonials</span>
-              <div></div>
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-csl-text section-heading tracking-tight mb-3">
-              Hear From <span className="text-csl-blue">Our Interns</span>
-            </h2>
-            <p className="text-csl-muted font-medium text-sm md:text-base section-subheading">
-              Authentic reflections and learning experiences directly from students who underwent hands-on internship programs at Creator Space Lab.
-            </p>
+        <div className="max-w-2xl mb-10 md:mb-12">
+          <div className="section-eyebrow">
+            <Video className="w-3.5 h-3.5 text-csl-gold" />
+            <span>Video Testimonials</span>
+            <div></div>
           </div>
-
-          {/* Navigation Arrows for Video Track */}
-          <div className="flex items-center gap-3 self-start md:self-end">
-            <button
-              onClick={() => scroll('left')}
-              aria-label="Scroll testimonials left"
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white border border-csl-gold/30 hover:border-csl-blue hover:bg-csl-blue hover:text-white text-csl-deep-blue shadow-sm transition-all duration-200 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-csl-blue/40"
-            >
-              <ChevronLeft className="w-5 h-5 stroke-[2.2]" />
-            </button>
-            <button
-              onClick={() => scroll('right')}
-              aria-label="Scroll testimonials right"
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white border border-csl-gold/30 hover:border-csl-blue hover:bg-csl-blue hover:text-white text-csl-deep-blue shadow-sm transition-all duration-200 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-csl-blue/40"
-            >
-              <ChevronRight className="w-5 h-5 stroke-[2.2]" />
-            </button>
-          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-csl-text section-heading tracking-tight mb-3">
+            Hear From <span className="text-csl-blue">Our Interns</span>
+          </h2>
+          <p className="text-csl-muted font-medium text-sm md:text-base section-subheading">
+            Authentic reflections and learning experiences directly from students who underwent hands-on internship programs at Creator Space Lab.
+          </p>
         </div>
 
-        {/* Video Cards Scroll Track (Strictly Portrait 9:16 Aspect Ratio) */}
-        <div
-          ref={scrollContainerRef}
-          className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scrollbar-none scroll-smooth"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
+        {/* Carousel Track Wrapper with Vertically Centered Left/Right Arrows */}
+        <div className="relative w-full">
+          {/* Left Arrow Button */}
+          <button
+            onClick={() => scroll('left')}
+            aria-label="Scroll testimonials left"
+            className="absolute -left-2 sm:-left-4 md:-left-5 lg:-left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 backdrop-blur-md border border-csl-gold/40 text-csl-blue shadow-[0_4px_20px_rgba(0,30,80,0.12)] hover:bg-csl-blue hover:text-white hover:border-csl-blue transition-all duration-200 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-csl-blue/40"
+          >
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
+          </button>
+
+          {/* Right Arrow Button */}
+          <button
+            onClick={() => scroll('right')}
+            aria-label="Scroll testimonials right"
+            className="absolute -right-2 sm:-right-4 md:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 backdrop-blur-md border border-csl-gold/40 text-csl-blue shadow-[0_4px_20px_rgba(0,30,80,0.12)] hover:bg-csl-blue hover:text-white hover:border-csl-blue transition-all duration-200 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-csl-blue/40"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
+          </button>
+
+          {/* Video Cards Scroll Track (Strictly Portrait 9:16 Aspect Ratio) */}
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scrollbar-none scroll-smooth px-1"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
           {TESTIMONIAL_VIDEOS.map((item, idx) => {
             const isPlaying = activeVideoId === item.id;
 
@@ -221,8 +221,9 @@ export function InternshipVideoTestimonials() {
             );
           })}
         </div>
-
       </div>
-    </section>
+
+    </div>
+  </section>
   );
 }

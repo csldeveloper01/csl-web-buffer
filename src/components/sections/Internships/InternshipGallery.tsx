@@ -144,7 +144,7 @@ export function InternshipGallery() {
           </p>
         </div>
 
-        {/* Photographed Stack Carousel Container (Tight, optically centered, no layout shifts) */}
+        {/* Photographed Stack Carousel Container (Tight, optically centered, scaled +12-15%) */}
         <div 
           ref={containerRef}
           tabIndex={0}
@@ -155,7 +155,7 @@ export function InternshipGallery() {
           onTouchEnd={() => setIsPaused(false)}
           onFocus={() => setIsPaused(true)}
           onBlur={() => setIsPaused(false)}
-          className="relative w-full max-w-4xl mx-auto h-[300px] sm:h-[350px] md:h-[390px] lg:h-[420px] flex items-center justify-center select-none outline-none"
+          className="relative w-full max-w-5xl mx-auto h-[325px] sm:h-[385px] md:h-[435px] lg:h-[475px] flex items-center justify-center select-none outline-none"
           role="region"
           aria-roledescription="carousel"
           aria-label="Internship life photo stack"
@@ -190,10 +190,10 @@ export function InternshipGallery() {
               } else if (isLeft) {
                 // Left card: symmetrically tucked slightly behind left edge
                 animateConfig = {
-                  x: 'calc(-50% - 26%)',
+                  x: 'calc(-50% - 27%)',
                   y: 'calc(-50% + 4px)',
                   rotate: -6,
-                  scale: 0.85,
+                  scale: 0.86,
                   opacity: 0.78,
                   filter: 'brightness(0.92)',
                 };
@@ -201,10 +201,10 @@ export function InternshipGallery() {
               } else if (isRight) {
                 // Right card: symmetrically tucked slightly behind right edge
                 animateConfig = {
-                  x: 'calc(-50% + 26%)',
+                  x: 'calc(-50% + 27%)',
                   y: 'calc(-50% - 4px)',
                   rotate: 6,
-                  scale: 0.85,
+                  scale: 0.86,
                   opacity: 0.78,
                   filter: 'brightness(0.92)',
                 };
@@ -214,7 +214,7 @@ export function InternshipGallery() {
               return (
                 <motion.div
                   key={photo.id}
-                  className={`absolute top-1/2 left-1/2 w-[82%] sm:w-[58%] md:w-[48%] lg:w-[42%] max-w-[420px] cursor-pointer ${
+                  className={`absolute top-1/2 left-1/2 w-[84%] sm:w-[62%] md:w-[52%] lg:w-[46%] max-w-[480px] cursor-pointer ${
                     !isCenter ? 'hidden sm:block' : ''
                   }`}
                   style={{ zIndex }}
@@ -267,7 +267,7 @@ export function InternshipGallery() {
           <button
             onClick={handlePrev}
             aria-label="Previous photo"
-            className="absolute left-1 sm:left-2 md:left-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/95 backdrop-blur-md border border-csl-gold/40 text-csl-deep-blue shadow-md hover:bg-csl-blue hover:text-white hover:border-csl-blue transition-all duration-200 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-csl-blue/40"
+            className="absolute left-1 sm:left-2 md:-left-2 lg:-left-3 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/95 backdrop-blur-md border border-csl-gold/40 text-csl-deep-blue shadow-md hover:bg-csl-blue hover:text-white hover:border-csl-blue transition-all duration-200 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-csl-blue/40"
           >
             <ChevronLeft className="w-5 h-5 stroke-[2.2]" />
           </button>
@@ -276,7 +276,7 @@ export function InternshipGallery() {
           <button
             onClick={handleNext}
             aria-label="Next photo"
-            className="absolute right-1 sm:right-2 md:right-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/95 backdrop-blur-md border border-csl-gold/40 text-csl-deep-blue shadow-md hover:bg-csl-blue hover:text-white hover:border-csl-blue transition-all duration-200 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-csl-blue/40"
+            className="absolute right-1 sm:right-2 md:-right-2 lg:-right-3 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/95 backdrop-blur-md border border-csl-gold/40 text-csl-deep-blue shadow-md hover:bg-csl-blue hover:text-white hover:border-csl-blue transition-all duration-200 flex items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-csl-blue/40"
           >
             <ChevronRight className="w-5 h-5 stroke-[2.2]" />
           </button>
