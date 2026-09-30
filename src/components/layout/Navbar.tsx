@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, BookOpen, Briefcase, Layers, Mail, LayoutGrid, X, Cpu, Info, ArrowUpRight, ChevronDown, ChevronRight, Cloud, Brain, BarChart3, PieChart, Megaphone, Palette } from 'lucide-react';
+import { Home, BookOpen, Briefcase, Layers, Mail, LayoutGrid, X, Cpu, Info, ArrowUpRight, ChevronDown, ChevronRight, Cloud, Brain, BarChart3, PieChart, Palette, ShieldCheck, CheckSquare, Megaphone } from 'lucide-react';
 import { coursesCatalog } from '../pages/CoursesPage';
 
 // @ts-ignore
@@ -19,6 +19,7 @@ const homeNavItems: NavItem[] = [
   { label: 'Courses', targetId: 'courses', icon: BookOpen },
   { label: 'Services', targetId: 'services', icon: Layers },
   { label: 'Internships', targetId: 'internships', icon: Briefcase },
+  { label: 'Careers', targetId: 'careers', icon: Briefcase },
   { label: 'Workshops', targetId: 'workshops', icon: Cpu },
   { label: 'Contact', targetId: 'contact', icon: Mail },
 ];
@@ -29,7 +30,7 @@ const standaloneNavItems: NavItem[] = [
   { label: 'Courses', targetId: 'courses', icon: BookOpen },
   { label: 'Services', targetId: 'services', icon: Layers },
   { label: 'Internships', targetId: 'internships', icon: Briefcase },
-  // { label: 'Careers', targetId: 'careers', icon: Briefcase },
+  { label: 'Careers', targetId: 'careers', icon: Briefcase },
   { label: 'Workshops', targetId: 'workshops', icon: Cpu },
   { label: 'Contact', targetId: 'contact', icon: Mail },
 ];
@@ -40,6 +41,7 @@ const allDrawerSections = [
   { label: 'Courses', targetId: 'courses', desc: 'Career-Ready Programs & Catalogue' },
   { label: 'Services', targetId: 'services', desc: 'End-to-End Solutions & Case Studies' },
   { label: 'Internships', targetId: 'internships', desc: 'Hands-On Real Experience' },
+  { label: 'Careers', targetId: 'careers', desc: 'Current Openings & Opportunities' },
   { label: 'Tie-Ups', targetId: 'tie-ups', desc: 'Industry Partnerships' },
   { label: 'Success Stories', targetId: 'success-stories', desc: 'Student Placements' },
   { label: 'Workshops', targetId: 'workshops', desc: 'Hands-On Tech Workshops' },
@@ -53,21 +55,29 @@ const allDrawerSections = [
 // ==================================================
 const COURSE_CATEGORY_ORDER = [
   'Development',
+  'AI/ML',
   'Data Science',
   'Data Analytics',
-  'AI/ML',
   'Cloud',
   'Design',
+  'Testing & QA',
+  'Cybersecurity',
+  'Enterprise Systems',
+  'Business Analysis',
   'Marketing',
 ] as const;
 
 const courseCategoryDisplay: Record<string, { icon: any }> = {
   'Development': { icon: BookOpen },
+  'AI/ML': { icon: Brain },
   'Data Science': { icon: BarChart3 },
   'Data Analytics': { icon: PieChart },
-  'AI/ML': { icon: Brain },
   'Cloud': { icon: Cloud },
   'Design': { icon: Palette },
+  'Testing & QA': { icon: CheckSquare },
+  'Cybersecurity': { icon: ShieldCheck },
+  'Enterprise Systems': { icon: Layers },
+  'Business Analysis': { icon: Briefcase },
   'Marketing': { icon: Megaphone },
 };
 
@@ -126,6 +136,7 @@ export function Navbar() {
     currentPath === '/courses' ||
     currentPath === '/services' ||
     currentPath === '/internships' ||
+    currentPath === '/careers' ||
     currentPath === '/workshops';
 
   useEffect(() => {
@@ -220,7 +231,7 @@ export function Navbar() {
           </div>
 
           {/* Desktop Links */}
-          <div className="custom1195:hidden flex flex-1 items-center justify-center gap-8 lg:gap-10">
+          <div className="custom1195:hidden flex flex-1 items-center justify-center gap-6 xl:gap-8 2xl:gap-10">
             {activeNavItems.map(item => (
               item.label === 'Courses' ? (
                 /* COURSES — Static Multi-Column Mega Dropdown Trigger */
@@ -348,6 +359,7 @@ export function Navbar() {
                         (item.targetId === 'courses' && currentPath === '/courses') ||
                         (item.targetId === 'services' && currentPath === '/services') ||
                         (item.targetId === 'internships' && currentPath === '/internships') ||
+                        (item.targetId === 'careers' && currentPath === '/careers') ||
                         (item.targetId === 'workshops' && currentPath === '/workshops')
                       )
                         ? 'text-csl-blue'

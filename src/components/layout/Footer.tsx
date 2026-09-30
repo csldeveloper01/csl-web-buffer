@@ -16,7 +16,7 @@ const navLinks = [
   { label: 'Tie-Ups', href: '#tie-ups' },
   { label: 'Internships', href: '/internships' },
   { label: 'Success Stories', href: '#success-stories' },
-  // { label: 'Careers', href: '/careers' },
+  { label: 'Careers', href: '/careers' },
   { label: 'Workshops', href: '/workshops' },
   { label: 'Contact', href: '#contact' },
 ];
@@ -68,6 +68,17 @@ export function Footer() {
       return;
     }
 
+    if (href === '/careers' || href === '#careers') {
+      if (window.location.pathname !== '/careers') {
+        window.history.pushState({}, '', '/careers');
+        window.dispatchEvent(new PopStateEvent('popstate'));
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
     if (href === '/terms' || href === '#terms') {
       if (window.location.pathname !== '/terms') {
         window.history.pushState({}, '', '/terms');
@@ -96,6 +107,7 @@ export function Footer() {
       window.location.pathname === '/courses' ||
       window.location.pathname === '/services' ||
       window.location.pathname === '/internships' ||
+      window.location.pathname === '/careers' ||
       window.location.pathname === '/workshops' || 
       window.location.pathname === '/terms' ||
       window.location.pathname === '/privacy' ||

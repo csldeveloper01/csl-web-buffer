@@ -17,6 +17,7 @@ import { AboutPage } from './components/pages/AboutPage';
 import { CoursesPage } from './components/pages/CoursesPage';
 import { ServicesPage } from './components/pages/ServicesPage';
 import { InternshipsPage } from './components/pages/InternshipsPage';
+import { CareersPage } from './components/pages/CareersPage';
 import { preloadHomeAssets } from './lib/preloadHomeAssets';
 import { preloadPageAssets } from './lib/preloadPageAssets';
 import { LoadingIndicator } from './components/ui/LoadingIndicator';
@@ -99,6 +100,8 @@ export function App() {
             <ServicesPage />
           ) : displayedPath === '/internships' ? (
             <InternshipsPage />
+          ) : displayedPath === '/careers' ? (
+            <CareersPage />
           ) : displayedPath === '/student-portal' ? (
             <ComingSoonPage />
           ) : displayedPath === '/terms' ? (
