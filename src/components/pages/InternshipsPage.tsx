@@ -343,7 +343,7 @@ export function InternshipsPage() {
                     onClick={() => handleSelectTrack(track.title)}
                     className="inline-flex items-center justify-start gap-2 text-xs sm:text-sm font-bold text-csl-blue hover:text-csl-deep-blue transition-colors group/link cursor-pointer"
                   >
-                    <span>Apply for Track</span>
+                    <span>Apply for Internship</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
                   </button>
                 </div>
