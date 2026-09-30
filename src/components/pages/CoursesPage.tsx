@@ -57,7 +57,7 @@ export function CoursesPage() {
     return matchCategory && matchLevel;
   });
 
-  const featuredCourse = coursesCatalog[0]; // Full Stack Development with AI - Java
+  const featuredCourse = coursesCatalog[1]; // Full Stack Development with AI - Java
 
   const yellowBlocks = [
     { size: 'w-12 h-12', pos: 'top-[14%] left-[6%]', delay: 0.4, duration: 7 },
@@ -1094,7 +1094,12 @@ function CallbackModal({ course, onClose }: { course: CourseItem; onClose: () =>
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-[9995] flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Request a Callback"
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -1108,11 +1113,13 @@ function CallbackModal({ course, onClose }: { course: CourseItem; onClose: () =>
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 15 }}
         transition={{ duration: 0.3 }}
-        className="relative z-10 w-full max-w-lg bg-csl-bg border border-csl-gold/30 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden my-auto"
+        onClick={(e) => e.stopPropagation()}
+        className="relative z-10 w-full max-w-lg bg-csl-bg border border-csl-gold/30 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden my-auto max-h-[90vh] overflow-y-auto"
       >
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white border border-csl-gold/30 flex items-center justify-center text-csl-text hover:bg-csl-blue hover:text-white transition-all shadow-xs cursor-pointer"
+          aria-label="Close"
+          className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white border border-csl-gold/30 flex items-center justify-center text-csl-text hover:bg-csl-blue hover:text-white transition-all shadow-xs cursor-pointer z-10"
         >
           <X className="w-5 h-5" />
         </button>

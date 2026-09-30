@@ -119,47 +119,6 @@ function buildLevels(
 
 export const coursesCatalog: CourseItem[] = [
   // 1. Full Stack Development with AI - Java
-  {
-    id: 'full-stack-ai-java',
-    title: 'Full Stack Development with AI - Java',
-    category: 'Development',
-    level: 'Intermediate',
-    description: 'Build enterprise-ready full stack applications with React, Java, Spring Boot, databases, and AI-powered features',
-    format: 'Comprehensive',
-    students: '2,634',
-    rating: '4.9',
-    image: 'https://images.unsplash.com/photo-1607706189992-eae578626c86?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    icon: iconFullStack,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'Programming Fundamentals', technicalContent: 'Variables, data types, operators, conditions, loops, functions and basic problem solving.', topics: ['Variables & Data Types', 'Operators & Conditions', 'Loops & Functions', 'Problem Solving'] },
-        { moduleNumber: 'Module 2', title: 'Object-Oriented Programming', technicalContent: 'Classes, objects, encapsulation, inheritance, polymorphism, abstraction and exception handling.', topics: ['Classes & Objects', 'Encapsulation & Inheritance', 'Polymorphism & Abstraction', 'Exception Handling'] },
-        { moduleNumber: 'Module 3', title: 'Web Fundamentals', technicalContent: 'HTML, CSS, JavaScript basics, forms, browser concepts and HTTP basics.', topics: ['HTML & CSS', 'JavaScript Basics', 'Forms & Browser Concepts', 'HTTP Basics'] },
-        { moduleNumber: 'Module 4', title: 'Database Fundamentals', technicalContent: 'Relational databases, tables, CRUD operations, joins and basic database design.', topics: ['Relational Databases', 'Tables & CRUD', 'SQL Joins', 'Database Design'] }
-      ],
-      [
-        { moduleNumber: 'Module 5', title: 'Backend Development', technicalContent: 'Java/Python backend concepts, REST APIs, requests/responses, authentication basics and API integration.', topics: ['Spring Boot Backend', 'REST APIs', 'Requests & Responses', 'API Authentication'] },
-        { moduleNumber: 'Module 6', title: 'Frontend Development', technicalContent: 'Modern frontend concepts, components, state/events, forms and API integration.', topics: ['React Components', 'State & Events', 'Forms Handling', 'API Integration'] },
-        { moduleNumber: 'Module 7', title: 'Full Stack Integration', technicalContent: 'Frontend-backend integration, database connectivity, authentication and error handling.', topics: ['Full Stack Linking', 'Database Connectivity', 'Spring Security / Auth', 'Error Handling'] },
-        { moduleNumber: 'Module 8', title: 'Development Tools', technicalContent: 'Git, GitHub, package management, debugging and API testing.', topics: ['Git & GitHub', 'Maven / Gradle', 'Debugging Techniques', 'API Testing (Postman)'] }
-      ],
-      [
-        { moduleNumber: 'Module 9', title: 'AI Integration', technicalContent: 'AI concepts for developers, AI APIs, generative AI and integrating AI features into applications.', topics: ['AI Concepts for Developers', 'AI APIs Integration', 'Generative AI', 'AI Assistant Features'] },
-        { moduleNumber: 'Module 10', title: 'Automation', technicalContent: 'Automated workflows, testing automation, build automation and deployment automation.', topics: ['Automated Workflows', 'Testing Automation', 'Build Automation', 'CI/CD Pipelines'] },
-        { moduleNumber: 'Module 11', title: 'Production Application', technicalContent: 'Application security, performance, logging, deployment and monitoring concepts.', topics: ['Application Security', 'Performance & Caching', 'Logging & Auditing', 'Cloud Deployment'] },
-        { moduleNumber: 'Module 12', title: 'Capstone Project', technicalContent: 'End-to-end AI-enabled full-stack application.', topics: ['Enterprise Architecture', 'AI Feature Integration', 'Full Stack Production Deployment'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Build responsive full stack web applications using React and Java',
-      'Develop production-ready REST APIs using Spring Boot',
-      'Design and manage relational databases using PostgreSQL / MySQL',
-      'Implement authentication and authorization using Spring Security',
-      'Integrate AI and LLM capabilities into enterprise applications',
-      'Containerize and deploy full stack applications using cloud platforms'
-    ]
-  },
 
   // 2. Full Stack Development with AI - Python
   {
@@ -204,6 +163,441 @@ export const coursesCatalog: CourseItem[] = [
     ]
   },
 
+  {
+    id: 'full-stack-ai-java',
+    title: 'Full Stack Development with AI - Java',
+    category: 'Development',
+    level: 'Intermediate',
+    description: 'Build enterprise-ready full stack applications with React, Java, Spring Boot, databases, and AI-powered features',
+    format: 'Comprehensive',
+    students: '2,634',
+    rating: '4.9',
+    image: 'https://images.unsplash.com/photo-1607706189992-eae578626c86?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    icon: iconFullStack,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'Programming Fundamentals', technicalContent: 'Variables, data types, operators, conditions, loops, functions and basic problem solving.', topics: ['Variables & Data Types', 'Operators & Conditions', 'Loops & Functions', 'Problem Solving'] },
+        { moduleNumber: 'Module 2', title: 'Object-Oriented Programming', technicalContent: 'Classes, objects, encapsulation, inheritance, polymorphism, abstraction and exception handling.', topics: ['Classes & Objects', 'Encapsulation & Inheritance', 'Polymorphism & Abstraction', 'Exception Handling'] },
+        { moduleNumber: 'Module 3', title: 'Web Fundamentals', technicalContent: 'HTML, CSS, JavaScript basics, forms, browser concepts and HTTP basics.', topics: ['HTML & CSS', 'JavaScript Basics', 'Forms & Browser Concepts', 'HTTP Basics'] },
+        { moduleNumber: 'Module 4', title: 'Database Fundamentals', technicalContent: 'Relational databases, tables, CRUD operations, joins and basic database design.', topics: ['Relational Databases', 'Tables & CRUD', 'SQL Joins', 'Database Design'] }
+      ],
+      [
+        { moduleNumber: 'Module 5', title: 'Backend Development', technicalContent: 'Java/Python backend concepts, REST APIs, requests/responses, authentication basics and API integration.', topics: ['Spring Boot Backend', 'REST APIs', 'Requests & Responses', 'API Authentication'] },
+        { moduleNumber: 'Module 6', title: 'Frontend Development', technicalContent: 'Modern frontend concepts, components, state/events, forms and API integration.', topics: ['React Components', 'State & Events', 'Forms Handling', 'API Integration'] },
+        { moduleNumber: 'Module 7', title: 'Full Stack Integration', technicalContent: 'Frontend-backend integration, database connectivity, authentication and error handling.', topics: ['Full Stack Linking', 'Database Connectivity', 'Spring Security / Auth', 'Error Handling'] },
+        { moduleNumber: 'Module 8', title: 'Development Tools', technicalContent: 'Git, GitHub, package management, debugging and API testing.', topics: ['Git & GitHub', 'Maven / Gradle', 'Debugging Techniques', 'API Testing (Postman)'] }
+      ],
+      [
+        { moduleNumber: 'Module 9', title: 'AI Integration', technicalContent: 'AI concepts for developers, AI APIs, generative AI and integrating AI features into applications.', topics: ['AI Concepts for Developers', 'AI APIs Integration', 'Generative AI', 'AI Assistant Features'] },
+        { moduleNumber: 'Module 10', title: 'Automation', technicalContent: 'Automated workflows, testing automation, build automation and deployment automation.', topics: ['Automated Workflows', 'Testing Automation', 'Build Automation', 'CI/CD Pipelines'] },
+        { moduleNumber: 'Module 11', title: 'Production Application', technicalContent: 'Application security, performance, logging, deployment and monitoring concepts.', topics: ['Application Security', 'Performance & Caching', 'Logging & Auditing', 'Cloud Deployment'] },
+        { moduleNumber: 'Module 12', title: 'Capstone Project', technicalContent: 'End-to-end AI-enabled full-stack application.', topics: ['Enterprise Architecture', 'AI Feature Integration', 'Full Stack Production Deployment'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Build responsive full stack web applications using React and Java',
+      'Develop production-ready REST APIs using Spring Boot',
+      'Design and manage relational databases using PostgreSQL / MySQL',
+      'Implement authentication and authorization using Spring Security',
+      'Integrate AI and LLM capabilities into enterprise applications',
+      'Containerize and deploy full stack applications using cloud platforms'
+    ]
+  },
+
+  // 17. Artificial Intelligence Fundamentals (corresponds to Technical Course 2: AI/ML WITH AUTOMATION PROCESS)
+  {
+    id: 'ai-fundamentals',
+    title: 'AI/ML with Automation Process',
+    category: 'AI/ML',
+    level: 'Beginner',
+    description: 'Learn AI and Machine Learning concepts, algorithms, and automated workflows with hands-on projects',
+    format: 'Self-paced',
+    students: '3,421',
+    rating: '4.9',
+    image: 'https://images.unsplash.com/photo-1745674684539-d90293d659a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    icon: iconAI,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'AI Fundamentals', technicalContent: 'AI concepts, AI vs ML, types of AI and applications.', topics: ['AI Concepts', 'AI vs ML', 'Types of AI', 'Real-world Applications'] },
+        { moduleNumber: 'Module 2', title: 'Machine Learning Fundamentals', technicalContent: 'Supervised and unsupervised learning, features, labels, training and testing data.', topics: ['Supervised Learning', 'Unsupervised Learning', 'Features & Labels', 'Training & Testing Data'] },
+        { moduleNumber: 'Module 3', title: 'Data and Python Basics', technicalContent: 'Programming basics, data handling, preprocessing and basic visualization.', topics: ['Python for Data', 'Data Handling', 'Preprocessing', 'Data Visualization'] }
+      ],
+      [
+        { moduleNumber: 'Module 4', title: 'Machine Learning Algorithms', technicalContent: 'Regression, classification, decision trees, random forest, KNN and clustering.', topics: ['Regression', 'Classification', 'Decision Trees & Random Forest', 'KNN & Clustering'] },
+        { moduleNumber: 'Module 5', title: 'Model Development', technicalContent: 'Data preparation, feature engineering, training, evaluation and performance metrics.', topics: ['Data Preparation', 'Feature Engineering', 'Model Training', 'Evaluation Metrics'] },
+        { moduleNumber: 'Module 6', title: 'AI Automation', technicalContent: 'Automated data processing, prediction workflows and API-based AI integration.', topics: ['Automated Data Processing', 'Prediction Pipelines', 'API AI Integration'] }
+      ],
+      [
+        { moduleNumber: 'Module 7', title: 'Advanced Machine Learning', technicalContent: 'Ensemble methods, hyperparameter tuning and model optimization.', topics: ['Ensemble Methods', 'Hyperparameter Tuning', 'Model Optimization'] },
+        { moduleNumber: 'Module 8', title: 'AI Deployment', technicalContent: 'Model serving, APIs, application integration and monitoring concepts.', topics: ['Model Serving', 'API Architecture', 'App Integration', 'Model Monitoring'] },
+        { moduleNumber: 'Module 9', title: 'Intelligent Automation', technicalContent: 'AI-powered workflows, automation pipelines and AI-agent concepts.', topics: ['AI Workflows', 'Automation Pipelines', 'AI-Agent Concepts'] },
+        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Automated AI/ML application.', topics: ['Automated AI/ML Application', 'Deployment & Evaluation'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Understand core AI concepts, algorithms, and applications',
+      'Implement supervised and unsupervised machine learning models',
+      'Develop automated prediction workflows and API integrations',
+      'Deploy AI/ML models to production serving environments',
+      'Build end-to-end intelligent automation applications'
+    ]
+  },
+
+  {
+    id: 'data-science-analytics',
+    title: 'Data Science & Machine Learning',
+    category: 'Data Science',
+    level: 'Advanced',
+    description: 'Analyze complex data and build predictive models using statistical foundations, Python, and machine learning',
+    format: 'Comprehensive',
+    students: '1,456',
+    rating: '4.7',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=550',
+    icon: iconAI,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'Data Science Fundamentals', technicalContent: 'Data science lifecycle, data types, collection and cleaning.', topics: ['Data Science Lifecycle', 'Data Types', 'Data Collection', 'Data Cleaning'] },
+        { moduleNumber: 'Module 2', title: 'Statistics Fundamentals', technicalContent: 'Mean, median, mode, variance, standard deviation and probability basics.', topics: ['Descriptive Statistics', 'Variance & Standard Deviation', 'Probability Basics', 'Distributions'] },
+        { moduleNumber: 'Module 3', title: 'Data Analysis Basics', technicalContent: 'Data manipulation, filtering, aggregation and basic visualization.', topics: ['Data Manipulation', 'Filtering & Slicing', 'Aggregation', 'Visualization'] }
+      ],
+      [
+        { moduleNumber: 'Module 4', title: 'Exploratory Data Analysis', technicalContent: 'Data exploration, missing values, outliers, correlation and visualization.', topics: ['Data Exploration', 'Handling Missing Values', 'Outliers Detection', 'Correlation Analysis'] },
+        { moduleNumber: 'Module 5', title: 'Machine Learning', technicalContent: 'Regression, classification, clustering and model evaluation.', topics: ['Regression Models', 'Classification', 'Clustering Techniques', 'Model Evaluation'] },
+        { moduleNumber: 'Module 6', title: 'Feature Engineering', technicalContent: 'Feature selection, transformation and preprocessing.', topics: ['Feature Selection', 'Data Transformation', 'Encoding & Scaling'] }
+      ],
+      [
+        { moduleNumber: 'Module 7', title: 'Advanced ML', technicalContent: 'Ensemble learning, hyperparameter tuning and model optimization.', topics: ['Ensemble Learning', 'Hyperparameter Tuning', 'Model Optimization'] },
+        { moduleNumber: 'Module 8', title: 'Advanced Data Science', technicalContent: 'Time-series basics, recommendation systems and NLP fundamentals.', topics: ['Time-Series Basics', 'Recommendation Systems', 'NLP Fundamentals'] },
+        { moduleNumber: 'Module 9', title: 'ML Deployment', technicalContent: 'Model APIs, deployment concepts and monitoring.', topics: ['Model APIs', 'Deployment Architecture', 'Performance Monitoring'] },
+        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'End-to-end data science and machine learning project.', topics: ['End-to-end Data Science Project', 'Model Presentation'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Perform comprehensive data analysis and exploratory visualization',
+      'Build and train supervised and unsupervised machine learning models',
+      'Engineer robust features and optimize model performance',
+      'Apply advanced methods including NLP and recommendation systems',
+      'Deploy models via APIs and monitor performance'
+    ]
+  },
+
+{
+    id: 'data-analyst-professional',
+    title: 'Data Analyst with AI & Automation',
+    category: 'Data Analytics',
+    level: 'Beginner',
+    description: 'Master business analytics, reporting, and data visualization with Excel, SQL, Power BI, and AI automation',
+    format: 'Flexible',
+    students: '2,876',
+    rating: '4.8',
+    image: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=800&h=550',
+    icon: iconBanner,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'Data Analytics Fundamentals', technicalContent: 'Data analyst role, data types, collection and cleaning.', topics: ['Data Analyst Role', 'Data Types', 'Data Collection', 'Data Cleaning'] },
+        { moduleNumber: 'Module 2', title: 'Excel', technicalContent: 'Formulas, functions, sorting/filtering, pivot tables and charts.', topics: ['Advanced Formulas', 'Sorting & Filtering', 'Pivot Tables', 'Interactive Charts'] },
+        { moduleNumber: 'Module 3', title: 'SQL', technicalContent: 'SELECT, WHERE, GROUP BY, ORDER BY, joins and subqueries.', topics: ['SELECT & WHERE', 'GROUP BY & ORDER BY', 'SQL Joins', 'Subqueries'] }
+      ],
+      [
+        { moduleNumber: 'Module 4', title: 'Power BI', technicalContent: 'Data import, transformation, data modeling, visualizations and dashboards.', topics: ['Data Import & Clean', 'Data Modeling', 'Visualizations', 'Interactive Dashboards'] },
+        { moduleNumber: 'Module 5', title: 'Advanced SQL', technicalContent: 'Advanced joins, CTEs, window functions and complex queries.', topics: ['Advanced Joins', 'CTEs', 'Window Functions', 'Complex Queries'] },
+        { moduleNumber: 'Module 6', title: 'Business Analytics', technicalContent: 'KPIs, metrics, reports and data-driven decision making.', topics: ['KPI Development', 'Business Metrics', 'Executive Reports', 'Data-driven Decisions'] }
+      ],
+      [
+        { moduleNumber: 'Module 7', title: 'AI for Data Analytics', technicalContent: 'AI-assisted analysis, natural-language queries, AI-generated insights and predictive analytics basics.', topics: ['AI-Assisted Analysis', 'Natural-Language Queries', 'AI-Generated Insights', 'Predictive Analytics'] },
+        { moduleNumber: 'Module 8', title: 'Analytics Automation', technicalContent: 'Automated reporting, data refresh, dashboard automation and workflow automation.', topics: ['Automated Reporting', 'Data Refresh Automation', 'Dashboard Workflows'] },
+        { moduleNumber: 'Module 9', title: 'Advanced Dashboarding', technicalContent: 'Interactive dashboards, advanced KPIs and automated reporting concepts.', topics: ['Interactive Dashboard Design', 'Advanced KPIs', 'Automated Reporting'] },
+        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Business analytics project.', topics: ['Comprehensive Business Analytics Project'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Analyze business data using Excel and advanced SQL',
+      'Create interactive dashboards and reports in Power BI',
+      'Implement AI-assisted natural-language analytics',
+      'Automate reporting workflows and refresh cycles',
+      'Present executive-level data insights for decision making'
+    ]
+  },
+
+  {
+    id: 'software-testing-automation',
+    title: 'Software Testing with Automation (Selenium)',
+    category: 'Testing & QA',
+    level: 'Intermediate',
+    description: 'Build progressive testing capability from manual and agile fundamentals to core Java and full Selenium automation frameworks',
+    format: 'Comprehensive',
+    students: '1,845',
+    rating: '4.8',
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800&h=550',
+    icon: iconFullStack,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'Software Testing Fundamentals', technicalContent: 'SDLC, STLC, testing principles, verification and validation.', topics: ['SDLC & STLC', 'Testing Principles', 'Verification vs Validation'] },
+        { moduleNumber: 'Module 2', title: 'Manual Testing', technicalContent: 'Test scenarios, test cases, test data, defect reporting, severity, priority, smoke, sanity and regression testing.', topics: ['Test Scenarios & Cases', 'Test Data Preparation', 'Defect Reporting', 'Severity & Priority', 'Regression Testing'] },
+        { moduleNumber: 'Module 3', title: 'Agile Testing', technicalContent: 'Agile, Scrum, sprint, user story, acceptance criteria and QA role.', topics: ['Agile & Scrum', 'Sprints & User Stories', 'Acceptance Criteria', 'QA Role in Agile'] },
+        { moduleNumber: 'Module 4', title: 'API and Database Testing Basics', technicalContent: 'API concepts, HTTP methods, status codes and basic SQL validation.', topics: ['API Concepts', 'HTTP Methods & Status Codes', 'SQL Validation Basics'] }
+      ],
+      [
+        { moduleNumber: 'Module 5', title: 'Core Java for Automation', technicalContent: 'OOP, collections, exception handling, strings and methods.', topics: ['OOP Principles', 'Collections Framework', 'Exception Handling', 'Strings & Methods'] },
+        { moduleNumber: 'Module 6', title: 'Selenium WebDriver', technicalContent: 'Selenium architecture, WebDriver, browser automation, locators, XPath and CSS selectors.', topics: ['Selenium Architecture', 'Browser Automation', 'Locators', 'XPath & CSS Selectors'] },
+        { moduleNumber: 'Module 7', title: 'Selenium Automation', technicalContent: 'Forms, dropdowns, alerts, frames, windows, mouse/keyboard actions and waits.', topics: ['Forms & Dropdowns', 'Alerts & Frames', 'Window Handling', 'Waits & Synchronization'] },
+        { moduleNumber: 'Module 8', title: 'Test Framework', technicalContent: 'TestNG, annotations, assertions, execution and reporting.', topics: ['TestNG Framework', 'Annotations', 'Assertions', 'Test Execution & Reports'] }
+      ],
+      [
+        { moduleNumber: 'Module 9', title: 'Automation Framework', technicalContent: 'Page Object Model, data-driven testing, parameterization, reusable utilities and framework structure.', topics: ['Page Object Model (POM)', 'Data-Driven Testing', 'Reusable Utilities', 'Framework Structure'] },
+        { moduleNumber: 'Module 10', title: 'Advanced Automation', technicalContent: 'Parallel execution, cross-browser testing, screenshots, logging and reporting.', topics: ['Parallel Execution', 'Cross-Browser Testing', 'Screenshot Capture', 'Logging & Reporting'] },
+        { moduleNumber: 'Module 11', title: 'CI/CD', technicalContent: 'Git/GitHub, Jenkins basics and automated test execution.', topics: ['Git & GitHub', 'Jenkins CI Basics', 'Automated Execution'] },
+        { moduleNumber: 'Module 12', title: 'Capstone Project', technicalContent: 'End-to-end Selenium automation framework.', topics: ['End-to-End Automation Framework Capstone'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Understand manual, agile, and automated software testing methodologies',
+      'Write robust automation test scripts using Core Java and Selenium WebDriver',
+      'Design modular Page Object Model (POM) and data-driven testing frameworks',
+      'Integrate automated tests into continuous integration (CI/CD) pipelines',
+      'Execute cross-browser and parallel testing with comprehensive test reporting'
+    ]
+  },
+
+  {
+    id: 'ui-ux-design-mastery',
+    title: 'UI/UX Design Mastery',
+    category: 'Design',
+    level: 'Beginner',
+    description: 'Create stunning user interfaces and exceptional user experiences with modern design tools and systems',
+    format: 'Flexible',
+    students: '1,923',
+    rating: '4.9',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800&h=550',
+    icon: iconUIUX,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'UI/UX Fundamentals', technicalContent: 'UI vs UX, design principles and user-centered design.', topics: ['UI vs UX', 'Design Principles', 'User-Centered Design'] },
+        { moduleNumber: 'Module 2', title: 'Design Basics', technicalContent: 'Typography, colors, spacing, layout and visual hierarchy.', topics: ['Typography', 'Color Theory', 'Spacing & Layout', 'Visual Hierarchy'] },
+        { moduleNumber: 'Module 3', title: 'Design Tools', technicalContent: 'Figma basics, frames, components and assets.', topics: ['Figma Interface', 'Frames & Constraints', 'Components & Assets'] }
+      ],
+      [
+        { moduleNumber: 'Module 4', title: 'UX Research', technicalContent: 'User research, personas, user journeys and user flows.', topics: ['User Research Methods', 'User Personas', 'User Journey Mapping', 'User Flows'] },
+        { moduleNumber: 'Module 5', title: 'Wireframing and Prototyping', technicalContent: 'Low-fidelity wireframes, high-fidelity designs and interactive prototypes.', topics: ['Low-Fidelity Wireframes', 'High-Fidelity Mockups', 'Interactive Prototyping'] },
+        { moduleNumber: 'Module 6', title: 'Design Systems', technicalContent: 'Components, consistency, responsive design and UI patterns.', topics: ['Design Systems', 'Component Libraries', 'Responsive Design', 'UI Patterns'] }
+      ],
+      [
+        { moduleNumber: 'Module 7', title: 'Advanced UX', technicalContent: 'Usability testing, accessibility and UX evaluation.', topics: ['Usability Testing', 'Accessibility Standards', 'UX Evaluation'] },
+        { moduleNumber: 'Module 8', title: 'Product Design', technicalContent: 'Design thinking, problem solving and product workflows.', topics: ['Design Thinking', 'Problem Solving', 'Product Workflows'] },
+        { moduleNumber: 'Module 9', title: 'AI in UI/UX', technicalContent: 'AI-assisted design, idea generation and design automation concepts.', topics: ['AI-Assisted Design', 'Idea Generation', 'Design Automation'] },
+        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Complete website or mobile product design.', topics: ['Complete Product Design Capstone'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Conduct comprehensive user research',
+      'Create wireframes and interactive prototypes',
+      'Design accessible and inclusive interfaces',
+      'Build professional design systems and portfolios',
+      'Present design solutions effectively'
+    ]
+  },
+
+    {
+    id: 'full-stack-mobile-development',
+    title: 'Full Stack Mobile Development',
+    category: 'Development',
+    level: 'Intermediate',
+    description: 'Build progressive mobile development knowledge from foundational UI and programming concepts to backend APIs and production mobile apps',
+    format: 'Comprehensive',
+    students: '1,720',
+    rating: '4.8',
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800&h=550',
+    icon: iconFullStack,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'Mobile Development Fundamentals', technicalContent: 'Mobile application concepts, platform concepts, UI components and navigation.', topics: ['Mobile App Architecture', 'Platform Concepts', 'UI Components', 'Mobile Navigation'] },
+        { moduleNumber: 'Module 2', title: 'Programming Fundamentals', technicalContent: 'Variables, functions, OOP, collections and error handling.', topics: ['Language Syntax', 'Functions & OOP', 'Collections', 'Error Handling'] },
+        { moduleNumber: 'Module 3', title: 'Mobile UI Development', technicalContent: 'Screens, forms, lists, navigation and responsive layouts.', topics: ['Screen Building', 'Forms & Inputs', 'Lists & Grid Layouts', 'Responsive UI'] }
+      ],
+      [
+        { moduleNumber: 'Module 4', title: 'Backend Fundamentals', technicalContent: 'REST APIs, authentication, database and CRUD operations.', topics: ['REST APIs', 'Mobile Authentication', 'Database Concepts', 'CRUD Operations'] },
+        { moduleNumber: 'Module 5', title: 'Mobile and API Integration', technicalContent: 'API requests, JSON, authentication and data handling.', topics: ['API Requests', 'JSON Serialization', 'Token Auth', 'Data Management'] },
+        { moduleNumber: 'Module 6', title: 'Local Storage', technicalContent: 'Local database, preferences and offline data concepts.', topics: ['Local Storage', 'Offline Data Caching', 'Preferences & State'] }
+      ],
+      [
+        { moduleNumber: 'Module 7', title: 'Advanced Mobile Development', technicalContent: 'Notifications, device features and performance optimization.', topics: ['Push Notifications', 'Device APIs', 'Performance Optimization'] },
+        { moduleNumber: 'Module 8', title: 'Mobile Security', technicalContent: 'Authentication, secure storage and API security.', topics: ['Secure Storage', 'Token Management', 'Mobile API Security'] },
+        { moduleNumber: 'Module 9', title: 'Deployment', technicalContent: 'Build generation, release process and version management.', topics: ['Build Generation', 'Release Pipelines', 'Version Management'] },
+        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Complete full-stack mobile application.', topics: ['Complete Full-Stack Mobile Application'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Understand core mobile architecture, UI components, and stateful navigation',
+      'Integrate mobile applications with backend REST APIs and secure databases',
+      'Implement local caching, offline sync, and device feature integrations',
+      'Apply mobile security best practices and token-based authentication',
+      'Build, bundle, and release a complete full-stack mobile application'
+    ]
+  },
+
+  {
+    id: 'devops-engineering',
+    title: 'DevOps with AWS, AI & Automation Deployment',
+    category: 'Cloud',
+    level: 'Advanced',
+    description: 'Master modern DevOps practices, AWS cloud services, CI/CD automation pipelines, and infrastructure management',
+    format: 'Comprehensive',
+    students: '1,876',
+    rating: '4.8',
+    image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&q=80&w=800&h=550',
+    icon: iconCloud,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'DevOps Fundamentals', technicalContent: 'DevOps concepts, SDLC, CI/CD and DevOps lifecycle.', topics: ['DevOps Concepts', 'SDLC Models', 'CI/CD Principles', 'DevOps Lifecycle'] },
+        { moduleNumber: 'Module 2', title: 'Linux Fundamentals', technicalContent: 'Linux commands, files/directories, permissions and processes.', topics: ['Linux Commands', 'Files & Directories', 'Permissions', 'Process Management'] },
+        { moduleNumber: 'Module 3', title: 'Git and Version Control', technicalContent: 'Git basics, branches, merge and GitHub.', topics: ['Git Fundamentals', 'Branching & Merging', 'GitHub Collaboration'] }
+      ],
+      [
+        { moduleNumber: 'Module 4', title: 'CI/CD', technicalContent: 'Continuous integration, continuous delivery, pipelines, build and deployment.', topics: ['Continuous Integration', 'Delivery Pipelines', 'Build & Test Automation', 'Deployment Stages'] },
+        { moduleNumber: 'Module 5', title: 'AWS Fundamentals', technicalContent: 'AWS concepts, EC2, S3, IAM and VPC basics.', topics: ['AWS Core Infrastructure', 'EC2 Compute', 'S3 Storage', 'IAM & VPC Basics'] },
+        { moduleNumber: 'Module 6', title: 'Containers', technicalContent: 'Docker concepts, images, containers and Docker Compose.', topics: ['Docker Concepts', 'Container Images', 'Container Management', 'Docker Compose'] }
+      ],
+      [
+        { moduleNumber: 'Module 7', title: 'AWS Deployment', technicalContent: 'Application deployment, cloud infrastructure, monitoring and scaling concepts.', topics: ['Cloud App Deployment', 'Infrastructure Scaling', 'Monitoring & Metrics'] },
+        { moduleNumber: 'Module 8', title: 'Infrastructure Automation', technicalContent: 'Infrastructure as Code concepts and automated provisioning.', topics: ['Infrastructure as Code', 'Automated Cloud Provisioning'] },
+        { moduleNumber: 'Module 9', title: 'AI and Intelligent Automation', technicalContent: 'AI-assisted DevOps, automated monitoring and intelligent workflows.', topics: ['AI-Assisted DevOps', 'Automated Monitoring', 'Intelligent Workflows'] },
+        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Cloud CI/CD deployment project.', topics: ['End-to-End Cloud CI/CD Deployment Capstone'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Implement robust CI/CD pipelines',
+      'Manage containerized applications with Docker',
+      'Automate infrastructure provisioning and cloud deployment on AWS',
+      'Apply AI-assisted monitoring and intelligent automation workflows',
+      'Deploy enterprise cloud projects to production'
+    ]
+  },
+
+  {
+    id: 'cyber-security-ethical-hacking',
+    title: 'Cyber Security & Ethical Hacking',
+    category: 'Cybersecurity',
+    level: 'Intermediate',
+    description: 'Learn cybersecurity principles, network defenses, vulnerability assessments, and authorized penetration testing methodologies',
+    format: 'Comprehensive',
+    students: '2,150',
+    rating: '4.9',
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800&h=550',
+    icon: iconCyber,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'Cybersecurity Fundamentals', technicalContent: 'Cybersecurity concepts, threats, vulnerabilities and security principles.', topics: ['Security Concepts', 'Threat Landscape', 'Vulnerability Fundamentals', 'Core Principles'] },
+        { moduleNumber: 'Module 2', title: 'Networking Fundamentals', technicalContent: 'IP, TCP/IP, DNS, HTTP/HTTPS and ports.', topics: ['IP & TCP/IP', 'DNS & Domain Resolution', 'HTTP/HTTPS Protocols', 'Network Ports'] },
+        { moduleNumber: 'Module 3', title: 'Security Fundamentals', technicalContent: 'Authentication, authorization, encryption and password security.', topics: ['Authentication Methods', 'Access Authorization', 'Encryption Basics', 'Password Security'] }
+      ],
+      [
+        { moduleNumber: 'Module 4', title: 'Ethical Hacking Fundamentals', technicalContent: 'Reconnaissance, vulnerability assessment and security testing methodology.', topics: ['Reconnaissance Techniques', 'Vulnerability Assessment', 'Testing Methodologies'] },
+        { moduleNumber: 'Module 5', title: 'Web Security', technicalContent: 'Common web vulnerabilities, authentication issues, input validation and session security.', topics: ['Web Vulnerabilities', 'Authentication Pitfalls', 'Input Validation', 'Session Security'] },
+        { moduleNumber: 'Module 6', title: 'Network Security', technicalContent: 'Network attacks, firewalls and security monitoring.', topics: ['Network Defense', 'Firewalls & Filters', 'Traffic Monitoring'] }
+      ],
+      [
+        { moduleNumber: 'Module 7', title: 'Penetration Testing', technicalContent: 'Authorized penetration testing methodology, vulnerability analysis and controlled security testing.', topics: ['Authorized Penetration Testing', 'Vulnerability Analysis', 'Controlled Security Testing'] },
+        { moduleNumber: 'Module 8', title: 'Security Tools', technicalContent: 'Security testing tools, scanning, monitoring and reporting.', topics: ['Security Testing Tools', 'Scanning Tools', 'Security Reporting'] },
+        { moduleNumber: 'Module 9', title: 'Incident Response', technicalContent: 'Incident detection, response process, evidence handling and security reporting.', topics: ['Incident Detection', 'Response Process', 'Evidence Handling', 'Post-Incident Reports'] },
+        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Authorized security assessment project.', topics: ['Authorized Security Assessment Capstone'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Understand core cybersecurity terminology, networking fundamentals, and threat vectors',
+      'Conduct authorized vulnerability assessments and web security testing',
+      'Configure firewalls, network monitoring, and system defenses',
+      'Follow ethical penetration testing frameworks and controlled testing practices',
+      'Execute incident detection, evidence handling, and security reporting'
+    ]
+  },
+
+  {
+    id: 'servicenow-salesforce-crm',
+    title: 'ServiceNow, Salesforce & CRM',
+    category: 'Enterprise Systems',
+    level: 'Intermediate',
+    description: 'Master leading enterprise CRM platforms, workflow automation, cloud administration, and system integrations',
+    format: 'Comprehensive',
+    students: '1,630',
+    rating: '4.8',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800&h=550',
+    icon: iconCloud,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'CRM Fundamentals', technicalContent: 'CRM concepts, customer lifecycle, sales process and customer data.', topics: ['CRM Concepts', 'Customer Lifecycle', 'Sales Process', 'Customer Data Management'] },
+        { moduleNumber: 'Module 2', title: 'ServiceNow Fundamentals', technicalContent: 'Platform concepts, applications, tables, records, users and roles.', topics: ['ServiceNow Platform', 'Applications & Tables', 'Records Management', 'Users & Roles'] },
+        { moduleNumber: 'Module 3', title: 'Salesforce Fundamentals', technicalContent: 'Platform concepts, objects, records, fields and relationships.', topics: ['Salesforce Architecture', 'Standard & Custom Objects', 'Fields & Relationships'] }
+      ],
+      [
+        { moduleNumber: 'Module 4', title: 'ServiceNow Administration', technicalContent: 'Users, roles, workflows, forms and reports.', topics: ['User & Role Admin', 'Workflows Customization', 'Form Design', 'Reporting'] },
+        { moduleNumber: 'Module 5', title: 'Salesforce Administration', technicalContent: 'Objects, data management, reports, dashboards and automation.', topics: ['Data Management', 'Reports & Dashboards', 'Process Automation'] },
+        { moduleNumber: 'Module 6', title: 'CRM Processes', technicalContent: 'Lead management, opportunity management, customer support and service management.', topics: ['Lead Management', 'Opportunity Workflows', 'Customer Support', 'Service Management'] }
+      ],
+      [
+        { moduleNumber: 'Module 7', title: 'Workflow Automation', technicalContent: 'Business workflows, process automation and notifications.', topics: ['Business Workflows', 'Process Automation', 'Automated Notifications'] },
+        { moduleNumber: 'Module 8', title: 'Integration', technicalContent: 'APIs, external systems and data integration concepts.', topics: ['REST APIs', 'System Integration', 'Data Synchronization'] },
+        { moduleNumber: 'Module 9', title: 'Advanced CRM', technicalContent: 'Reporting, analytics, automation and customization.', topics: ['Advanced Analytics', 'Automation Pipelines', 'Customizations'] },
+        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'CRM implementation project.', topics: ['End-to-End CRM Implementation Capstone'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Master CRM processes, customer lifecycles, and enterprise data models',
+      'Administer ServiceNow tables, user roles, forms, and business workflows',
+      'Manage Salesforce objects, custom fields, reports, and dashboards',
+      'Automate business processes using workflows and notification triggers',
+      'Implement enterprise CRM integrations and API connectivity'
+    ]
+  },
+
+  {
+    id: 'business-analyst',
+    title: 'Business Analyst',
+    category: 'Business Analysis',
+    level: 'Beginner',
+    description: 'Learn requirements engineering, process mapping, business modeling, agile frameworks, and BA documentation tools',
+    format: 'Comprehensive',
+    students: '1,940',
+    rating: '4.8',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800&h=550',
+    icon: iconBanner,
+    levels: buildLevels(
+      [
+        { moduleNumber: 'Module 1', title: 'Business Analysis Fundamentals', technicalContent: 'Business Analyst role, SDLC, Agile and stakeholders.', topics: ['BA Role & Responsibilities', 'SDLC in Business Analysis', 'Agile Principles', 'Stakeholder Mapping'] },
+        { moduleNumber: 'Module 2', title: 'Requirement Engineering', technicalContent: 'Business requirements, functional/non-functional requirements and requirement gathering.', topics: ['Business Requirements', 'Functional & Non-Functional', 'Elicitation Techniques'] },
+        { moduleNumber: 'Module 3', title: 'Documentation', technicalContent: 'BRD, FRD, user stories and acceptance criteria.', topics: ['BRD Preparation', 'FRD Authoring', 'User Stories', 'Acceptance Criteria'] }
+      ],
+      [
+        { moduleNumber: 'Module 4', title: 'Requirement Analysis', technicalContent: 'Requirement elicitation, validation, prioritization and gap analysis.', topics: ['Elicitation Workflows', 'Requirement Validation', 'Prioritization Techniques', 'Gap Analysis'] },
+        { moduleNumber: 'Module 5', title: 'Process Analysis', technicalContent: 'Business processes, AS-IS, TO-BE and process mapping.', topics: ['Business Processes', 'AS-IS Analysis', 'TO-BE Design', 'Process Mapping'] },
+        { moduleNumber: 'Module 6', title: 'Agile Business Analysis', technicalContent: 'Scrum, product backlog, user stories, sprint planning and acceptance criteria.', topics: ['Scrum Ceremonies', 'Product Backlog Management', 'Sprint Planning'] }
+      ],
+      [
+        { moduleNumber: 'Module 7', title: 'Business Modelling', technicalContent: 'Use cases, process models, data flow and UML basics.', topics: ['Use Cases', 'Process Modeling', 'Data Flow Diagrams', 'UML Basics'] },
+        { moduleNumber: 'Module 8', title: 'BA Tools', technicalContent: 'Jira, Confluence, documentation tools and reporting.', topics: ['Jira Management', 'Confluence Documentation', 'Stakeholder Reporting'] },
+        { moduleNumber: 'Module 9', title: 'Advanced Business Analysis', technicalContent: 'Stakeholder management, risk analysis, solution evaluation and change management.', topics: ['Stakeholder Management', 'Risk Analysis', 'Solution Evaluation', 'Change Management'] },
+        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Complete business requirement and project documentation.', topics: ['Complete BRD / Project Documentation Capstone'] }
+      ]
+    ),
+    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
+    learningOutcomes: [
+      'Master requirement elicitation, engineering, and documentation (BRD / FRD)',
+      'Map AS-IS and TO-BE business processes and create data flow diagrams',
+      'Operate within Agile / Scrum frameworks with backlog grooming and user stories',
+      'Utilize industry BA tools including Jira, Confluence, and modeling platforms',
+      'Execute stakeholder management, risk analysis, and solution evaluation'
+    ]
+  },
+  
   // 3. Python Programming
   {
     id: 'python-programming',
@@ -429,85 +823,9 @@ export const coursesCatalog: CourseItem[] = [
   },
 
   // 9. UI/UX Design Mastery (corresponds to Technical Course 6: UI/UX)
-  {
-    id: 'ui-ux-design-mastery',
-    title: 'UI/UX Design Mastery',
-    category: 'Design',
-    level: 'Beginner',
-    description: 'Create stunning user interfaces and exceptional user experiences with modern design tools and systems',
-    format: 'Flexible',
-    students: '1,923',
-    rating: '4.9',
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800&h=550',
-    icon: iconUIUX,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'UI/UX Fundamentals', technicalContent: 'UI vs UX, design principles and user-centered design.', topics: ['UI vs UX', 'Design Principles', 'User-Centered Design'] },
-        { moduleNumber: 'Module 2', title: 'Design Basics', technicalContent: 'Typography, colors, spacing, layout and visual hierarchy.', topics: ['Typography', 'Color Theory', 'Spacing & Layout', 'Visual Hierarchy'] },
-        { moduleNumber: 'Module 3', title: 'Design Tools', technicalContent: 'Figma basics, frames, components and assets.', topics: ['Figma Interface', 'Frames & Constraints', 'Components & Assets'] }
-      ],
-      [
-        { moduleNumber: 'Module 4', title: 'UX Research', technicalContent: 'User research, personas, user journeys and user flows.', topics: ['User Research Methods', 'User Personas', 'User Journey Mapping', 'User Flows'] },
-        { moduleNumber: 'Module 5', title: 'Wireframing and Prototyping', technicalContent: 'Low-fidelity wireframes, high-fidelity designs and interactive prototypes.', topics: ['Low-Fidelity Wireframes', 'High-Fidelity Mockups', 'Interactive Prototyping'] },
-        { moduleNumber: 'Module 6', title: 'Design Systems', technicalContent: 'Components, consistency, responsive design and UI patterns.', topics: ['Design Systems', 'Component Libraries', 'Responsive Design', 'UI Patterns'] }
-      ],
-      [
-        { moduleNumber: 'Module 7', title: 'Advanced UX', technicalContent: 'Usability testing, accessibility and UX evaluation.', topics: ['Usability Testing', 'Accessibility Standards', 'UX Evaluation'] },
-        { moduleNumber: 'Module 8', title: 'Product Design', technicalContent: 'Design thinking, problem solving and product workflows.', topics: ['Design Thinking', 'Problem Solving', 'Product Workflows'] },
-        { moduleNumber: 'Module 9', title: 'AI in UI/UX', technicalContent: 'AI-assisted design, idea generation and design automation concepts.', topics: ['AI-Assisted Design', 'Idea Generation', 'Design Automation'] },
-        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Complete website or mobile product design.', topics: ['Complete Product Design Capstone'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Conduct comprehensive user research',
-      'Create wireframes and interactive prototypes',
-      'Design accessible and inclusive interfaces',
-      'Build professional design systems and portfolios',
-      'Present design solutions effectively'
-    ]
-  },
 
   // 10. Data Science & Analytics (corresponds to Technical Course 3: DATA SCIENCE & MACHINE LEARNING)
-  {
-    id: 'data-science-analytics',
-    title: 'Data Science & Machine Learning',
-    category: 'Data Science',
-    level: 'Advanced',
-    description: 'Analyze complex data and build predictive models using statistical foundations, Python, and machine learning',
-    format: 'Comprehensive',
-    students: '1,456',
-    rating: '4.7',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=550',
-    icon: iconAI,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'Data Science Fundamentals', technicalContent: 'Data science lifecycle, data types, collection and cleaning.', topics: ['Data Science Lifecycle', 'Data Types', 'Data Collection', 'Data Cleaning'] },
-        { moduleNumber: 'Module 2', title: 'Statistics Fundamentals', technicalContent: 'Mean, median, mode, variance, standard deviation and probability basics.', topics: ['Descriptive Statistics', 'Variance & Standard Deviation', 'Probability Basics', 'Distributions'] },
-        { moduleNumber: 'Module 3', title: 'Data Analysis Basics', technicalContent: 'Data manipulation, filtering, aggregation and basic visualization.', topics: ['Data Manipulation', 'Filtering & Slicing', 'Aggregation', 'Visualization'] }
-      ],
-      [
-        { moduleNumber: 'Module 4', title: 'Exploratory Data Analysis', technicalContent: 'Data exploration, missing values, outliers, correlation and visualization.', topics: ['Data Exploration', 'Handling Missing Values', 'Outliers Detection', 'Correlation Analysis'] },
-        { moduleNumber: 'Module 5', title: 'Machine Learning', technicalContent: 'Regression, classification, clustering and model evaluation.', topics: ['Regression Models', 'Classification', 'Clustering Techniques', 'Model Evaluation'] },
-        { moduleNumber: 'Module 6', title: 'Feature Engineering', technicalContent: 'Feature selection, transformation and preprocessing.', topics: ['Feature Selection', 'Data Transformation', 'Encoding & Scaling'] }
-      ],
-      [
-        { moduleNumber: 'Module 7', title: 'Advanced ML', technicalContent: 'Ensemble learning, hyperparameter tuning and model optimization.', topics: ['Ensemble Learning', 'Hyperparameter Tuning', 'Model Optimization'] },
-        { moduleNumber: 'Module 8', title: 'Advanced Data Science', technicalContent: 'Time-series basics, recommendation systems and NLP fundamentals.', topics: ['Time-Series Basics', 'Recommendation Systems', 'NLP Fundamentals'] },
-        { moduleNumber: 'Module 9', title: 'ML Deployment', technicalContent: 'Model APIs, deployment concepts and monitoring.', topics: ['Model APIs', 'Deployment Architecture', 'Performance Monitoring'] },
-        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'End-to-end data science and machine learning project.', topics: ['End-to-end Data Science Project', 'Model Presentation'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Perform comprehensive data analysis and exploratory visualization',
-      'Build and train supervised and unsupervised machine learning models',
-      'Engineer robust features and optimize model performance',
-      'Apply advanced methods including NLP and recommendation systems',
-      'Deploy models via APIs and monitor performance'
-    ]
-  },
-
+  
   // 11. Digital Marketing Strategy
   {
     id: 'digital-marketing-strategy',
@@ -614,44 +932,6 @@ export const coursesCatalog: CourseItem[] = [
   },
 
   // 14. DevOps Engineering (corresponds to Technical Course 8: DEVOPS WITH AWS, AI & AUTOMATION DEPLOYMENT)
-  {
-    id: 'devops-engineering',
-    title: 'DevOps with AWS, AI & Automation Deployment',
-    category: 'Cloud',
-    level: 'Advanced',
-    description: 'Master modern DevOps practices, AWS cloud services, CI/CD automation pipelines, and infrastructure management',
-    format: 'Comprehensive',
-    students: '1,876',
-    rating: '4.8',
-    image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&q=80&w=800&h=550',
-    icon: iconCloud,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'DevOps Fundamentals', technicalContent: 'DevOps concepts, SDLC, CI/CD and DevOps lifecycle.', topics: ['DevOps Concepts', 'SDLC Models', 'CI/CD Principles', 'DevOps Lifecycle'] },
-        { moduleNumber: 'Module 2', title: 'Linux Fundamentals', technicalContent: 'Linux commands, files/directories, permissions and processes.', topics: ['Linux Commands', 'Files & Directories', 'Permissions', 'Process Management'] },
-        { moduleNumber: 'Module 3', title: 'Git and Version Control', technicalContent: 'Git basics, branches, merge and GitHub.', topics: ['Git Fundamentals', 'Branching & Merging', 'GitHub Collaboration'] }
-      ],
-      [
-        { moduleNumber: 'Module 4', title: 'CI/CD', technicalContent: 'Continuous integration, continuous delivery, pipelines, build and deployment.', topics: ['Continuous Integration', 'Delivery Pipelines', 'Build & Test Automation', 'Deployment Stages'] },
-        { moduleNumber: 'Module 5', title: 'AWS Fundamentals', technicalContent: 'AWS concepts, EC2, S3, IAM and VPC basics.', topics: ['AWS Core Infrastructure', 'EC2 Compute', 'S3 Storage', 'IAM & VPC Basics'] },
-        { moduleNumber: 'Module 6', title: 'Containers', technicalContent: 'Docker concepts, images, containers and Docker Compose.', topics: ['Docker Concepts', 'Container Images', 'Container Management', 'Docker Compose'] }
-      ],
-      [
-        { moduleNumber: 'Module 7', title: 'AWS Deployment', technicalContent: 'Application deployment, cloud infrastructure, monitoring and scaling concepts.', topics: ['Cloud App Deployment', 'Infrastructure Scaling', 'Monitoring & Metrics'] },
-        { moduleNumber: 'Module 8', title: 'Infrastructure Automation', technicalContent: 'Infrastructure as Code concepts and automated provisioning.', topics: ['Infrastructure as Code', 'Automated Cloud Provisioning'] },
-        { moduleNumber: 'Module 9', title: 'AI and Intelligent Automation', technicalContent: 'AI-assisted DevOps, automated monitoring and intelligent workflows.', topics: ['AI-Assisted DevOps', 'Automated Monitoring', 'Intelligent Workflows'] },
-        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Cloud CI/CD deployment project.', topics: ['End-to-End Cloud CI/CD Deployment Capstone'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Implement robust CI/CD pipelines',
-      'Manage containerized applications with Docker',
-      'Automate infrastructure provisioning and cloud deployment on AWS',
-      'Apply AI-assisted monitoring and intelligent automation workflows',
-      'Deploy enterprise cloud projects to production'
-    ]
-  },
 
   // 15. AWS Cloud Computing
   {
@@ -689,84 +969,8 @@ export const coursesCatalog: CourseItem[] = [
   },
 
   // 16. Data Analyst Professional (corresponds to Technical Course 4: DATA ANALYST WITH AI & AUTOMATION)
-  {
-    id: 'data-analyst-professional',
-    title: 'Data Analyst with AI & Automation',
-    category: 'Data Analytics',
-    level: 'Beginner',
-    description: 'Master business analytics, reporting, and data visualization with Excel, SQL, Power BI, and AI automation',
-    format: 'Flexible',
-    students: '2,876',
-    rating: '4.8',
-    image: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=800&h=550',
-    icon: iconBanner,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'Data Analytics Fundamentals', technicalContent: 'Data analyst role, data types, collection and cleaning.', topics: ['Data Analyst Role', 'Data Types', 'Data Collection', 'Data Cleaning'] },
-        { moduleNumber: 'Module 2', title: 'Excel', technicalContent: 'Formulas, functions, sorting/filtering, pivot tables and charts.', topics: ['Advanced Formulas', 'Sorting & Filtering', 'Pivot Tables', 'Interactive Charts'] },
-        { moduleNumber: 'Module 3', title: 'SQL', technicalContent: 'SELECT, WHERE, GROUP BY, ORDER BY, joins and subqueries.', topics: ['SELECT & WHERE', 'GROUP BY & ORDER BY', 'SQL Joins', 'Subqueries'] }
-      ],
-      [
-        { moduleNumber: 'Module 4', title: 'Power BI', technicalContent: 'Data import, transformation, data modeling, visualizations and dashboards.', topics: ['Data Import & Clean', 'Data Modeling', 'Visualizations', 'Interactive Dashboards'] },
-        { moduleNumber: 'Module 5', title: 'Advanced SQL', technicalContent: 'Advanced joins, CTEs, window functions and complex queries.', topics: ['Advanced Joins', 'CTEs', 'Window Functions', 'Complex Queries'] },
-        { moduleNumber: 'Module 6', title: 'Business Analytics', technicalContent: 'KPIs, metrics, reports and data-driven decision making.', topics: ['KPI Development', 'Business Metrics', 'Executive Reports', 'Data-driven Decisions'] }
-      ],
-      [
-        { moduleNumber: 'Module 7', title: 'AI for Data Analytics', technicalContent: 'AI-assisted analysis, natural-language queries, AI-generated insights and predictive analytics basics.', topics: ['AI-Assisted Analysis', 'Natural-Language Queries', 'AI-Generated Insights', 'Predictive Analytics'] },
-        { moduleNumber: 'Module 8', title: 'Analytics Automation', technicalContent: 'Automated reporting, data refresh, dashboard automation and workflow automation.', topics: ['Automated Reporting', 'Data Refresh Automation', 'Dashboard Workflows'] },
-        { moduleNumber: 'Module 9', title: 'Advanced Dashboarding', technicalContent: 'Interactive dashboards, advanced KPIs and automated reporting concepts.', topics: ['Interactive Dashboard Design', 'Advanced KPIs', 'Automated Reporting'] },
-        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Business analytics project.', topics: ['Comprehensive Business Analytics Project'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Analyze business data using Excel and advanced SQL',
-      'Create interactive dashboards and reports in Power BI',
-      'Implement AI-assisted natural-language analytics',
-      'Automate reporting workflows and refresh cycles',
-      'Present executive-level data insights for decision making'
-    ]
-  },
-
-  // 17. Artificial Intelligence Fundamentals (corresponds to Technical Course 2: AI/ML WITH AUTOMATION PROCESS)
-  {
-    id: 'ai-fundamentals',
-    title: 'AI/ML with Automation Process',
-    category: 'AI/ML',
-    level: 'Beginner',
-    description: 'Learn AI and Machine Learning concepts, algorithms, and automated workflows with hands-on projects',
-    format: 'Self-paced',
-    students: '3,421',
-    rating: '4.9',
-    image: 'https://images.unsplash.com/photo-1745674684539-d90293d659a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    icon: iconAI,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'AI Fundamentals', technicalContent: 'AI concepts, AI vs ML, types of AI and applications.', topics: ['AI Concepts', 'AI vs ML', 'Types of AI', 'Real-world Applications'] },
-        { moduleNumber: 'Module 2', title: 'Machine Learning Fundamentals', technicalContent: 'Supervised and unsupervised learning, features, labels, training and testing data.', topics: ['Supervised Learning', 'Unsupervised Learning', 'Features & Labels', 'Training & Testing Data'] },
-        { moduleNumber: 'Module 3', title: 'Data and Python Basics', technicalContent: 'Programming basics, data handling, preprocessing and basic visualization.', topics: ['Python for Data', 'Data Handling', 'Preprocessing', 'Data Visualization'] }
-      ],
-      [
-        { moduleNumber: 'Module 4', title: 'Machine Learning Algorithms', technicalContent: 'Regression, classification, decision trees, random forest, KNN and clustering.', topics: ['Regression', 'Classification', 'Decision Trees & Random Forest', 'KNN & Clustering'] },
-        { moduleNumber: 'Module 5', title: 'Model Development', technicalContent: 'Data preparation, feature engineering, training, evaluation and performance metrics.', topics: ['Data Preparation', 'Feature Engineering', 'Model Training', 'Evaluation Metrics'] },
-        { moduleNumber: 'Module 6', title: 'AI Automation', technicalContent: 'Automated data processing, prediction workflows and API-based AI integration.', topics: ['Automated Data Processing', 'Prediction Pipelines', 'API AI Integration'] }
-      ],
-      [
-        { moduleNumber: 'Module 7', title: 'Advanced Machine Learning', technicalContent: 'Ensemble methods, hyperparameter tuning and model optimization.', topics: ['Ensemble Methods', 'Hyperparameter Tuning', 'Model Optimization'] },
-        { moduleNumber: 'Module 8', title: 'AI Deployment', technicalContent: 'Model serving, APIs, application integration and monitoring concepts.', topics: ['Model Serving', 'API Architecture', 'App Integration', 'Model Monitoring'] },
-        { moduleNumber: 'Module 9', title: 'Intelligent Automation', technicalContent: 'AI-powered workflows, automation pipelines and AI-agent concepts.', topics: ['AI Workflows', 'Automation Pipelines', 'AI-Agent Concepts'] },
-        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Automated AI/ML application.', topics: ['Automated AI/ML Application', 'Deployment & Evaluation'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Understand core AI concepts, algorithms, and applications',
-      'Implement supervised and unsupervised machine learning models',
-      'Develop automated prediction workflows and API integrations',
-      'Deploy AI/ML models to production serving environments',
-      'Build end-to-end intelligent automation applications'
-    ]
-  },
+  
+  
 
   // 18. Machine Learning Engineering
   {
@@ -804,206 +1008,15 @@ export const coursesCatalog: CourseItem[] = [
   },
 
   // 19. Software Testing with Automation (Selenium) — New from Document
-  {
-    id: 'software-testing-automation',
-    title: 'Software Testing with Automation (Selenium)',
-    category: 'Testing & QA',
-    level: 'Intermediate',
-    description: 'Build progressive testing capability from manual and agile fundamentals to core Java and full Selenium automation frameworks',
-    format: 'Comprehensive',
-    students: '1,845',
-    rating: '4.8',
-    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800&h=550',
-    icon: iconFullStack,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'Software Testing Fundamentals', technicalContent: 'SDLC, STLC, testing principles, verification and validation.', topics: ['SDLC & STLC', 'Testing Principles', 'Verification vs Validation'] },
-        { moduleNumber: 'Module 2', title: 'Manual Testing', technicalContent: 'Test scenarios, test cases, test data, defect reporting, severity, priority, smoke, sanity and regression testing.', topics: ['Test Scenarios & Cases', 'Test Data Preparation', 'Defect Reporting', 'Severity & Priority', 'Regression Testing'] },
-        { moduleNumber: 'Module 3', title: 'Agile Testing', technicalContent: 'Agile, Scrum, sprint, user story, acceptance criteria and QA role.', topics: ['Agile & Scrum', 'Sprints & User Stories', 'Acceptance Criteria', 'QA Role in Agile'] },
-        { moduleNumber: 'Module 4', title: 'API and Database Testing Basics', technicalContent: 'API concepts, HTTP methods, status codes and basic SQL validation.', topics: ['API Concepts', 'HTTP Methods & Status Codes', 'SQL Validation Basics'] }
-      ],
-      [
-        { moduleNumber: 'Module 5', title: 'Core Java for Automation', technicalContent: 'OOP, collections, exception handling, strings and methods.', topics: ['OOP Principles', 'Collections Framework', 'Exception Handling', 'Strings & Methods'] },
-        { moduleNumber: 'Module 6', title: 'Selenium WebDriver', technicalContent: 'Selenium architecture, WebDriver, browser automation, locators, XPath and CSS selectors.', topics: ['Selenium Architecture', 'Browser Automation', 'Locators', 'XPath & CSS Selectors'] },
-        { moduleNumber: 'Module 7', title: 'Selenium Automation', technicalContent: 'Forms, dropdowns, alerts, frames, windows, mouse/keyboard actions and waits.', topics: ['Forms & Dropdowns', 'Alerts & Frames', 'Window Handling', 'Waits & Synchronization'] },
-        { moduleNumber: 'Module 8', title: 'Test Framework', technicalContent: 'TestNG, annotations, assertions, execution and reporting.', topics: ['TestNG Framework', 'Annotations', 'Assertions', 'Test Execution & Reports'] }
-      ],
-      [
-        { moduleNumber: 'Module 9', title: 'Automation Framework', technicalContent: 'Page Object Model, data-driven testing, parameterization, reusable utilities and framework structure.', topics: ['Page Object Model (POM)', 'Data-Driven Testing', 'Reusable Utilities', 'Framework Structure'] },
-        { moduleNumber: 'Module 10', title: 'Advanced Automation', technicalContent: 'Parallel execution, cross-browser testing, screenshots, logging and reporting.', topics: ['Parallel Execution', 'Cross-Browser Testing', 'Screenshot Capture', 'Logging & Reporting'] },
-        { moduleNumber: 'Module 11', title: 'CI/CD', technicalContent: 'Git/GitHub, Jenkins basics and automated test execution.', topics: ['Git & GitHub', 'Jenkins CI Basics', 'Automated Execution'] },
-        { moduleNumber: 'Module 12', title: 'Capstone Project', technicalContent: 'End-to-end Selenium automation framework.', topics: ['End-to-End Automation Framework Capstone'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Understand manual, agile, and automated software testing methodologies',
-      'Write robust automation test scripts using Core Java and Selenium WebDriver',
-      'Design modular Page Object Model (POM) and data-driven testing frameworks',
-      'Integrate automated tests into continuous integration (CI/CD) pipelines',
-      'Execute cross-browser and parallel testing with comprehensive test reporting'
-    ]
-  },
 
   // 20. Full Stack Mobile Development — New from Document
-  {
-    id: 'full-stack-mobile-development',
-    title: 'Full Stack Mobile Development',
-    category: 'Development',
-    level: 'Intermediate',
-    description: 'Build progressive mobile development knowledge from foundational UI and programming concepts to backend APIs and production mobile apps',
-    format: 'Comprehensive',
-    students: '1,720',
-    rating: '4.8',
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800&h=550',
-    icon: iconFullStack,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'Mobile Development Fundamentals', technicalContent: 'Mobile application concepts, platform concepts, UI components and navigation.', topics: ['Mobile App Architecture', 'Platform Concepts', 'UI Components', 'Mobile Navigation'] },
-        { moduleNumber: 'Module 2', title: 'Programming Fundamentals', technicalContent: 'Variables, functions, OOP, collections and error handling.', topics: ['Language Syntax', 'Functions & OOP', 'Collections', 'Error Handling'] },
-        { moduleNumber: 'Module 3', title: 'Mobile UI Development', technicalContent: 'Screens, forms, lists, navigation and responsive layouts.', topics: ['Screen Building', 'Forms & Inputs', 'Lists & Grid Layouts', 'Responsive UI'] }
-      ],
-      [
-        { moduleNumber: 'Module 4', title: 'Backend Fundamentals', technicalContent: 'REST APIs, authentication, database and CRUD operations.', topics: ['REST APIs', 'Mobile Authentication', 'Database Concepts', 'CRUD Operations'] },
-        { moduleNumber: 'Module 5', title: 'Mobile and API Integration', technicalContent: 'API requests, JSON, authentication and data handling.', topics: ['API Requests', 'JSON Serialization', 'Token Auth', 'Data Management'] },
-        { moduleNumber: 'Module 6', title: 'Local Storage', technicalContent: 'Local database, preferences and offline data concepts.', topics: ['Local Storage', 'Offline Data Caching', 'Preferences & State'] }
-      ],
-      [
-        { moduleNumber: 'Module 7', title: 'Advanced Mobile Development', technicalContent: 'Notifications, device features and performance optimization.', topics: ['Push Notifications', 'Device APIs', 'Performance Optimization'] },
-        { moduleNumber: 'Module 8', title: 'Mobile Security', technicalContent: 'Authentication, secure storage and API security.', topics: ['Secure Storage', 'Token Management', 'Mobile API Security'] },
-        { moduleNumber: 'Module 9', title: 'Deployment', technicalContent: 'Build generation, release process and version management.', topics: ['Build Generation', 'Release Pipelines', 'Version Management'] },
-        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Complete full-stack mobile application.', topics: ['Complete Full-Stack Mobile Application'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Understand core mobile architecture, UI components, and stateful navigation',
-      'Integrate mobile applications with backend REST APIs and secure databases',
-      'Implement local caching, offline sync, and device feature integrations',
-      'Apply mobile security best practices and token-based authentication',
-      'Build, bundle, and release a complete full-stack mobile application'
-    ]
-  },
 
   // 21. Cyber Security & Ethical Hacking — New from Document
-  {
-    id: 'cyber-security-ethical-hacking',
-    title: 'Cyber Security & Ethical Hacking',
-    category: 'Cybersecurity',
-    level: 'Intermediate',
-    description: 'Learn cybersecurity principles, network defenses, vulnerability assessments, and authorized penetration testing methodologies',
-    format: 'Comprehensive',
-    students: '2,150',
-    rating: '4.9',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800&h=550',
-    icon: iconCyber,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'Cybersecurity Fundamentals', technicalContent: 'Cybersecurity concepts, threats, vulnerabilities and security principles.', topics: ['Security Concepts', 'Threat Landscape', 'Vulnerability Fundamentals', 'Core Principles'] },
-        { moduleNumber: 'Module 2', title: 'Networking Fundamentals', technicalContent: 'IP, TCP/IP, DNS, HTTP/HTTPS and ports.', topics: ['IP & TCP/IP', 'DNS & Domain Resolution', 'HTTP/HTTPS Protocols', 'Network Ports'] },
-        { moduleNumber: 'Module 3', title: 'Security Fundamentals', technicalContent: 'Authentication, authorization, encryption and password security.', topics: ['Authentication Methods', 'Access Authorization', 'Encryption Basics', 'Password Security'] }
-      ],
-      [
-        { moduleNumber: 'Module 4', title: 'Ethical Hacking Fundamentals', technicalContent: 'Reconnaissance, vulnerability assessment and security testing methodology.', topics: ['Reconnaissance Techniques', 'Vulnerability Assessment', 'Testing Methodologies'] },
-        { moduleNumber: 'Module 5', title: 'Web Security', technicalContent: 'Common web vulnerabilities, authentication issues, input validation and session security.', topics: ['Web Vulnerabilities', 'Authentication Pitfalls', 'Input Validation', 'Session Security'] },
-        { moduleNumber: 'Module 6', title: 'Network Security', technicalContent: 'Network attacks, firewalls and security monitoring.', topics: ['Network Defense', 'Firewalls & Filters', 'Traffic Monitoring'] }
-      ],
-      [
-        { moduleNumber: 'Module 7', title: 'Penetration Testing', technicalContent: 'Authorized penetration testing methodology, vulnerability analysis and controlled security testing.', topics: ['Authorized Penetration Testing', 'Vulnerability Analysis', 'Controlled Security Testing'] },
-        { moduleNumber: 'Module 8', title: 'Security Tools', technicalContent: 'Security testing tools, scanning, monitoring and reporting.', topics: ['Security Testing Tools', 'Scanning Tools', 'Security Reporting'] },
-        { moduleNumber: 'Module 9', title: 'Incident Response', technicalContent: 'Incident detection, response process, evidence handling and security reporting.', topics: ['Incident Detection', 'Response Process', 'Evidence Handling', 'Post-Incident Reports'] },
-        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Authorized security assessment project.', topics: ['Authorized Security Assessment Capstone'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Understand core cybersecurity terminology, networking fundamentals, and threat vectors',
-      'Conduct authorized vulnerability assessments and web security testing',
-      'Configure firewalls, network monitoring, and system defenses',
-      'Follow ethical penetration testing frameworks and controlled testing practices',
-      'Execute incident detection, evidence handling, and security reporting'
-    ]
-  },
 
   // 22. ServiceNow, Salesforce & CRM — New from Document
-  {
-    id: 'servicenow-salesforce-crm',
-    title: 'ServiceNow, Salesforce & CRM',
-    category: 'Enterprise Systems',
-    level: 'Intermediate',
-    description: 'Master leading enterprise CRM platforms, workflow automation, cloud administration, and system integrations',
-    format: 'Comprehensive',
-    students: '1,630',
-    rating: '4.8',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800&h=550',
-    icon: iconCloud,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'CRM Fundamentals', technicalContent: 'CRM concepts, customer lifecycle, sales process and customer data.', topics: ['CRM Concepts', 'Customer Lifecycle', 'Sales Process', 'Customer Data Management'] },
-        { moduleNumber: 'Module 2', title: 'ServiceNow Fundamentals', technicalContent: 'Platform concepts, applications, tables, records, users and roles.', topics: ['ServiceNow Platform', 'Applications & Tables', 'Records Management', 'Users & Roles'] },
-        { moduleNumber: 'Module 3', title: 'Salesforce Fundamentals', technicalContent: 'Platform concepts, objects, records, fields and relationships.', topics: ['Salesforce Architecture', 'Standard & Custom Objects', 'Fields & Relationships'] }
-      ],
-      [
-        { moduleNumber: 'Module 4', title: 'ServiceNow Administration', technicalContent: 'Users, roles, workflows, forms and reports.', topics: ['User & Role Admin', 'Workflows Customization', 'Form Design', 'Reporting'] },
-        { moduleNumber: 'Module 5', title: 'Salesforce Administration', technicalContent: 'Objects, data management, reports, dashboards and automation.', topics: ['Data Management', 'Reports & Dashboards', 'Process Automation'] },
-        { moduleNumber: 'Module 6', title: 'CRM Processes', technicalContent: 'Lead management, opportunity management, customer support and service management.', topics: ['Lead Management', 'Opportunity Workflows', 'Customer Support', 'Service Management'] }
-      ],
-      [
-        { moduleNumber: 'Module 7', title: 'Workflow Automation', technicalContent: 'Business workflows, process automation and notifications.', topics: ['Business Workflows', 'Process Automation', 'Automated Notifications'] },
-        { moduleNumber: 'Module 8', title: 'Integration', technicalContent: 'APIs, external systems and data integration concepts.', topics: ['REST APIs', 'System Integration', 'Data Synchronization'] },
-        { moduleNumber: 'Module 9', title: 'Advanced CRM', technicalContent: 'Reporting, analytics, automation and customization.', topics: ['Advanced Analytics', 'Automation Pipelines', 'Customizations'] },
-        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'CRM implementation project.', topics: ['End-to-End CRM Implementation Capstone'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Master CRM processes, customer lifecycles, and enterprise data models',
-      'Administer ServiceNow tables, user roles, forms, and business workflows',
-      'Manage Salesforce objects, custom fields, reports, and dashboards',
-      'Automate business processes using workflows and notification triggers',
-      'Implement enterprise CRM integrations and API connectivity'
-    ]
-  },
 
   // 23. Business Analyst — New from Document
-  {
-    id: 'business-analyst',
-    title: 'Business Analyst',
-    category: 'Business Analysis',
-    level: 'Beginner',
-    description: 'Learn requirements engineering, process mapping, business modeling, agile frameworks, and BA documentation tools',
-    format: 'Comprehensive',
-    students: '1,940',
-    rating: '4.8',
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800&h=550',
-    icon: iconBanner,
-    levels: buildLevels(
-      [
-        { moduleNumber: 'Module 1', title: 'Business Analysis Fundamentals', technicalContent: 'Business Analyst role, SDLC, Agile and stakeholders.', topics: ['BA Role & Responsibilities', 'SDLC in Business Analysis', 'Agile Principles', 'Stakeholder Mapping'] },
-        { moduleNumber: 'Module 2', title: 'Requirement Engineering', technicalContent: 'Business requirements, functional/non-functional requirements and requirement gathering.', topics: ['Business Requirements', 'Functional & Non-Functional', 'Elicitation Techniques'] },
-        { moduleNumber: 'Module 3', title: 'Documentation', technicalContent: 'BRD, FRD, user stories and acceptance criteria.', topics: ['BRD Preparation', 'FRD Authoring', 'User Stories', 'Acceptance Criteria'] }
-      ],
-      [
-        { moduleNumber: 'Module 4', title: 'Requirement Analysis', technicalContent: 'Requirement elicitation, validation, prioritization and gap analysis.', topics: ['Elicitation Workflows', 'Requirement Validation', 'Prioritization Techniques', 'Gap Analysis'] },
-        { moduleNumber: 'Module 5', title: 'Process Analysis', technicalContent: 'Business processes, AS-IS, TO-BE and process mapping.', topics: ['Business Processes', 'AS-IS Analysis', 'TO-BE Design', 'Process Mapping'] },
-        { moduleNumber: 'Module 6', title: 'Agile Business Analysis', technicalContent: 'Scrum, product backlog, user stories, sprint planning and acceptance criteria.', topics: ['Scrum Ceremonies', 'Product Backlog Management', 'Sprint Planning'] }
-      ],
-      [
-        { moduleNumber: 'Module 7', title: 'Business Modelling', technicalContent: 'Use cases, process models, data flow and UML basics.', topics: ['Use Cases', 'Process Modeling', 'Data Flow Diagrams', 'UML Basics'] },
-        { moduleNumber: 'Module 8', title: 'BA Tools', technicalContent: 'Jira, Confluence, documentation tools and reporting.', topics: ['Jira Management', 'Confluence Documentation', 'Stakeholder Reporting'] },
-        { moduleNumber: 'Module 9', title: 'Advanced Business Analysis', technicalContent: 'Stakeholder management, risk analysis, solution evaluation and change management.', topics: ['Stakeholder Management', 'Risk Analysis', 'Solution Evaluation', 'Change Management'] },
-        { moduleNumber: 'Module 10', title: 'Capstone Project', technicalContent: 'Complete business requirement and project documentation.', topics: ['Complete BRD / Project Documentation Capstone'] }
-      ]
-    ),
-    get modules() { return [...this.levels.basic.modules, ...this.levels.intermediate.modules, ...this.levels.advanced.modules]; },
-    learningOutcomes: [
-      'Master requirement elicitation, engineering, and documentation (BRD / FRD)',
-      'Map AS-IS and TO-BE business processes and create data flow diagrams',
-      'Operate within Agile / Scrum frameworks with backlog grooming and user stories',
-      'Utilize industry BA tools including Jira, Confluence, and modeling platforms',
-      'Execute stakeholder management, risk analysis, and solution evaluation'
-    ]
-  }
+
 ];
 
 export const CATEGORY_OPTIONS = [

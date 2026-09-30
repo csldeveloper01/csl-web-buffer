@@ -270,9 +270,9 @@ export function Navbar() {
                         onMouseEnter={openCoursesMenu}
                         onMouseLeave={closeCoursesMenuWithDelay}
                       >
-                        <div className="bg-white border border-csl-gold/30 rounded-2xl shadow-xl shadow-csl-blue/5 overflow-hidden">
+                        <div className="bg-white border border-csl-gold/30 rounded-2xl shadow-xl shadow-csl-blue/5 overflow-hidden max-h-[calc(100vh-80px)] flex flex-col">
                           {/* Panel Header */}
-                          <div className="flex items-center justify-between gap-3 px-7 pt-5 pb-4 border-b border-csl-gold/20">
+                          <div className="shrink-0 flex items-center justify-between gap-3 px-7 pt-5 pb-4 border-b border-csl-gold/20 bg-white">
                             <div className="flex items-center gap-2.5">
                               <span className="text-[11px] font-bold tracking-widest uppercase text-csl-blue">
                                 Course Catalogue
@@ -289,11 +289,11 @@ export function Navbar() {
                           </div>
 
                           {/* Multi-Column Category Grid (from existing course data) */}
-                          <div className="px-5 sm:px-7 py-6 flex flex-wrap justify-center gap-x-8 gap-y-7">
+                          <div className="px-5 sm:px-7 py-6 overflow-y-auto max-h-[calc(100vh-150px)] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-8 gap-y-7 items-start">
                             {courseMenuCategories.map((category) => {
                               const CategoryIcon = category.icon;
                               return (
-                                <div key={category.name} className="flex-[1_1_170px] min-w-[170px] max-w-[220px]">
+                                <div key={category.name} className="w-full self-start">
                                   {/* Category Heading */}
                                   <div className="flex items-center gap-2 mb-3 pb-2 border-b border-csl-gold/25">
                                     <CategoryIcon className="w-3.5 h-3.5 text-csl-gold" />

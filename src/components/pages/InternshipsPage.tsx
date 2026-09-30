@@ -1,33 +1,16 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   ArrowRight, 
   Calendar, 
-  Check, 
-  CheckCircle2,
-  AlertCircle,
   Globe2
 } from 'lucide-react';
 import { YellowBox } from '../effects/YellowBox';
-import { openWhatsApp } from '../../lib/whatsapp';
 import { InternshipDetails } from '../sections/Internships/InternshipDetails';
 import { InternshipGallery } from '../sections/Internships/InternshipGallery';
 import { InternshipReviewsMarquee } from '../sections/Internships/InternshipReviewsMarquee';
 import { InternshipVideoTestimonials } from '../sections/Internships/InternshipVideoTestimonials';
-import { CustomDropdown } from '../ui/CustomDropdown';
-
-// Local type for enquiry
-interface InternshipEnquiryPayload {
-  name: string;
-  email: string;
-  phone: string;
-  institution: string;
-  degree: string;
-  year: string;
-  domain: string;
-  duration: string;
-  message?: string;
-}
+import { InternshipModal } from '../sections/Internships/InternshipModal';
 
 // @ts-ignore
 import heroStandaloneVisual from '../../../Elements/INTERNSHIPS/INTERNSHIPS - Standalone.png';
@@ -149,40 +132,8 @@ const tracksData = [
 ];
 
 export function InternshipsPage() {
-  // Internship Enquiry Form State
-  const [formData, setFormData] = useState<InternshipEnquiryPayload>({
-    name: '',
-    email: '',
-    phone: '',
-    institution: '',
-    degree: '',
-    year: '',
-    domain: '',
-    duration: '',
-    message: ''
-  });
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  
-  // Submit state machine: idle -> submitting -> button-green-swipe -> submitted-green -> flowing-gradient -> success-complete | error
-  type SubmitState = 'idle' | 'submitting' | 'button-green-swipe' | 'submitted-green' | 'flowing-gradient' | 'success-complete' | 'error';
-  const [submitState, setSubmitState] = useState<SubmitState>('idle');
-  const [submittingDots, setSubmittingDots] = useState('.');
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const formRef = useRef<HTMLDivElement>(null);
-  const actualFormRef = useRef<HTMLFormElement>(null);
-
-  // Submitting dots animation loop (Submitting -> Submitting.. -> Submitting...)
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (submitState === 'submitting') {
-      interval = setInterval(() => {
-        setSubmittingDots(prev => (prev === '...' ? '.' : prev + '.'));
-      }, 350);
-    }
-    return () => clearInterval(interval);
-  }, [submitState]);
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [selectedTrackDomain, setSelectedTrackDomain] = useState<string>('');
 
   // Reclining Hero Scroll Effect
   const { scrollY } = useScroll();
@@ -191,96 +142,13 @@ export function InternshipsPage() {
   const heroY = useTransform(scrollY, [0, 600], [0, -35]);
 
   const handleSelectTrack = (title: string) => {
-    setFormData(prev => ({ ...prev, domain: title }));
-    const formElement = document.getElementById('apply-form');
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth' });
-    }
+    setSelectedTrackDomain(title);
+    setIsApplyModalOpen(true);
   };
 
-  const validateForm = (): boolean => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Full name is required.';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email address is required.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      newErrors.email = 'Please enter a valid email address.';
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required.';
-    } else if (!/^\d{10}$/.test(formData.phone.trim())) {
-      newErrors.phone = 'Please enter a valid 10-digit phone number.';
-    }
-
-    if (!formData.institution.trim()) {
-      newErrors.institution = 'Institution / College name is required.';
-    }
-
-    if (!formData.degree.trim()) {
-      newErrors.degree = 'Degree / Program is required.';
-    }
-
-    if (!formData.year) {
-      newErrors.year = 'Please select your current year.';
-    }
-
-    if (!formData.domain) {
-      newErrors.domain = 'Please select an interested domain.';
-    }
-
-    if (!formData.duration) {
-      newErrors.duration = 'Please select preferred internship duration.';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    // STATE 2 — SUBMITTING: Immediately quick fade button into neutral grey gradient (200ms)
-    setSubmitState('submitting');
-    setErrorMessage('');
-
-    // Build WhatsApp message and open chat
-    const message = `Hello, I would like to enquire about an internship at Creator Space Lab.
-Name: ${formData.name}
-Phone: ${formData.phone}
-Email: ${formData.email}
-Institution: ${formData.institution}
-Degree: ${formData.degree} (${formData.year})
-Track: ${formData.domain}
-Duration: ${formData.duration}
-Message: ${formData.message || 'N/A'}`;
-    openWhatsApp(message);
-
-    // STATE 3 — SUCCESS: Reveal GREEN SUCCESS GRADIENT from LEFT -> RIGHT (550ms) + Soft Reflective Light Sweep
-    setSubmitState('button-green-swipe');
-
-    setTimeout(() => {
-      // Button is full CSL Green with "Submitted" text
-      setSubmitState('submitted-green');
-    }, 550);
-
-    setTimeout(() => {
-      // Trigger soft borderless chromatic liquid light flow across form (~2.2s)
-      setSubmitState('flowing-gradient');
-    }, 1050);
-
-    setTimeout(() => {
-      // Display clean success confirmation state UI ("Enquiry Sent")
-      setSubmitState('success-complete');
-    }, 3250);
+  const handleOpenGeneralApply = () => {
+    setSelectedTrackDomain(tracksData[0]?.title ?? '');
+    setIsApplyModalOpen(true);
   };
 
   const yellowBlocks = [
@@ -289,8 +157,6 @@ Message: ${formData.message || 'N/A'}`;
     { size: 'w-8 h-8', pos: 'bottom-[20%] left-[10%]', delay: 1.8, duration: 6 },
     { size: 'w-16 h-16', pos: 'bottom-[15%] right-[25%]', delay: 0.9, duration: 7.5 },
   ];
-
-  const isFlowingGradient = submitState === 'flowing-gradient';
 
   return (
     <div className="relative w-full min-h-screen bg-csl-bg overflow-x-hidden">
@@ -528,378 +394,38 @@ Message: ${formData.message || 'N/A'}`;
               </p>
             </div>
 
-            {/* Application Card Form Container */}
-            <div 
-              ref={formRef}
-              className="relative w-full bg-white/90 backdrop-blur-md border border-csl-gold/30 rounded-3xl p-6 sm:p-10 shadow-xl shadow-csl-gold/5 overflow-hidden"
-            >
-              {/* Atmospheric Translucent Chromatic Liquid Light Flow (No boxes/shapes) */}
-              {isFlowingGradient && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 0.45, 0.45, 0] }}
-                  transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-0 pointer-events-none z-30 overflow-hidden rounded-3xl"
+            {/* Application Action Card */}
+            <div className="relative w-full bg-white/90 backdrop-blur-md border border-csl-gold/30 rounded-3xl p-8 sm:p-12 shadow-xl shadow-csl-gold/5 overflow-hidden text-center flex flex-col items-center">
+              <div className="max-w-xl mx-auto flex flex-col items-center">
+                <div className="w-16 h-16 rounded-2xl bg-csl-blue/10 border border-csl-blue/20 flex items-center justify-center text-csl-blue mb-6 shadow-md shadow-csl-blue/10">
+                  <Calendar className="w-8 h-8 stroke-[1.8]" />
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-csl-text mb-3 tracking-tight">
+                  Ready to Accelerate Your Career?
+                </h3>
+                <p className="text-csl-muted font-medium text-sm sm:text-base mb-8 leading-relaxed">
+                  Join hundreds of students and graduates who built production-level systems and launched their careers with Creator Space Lab.
+                </p>
+                <button
+                  onClick={handleOpenGeneralApply}
+                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue via-csl-blue to-csl-deep-blue text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg hover:shadow-csl-blue/25 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
                 >
-                  {/* Oversized heavily blurred gradient field animating background-position & hue */}
-                  <motion.div
-                    initial={{ backgroundPosition: '0% 100%', filter: 'blur(50px) hue-rotate(0deg)' }}
-                    animate={{ backgroundPosition: '100% 0%', filter: 'blur(65px) hue-rotate(25deg)' }}
-                    transition={{ duration: 2.2, ease: [0.2, 0.8, 0.2, 1] }}
-                    className="w-full h-full"
-                    style={{
-                      background: `
-                        radial-gradient(circle at 20% 80%, rgba(0,229,255,0.4) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 60%, rgba(123,44,191,0.35) 0%, transparent 55%),
-                        radial-gradient(circle at 60% 40%, rgba(0,71,171,0.35) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255,183,3,0.3) 0%, transparent 60%),
-                        linear-gradient(135deg, rgba(0,229,255,0.2) 0%, rgba(139,92,246,0.25) 35%, rgba(236,72,153,0.2) 70%, rgba(255,183,3,0.2) 100%)
-                      `,
-                      backgroundSize: '230% 230%'
-                    }}
-                  />
-                </motion.div>
-              )}
-
-              <AnimatePresence mode="wait">
-                {submitState === 'success-complete' ? (
-                  /* Clean Post-Submission Success State UI */
-                  <motion.div
-                    key="success-card"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="flex flex-col items-center text-center py-8 px-4"
-                  >
-                    <div className="w-16 h-16 rounded-full bg-emerald-500/10 border-2 border-emerald-500 text-emerald-600 flex items-center justify-center mb-5 shadow-lg shadow-emerald-500/20">
-                      <Check className="w-8 h-8 stroke-[2.5]" />
-                    </div>
-
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-csl-text mb-3 tracking-tight">
-                      Enquiry Sent
-                    </h3>
-
-                    <p className="text-csl-muted font-medium text-sm sm:text-base max-w-md leading-relaxed mb-6">
-                      Thanks for reaching out. Our team will review your enquiry and get back to you regarding available internship opportunities.
-                    </p>
-
-                    <button
-                      onClick={() => {
-                        setSubmitState('idle');
-                        setFormData({
-                          name: '',
-                          email: '',
-                          phone: '',
-                          institution: '',
-                          degree: '',
-                          year: '',
-                          domain: '',
-                          duration: '',
-                          message: ''
-                        });
-                      }}
-                      className="px-6 py-3 rounded-xl bg-csl-blue text-white font-bold text-sm hover:bg-csl-deep-blue transition-colors cursor-pointer"
-                    >
-                      Send Another Enquiry
-                    </button>
-                  </motion.div>
-                ) : (
-                  /* Main Form UI */
-                  <form 
-                    key="form-ui" 
-                    ref={actualFormRef}
-                    onSubmit={handleSubmit} 
-                    className={`flex flex-col gap-6 w-full transition-all duration-700 ${
-                      isFlowingGradient ? 'filter hue-rotate-[15deg] contrast-[1.02] opacity-[0.98]' : ''
-                    }`}
-                  >
-                    <input type="hidden" name="subject" value={`Internship request form from ${formData.name}`} />
-                    
-                    {/* Error Banner if validation fails */}
-                    {submitState === 'error' && (
-                      <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-2xl text-red-600 text-xs sm:text-sm font-semibold">
-                        <AlertCircle className="w-5 h-5 shrink-0" />
-                        <span>{errorMessage || 'Something went wrong. Please try again.'}</span>
-                      </div>
-                    )}
-
-                    {/* Row 1: Full Name & Email */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                      
-                      {/* Full Name */}
-                      <div className="flex flex-col">
-                        <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
-                          Full Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="name"
-                          placeholder="Enter your full name"
-                          value={formData.name}
-                          onChange={e => {
-                            const value = e.target.value.replace(/[^a-zA-Z\s'-]/g, '');
-                            setFormData({ ...formData, name: value });
-                          }}
-                          className={`w-full px-4 py-3 rounded-xl bg-white border ${
-                            errors.name ? 'border-red-400 focus:ring-red-400' : 'border-csl-gold/30 focus:border-csl-blue focus:ring-csl-blue/20'
-                          } text-sm font-medium text-csl-text placeholder:text-csl-muted/60 focus:outline-none focus:ring-2 transition-all`}
-                        />
-                        {errors.name && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.name}</span>}
-                      </div>
-
-                      {/* Email Address */}
-                      <div className="flex flex-col">
-                        <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
-                          Email Address <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          name="email"
-                          placeholder="Enter your email address"
-                          value={formData.email}
-                          onChange={e => setFormData({ ...formData, email: e.target.value })}
-                          className={`w-full px-4 py-3 rounded-xl bg-white border ${
-                            errors.email ? 'border-red-400 focus:ring-red-400' : 'border-csl-gold/30 focus:border-csl-blue focus:ring-csl-blue/20'
-                          } text-sm font-medium text-csl-text placeholder:text-csl-muted/60 focus:outline-none focus:ring-2 transition-all`}
-                        />
-                        {errors.email && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.email}</span>}
-                      </div>
-
-                    </div>
-
-                    {/* Row 2: Phone Number & Institution */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                      
-                      {/* Phone Number */}
-                      <div className="flex flex-col">
-                        <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
-                          Phone Number <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          placeholder="Enter your 10-digit phone number"
-                          value={formData.phone}
-                          maxLength={10}
-                          inputMode="numeric"
-                          onChange={e => {
-                            const value = e.target.value.replace(/\D/g, '').slice(0, 10);
-                            setFormData({ ...formData, phone: value });
-                          }}
-                          className={`w-full px-4 py-3 rounded-xl bg-white border ${
-                            errors.phone ? 'border-red-400 focus:ring-red-400' : 'border-csl-gold/30 focus:border-csl-blue focus:ring-csl-blue/20'
-                          } text-sm font-medium text-csl-text placeholder:text-csl-muted/60 focus:outline-none focus:ring-2 transition-all`}
-                        />
-                        {errors.phone && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.phone}</span>}
-                      </div>
-
-                      {/* Institution / College */}
-                      <div className="flex flex-col">
-                        <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
-                          Institution / College <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="institution"
-                          placeholder="Enter your college or institution"
-                          value={formData.institution}
-                          onChange={e => setFormData({ ...formData, institution: e.target.value })}
-                          className={`w-full px-4 py-3 rounded-xl bg-white border ${
-                            errors.institution ? 'border-red-400 focus:ring-red-400' : 'border-csl-gold/30 focus:border-csl-blue focus:ring-csl-blue/20'
-                          } text-sm font-medium text-csl-text placeholder:text-csl-muted/60 focus:outline-none focus:ring-2 transition-all`}
-                        />
-                        {errors.institution && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.institution}</span>}
-                      </div>
-
-                    </div>
-
-                    {/* Row 3: Degree & Current Year */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                      
-                      {/* Degree / Program */}
-                      <div className="flex flex-col">
-                        <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
-                          Degree / Program <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="degree"
-                          placeholder="e.g. B.Sc CS, BCA, B.Tech, MCA"
-                          value={formData.degree}
-                          onChange={e => setFormData({ ...formData, degree: e.target.value })}
-                          className={`w-full px-4 py-3 rounded-xl bg-white border ${
-                            errors.degree ? 'border-red-400 focus:ring-red-400' : 'border-csl-gold/30 focus:border-csl-blue focus:ring-csl-blue/20'
-                          } text-sm font-medium text-csl-text placeholder:text-csl-muted/60 focus:outline-none focus:ring-2 transition-all`}
-                        />
-                        {errors.degree && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.degree}</span>}
-                      </div>
-
-                      {/* Current Year Dropdown */}
-                      <div className="flex flex-col">
-                        <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
-                          Current Year <span className="text-red-500">*</span>
-                        </label>
-                        <CustomDropdown
-                          name="pursuing_year"
-                          value={formData.year}
-                          onChange={(val) => {
-                            setFormData((prev) => ({ ...prev, year: val }));
-                            setErrors((prev) => ({ ...prev, year: '' }));
-                          }}
-                          options={[
-                            '1st Year',
-                            '2nd Year',
-                            '3rd Year',
-                            '4th Year',
-                            'Final Year',
-                            'Graduate',
-                            'Postgraduate',
-                          ]}
-                          placeholder="Select Current Year"
-                          error={errors.year}
-                        />
-                        {errors.year && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.year}</span>}
-                      </div>
-
-                    </div>
-
-                    {/* Row 4: Interested Domain & Preferred Duration */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                      
-                      {/* Interested Internship Domain Dropdown */}
-                      <div className="flex flex-col">
-                        <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
-                          Interested Internship Domain <span className="text-red-500">*</span>
-                        </label>
-                        <CustomDropdown
-                          name="domain"
-                          value={formData.domain}
-                          onChange={(val) => {
-                            setFormData((prev) => ({ ...prev, domain: val }));
-                            setErrors((prev) => ({ ...prev, domain: '' }));
-                          }}
-                          options={[
-                            'Artificial Intelligence & Machine Learning Engineering',
-                            'Generative AI & Prompt Engineering',
-                            'Agentic AI & Intelligent Automation',
-                            'Full Stack Web & Mobile Application Development',
-                            'DevOps & Cloud Engineering',
-                            'Software Testing & QA Automation',
-                            'UI/UX Product Design',
-                            'Data Analytics & Business Intelligence',
-                          ]}
-                          placeholder="Select Domain"
-                          error={errors.domain}
-                        />
-                        {errors.domain && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.domain}</span>}
-                      </div>
-
-                      {/* Preferred Internship Duration Dropdown */}
-                      <div className="flex flex-col">
-                        <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
-                          Preferred Internship Duration <span className="text-red-500">*</span>
-                        </label>
-                        <CustomDropdown
-                          name="duration"
-                          value={formData.duration}
-                          onChange={(val) => {
-                            setFormData((prev) => ({ ...prev, duration: val }));
-                            setErrors((prev) => ({ ...prev, duration: '' }));
-                          }}
-                          options={[
-                            '15 Days (₹1,000)',
-                            '30 Days (₹2,000)',
-                            'Flexible / Open to Discussion',
-                          ]}
-                          placeholder="Select Preferred Duration"
-                          error={errors.duration}
-                        />
-                        {errors.duration && <span className="text-xs text-red-500 mt-1 font-semibold">{errors.duration}</span>}
-                      </div>
-
-                    </div>
-
-                    {/* Message / Internship Requirement (Optional) */}
-                    <div className="flex flex-col">
-                      <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-2">
-                        Message / Internship Requirement <span className="text-csl-muted font-normal lowercase">(optional)</span>
-                      </label>
-                      <textarea
-                        name="message"
-                        rows={3}
-                        placeholder="Tell us what kind of internship you're looking for, preferred mode (online/offline), or any specific technical interests."
-                        value={formData.message}
-                        onChange={e => setFormData({ ...formData, message: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-white border border-csl-gold/30 focus:border-csl-blue focus:ring-2 focus:ring-csl-blue/20 text-sm font-medium text-csl-text placeholder:text-csl-muted/60 focus:outline-none transition-all"
-                      />
-                    </div>
-
-                    {/* Custom State-Based Animated Submit Button */}
-                    <div className="pt-3">
-                      <button
-                        type="submit"
-                        disabled={submitState !== 'idle' && submitState !== 'error'}
-                        className="relative w-full h-[52px] rounded-xl font-bold text-sm sm:text-base overflow-hidden shadow-md cursor-pointer flex items-center justify-center transition-transform hover:scale-[1.01] active:scale-[0.99]"
-                      >
-                        {/* STATE 1 — NORMAL: CSL Normal Blue Gradient Layer */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-csl-deep-blue to-csl-blue flex items-center justify-center text-white">
-                          <div className="flex items-center gap-2">
-                            <span>Send Internship Enquiry</span>
-                            <ArrowRight className="w-5 h-5" />
-                          </div>
-                        </div>
-
-                        {/* STATE 2 — SUBMITTING: Neutral Grey Gradient Layer (Quick Fade 200ms, NO green, NO swipe) */}
-                        {submitState === 'submitting' && (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute inset-0 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 flex items-center justify-center text-white z-10"
-                          >
-                            <span>Submitting{submittingDots}</span>
-                          </motion.div>
-                        )}
-
-                        {/* STATE 3 — SUCCESS: Reveal Green Success Gradient (LEFT -> RIGHT over 550ms) + Soft Reflective Light Sweep */}
-                        {(submitState === 'button-green-swipe' || submitState === 'submitted-green' || submitState === 'flowing-gradient') && (
-                          <motion.div
-                            initial={{ x: submitState === 'button-green-swipe' ? '-100%' : '0%' }}
-                            animate={{ x: '0%' }}
-                            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                            className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 flex items-center justify-center text-white z-20 shadow-lg shadow-emerald-600/20 overflow-hidden"
-                          >
-                            {/* Soft Reflective Light Sweep traveling across green surface */}
-                            {submitState === 'button-green-swipe' && (
-                              <motion.div
-                                initial={{ x: '-120%' }}
-                                animate={{ x: '220%' }}
-                                transition={{ duration: 0.65, ease: 'easeInOut', delay: 0.1 }}
-                                className="absolute inset-y-0 w-28 bg-gradient-to-r from-transparent via-white/35 to-transparent skew-x-[-20deg] pointer-events-none"
-                              />
-                            )}
-
-                            {/* Button Text = "Submitted" */}
-                            <div className="flex items-center gap-2 relative z-30">
-                              <CheckCircle2 className="w-5 h-5 stroke-[2.2]" />
-                              <span>Submitted</span>
-                            </div>
-                          </motion.div>
-                        )}
-                      </button>
-                    </div>
-
-                  </form>
-                )}
-              </AnimatePresence>
-
+                  <span>Apply for an Internship</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
           </div>
         </section>
 
       </div>
+          {/* Internship Enquiry Modal */}
+      <InternshipModal
+        isOpen={isApplyModalOpen}
+        onClose={() => setIsApplyModalOpen(false)}
+        initialDomain={selectedTrackDomain}
+      />
     </div>
   );
 }

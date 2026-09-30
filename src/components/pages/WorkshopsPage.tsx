@@ -10,12 +10,14 @@ import {
 import { YellowBox } from '../effects/YellowBox';
 import { WorkshopExplorer } from '../sections/Workshops/WorkshopExplorer';
 import { WorkshopVideos } from '../sections/Workshops/WorkshopVideos';
+import { ContactModal } from '../sections/Contact/ContactModal';
 
 // @ts-ignore
 import cslEmblem from '../../../Elements/COURSES/CSL-BOOK-WK.png';
 
 export function WorkshopsPage() {
   const [selectedDomainId, setSelectedDomainId] = useState<string>('all');
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   // Handle direct hash navigation if specified
   useEffect(() => {
@@ -31,18 +33,8 @@ export function WorkshopsPage() {
   const heroOpacity = useTransform(scrollY, [0, 500], [1, 0.35]);
   const heroY = useTransform(scrollY, [0, 600], [0, -35]);
 
-  const handleNavigateToContact = () => {
-    if (window.location.pathname !== '/') {
-      window.history.pushState({}, '', '/');
-      window.dispatchEvent(new PopStateEvent('popstate'));
-      setTimeout(() => {
-        const el = document.getElementById('contact');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      const el = document.getElementById('contact');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
+  const handleOpenContactModal = () => {
+    setIsContactModalOpen(true);
   };
 
   const handleDomainSelect = (domainId: string) => {
@@ -133,7 +125,7 @@ export function WorkshopsPage() {
               </a>
 
               <button
-                onClick={handleNavigateToContact}
+                onClick={handleOpenContactModal}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/90 border border-csl-gold/40 text-csl-text hover:text-csl-blue px-7 py-3 rounded-xl font-bold text-sm sm:text-base shadow-xs hover:shadow-md hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
               >
                 <span>Host at Your College</span>
@@ -205,7 +197,7 @@ export function WorkshopsPage() {
         <WorkshopExplorer 
           selectedDomainId={selectedDomainId}
           onSelectDomain={handleDomainSelect}
-          onNavigateToContact={handleNavigateToContact}
+          onNavigateToContact={handleOpenContactModal}
         />
 
         {/* ==================================================
@@ -297,7 +289,7 @@ export function WorkshopsPage() {
                 </a>
 
                 <button
-                  onClick={handleNavigateToContact}
+                  onClick={handleOpenContactModal}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white border border-csl-gold/50 text-csl-text hover:text-csl-blue px-7 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-xs hover:shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
                 >
                   <span>Host at Your College</span>
@@ -310,6 +302,15 @@ export function WorkshopsPage() {
         </section>
 
       </div>
+
+      {/* Workshop Enquiry / Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+        initialSubject="Workshop"
+        title="Host a Workshop at Your Institution"
+        subtitle="Share your requirements and our academic partnership team will coordinate with your institution for schedules, curriculum, and hands-on lab setups."
+      />
     </div>
   );
 }
