@@ -665,6 +665,7 @@ export function CoursesPage() {
       <AnimatePresence>
         {callbackCourse && (
           <CallbackModal 
+            key={`callback-modal-${callbackCourse.id}`}
             course={callbackCourse} 
             onClose={() => setCallbackCourse(null)} 
           />
@@ -1035,6 +1036,7 @@ function CallbackModal({ course, onClose }: { course: CourseItem; onClose: () =>
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -1044,7 +1046,7 @@ function CallbackModal({ course, onClose }: { course: CourseItem; onClose: () =>
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);

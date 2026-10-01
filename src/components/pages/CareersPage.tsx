@@ -11,14 +11,14 @@ import {
   ArrowDown, 
   Mail, 
   Phone, 
-  Edit3, 
-  MapPin
+  MapPin,
+  Building2,
+  CheckCircle,
+  GraduationCap
 } from 'lucide-react';
 import { YellowBox } from '../effects/YellowBox';
 import { CareerModal } from '../sections/Careers/CareerModal';
-
-// @ts-expect-error — Vite asset import
-import heroCareersVisual from '../../../Elements/ABOUT/PEOPLE & COLLABORATION.png';
+import { CareerApplicationForm } from '../sections/Careers/CareerApplicationForm';
 
 export interface CareerPosition {
   id: string;
@@ -102,24 +102,19 @@ export function CareersPage() {
 
   // Reclining Hero Scroll Effect
   const { scrollY } = useScroll();
-  const heroScale = useTransform(scrollY, [0, 600], [1, 0.92]);
-  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0.35]);
-  const heroY = useTransform(scrollY, [0, 600], [0, -35]);
+  const heroScale = useTransform(scrollY, [0, 600], [1, 0.94]);
+  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0.4]);
+  const heroY = useTransform(scrollY, [0, 600], [0, -30]);
 
   const yellowBlocks = [
-    { size: 'w-12 h-12', pos: 'top-[15%] left-[8%]', delay: 0.3, duration: 7 },
-    { size: 'w-20 h-20', pos: 'top-[20%] right-[10%]', delay: 1.1, duration: 8.5 },
-    { size: 'w-10 h-10', pos: 'bottom-[22%] left-[12%]', delay: 1.6, duration: 6 },
-    { size: 'w-14 h-14', pos: 'bottom-[18%] right-[22%]', delay: 0.8, duration: 7.5 },
+    { size: 'w-12 h-12', pos: 'top-[14%] left-[6%]', delay: 0.3, duration: 7 },
+    { size: 'w-16 h-16', pos: 'top-[18%] right-[8%]', delay: 1.1, duration: 8.5 },
+    { size: 'w-10 h-10', pos: 'bottom-[20%] left-[10%]', delay: 1.6, duration: 6 },
+    { size: 'w-14 h-14', pos: 'bottom-[16%] right-[18%]', delay: 0.8, duration: 7.5 },
   ];
 
   const handleApplyClick = (positionTitle: string) => {
     setSelectedPosition(positionTitle);
-    setIsApplyModalOpen(true);
-  };
-
-  const handleOpenGeneralApply = () => {
-    setSelectedPosition(careerPositions[0]?.title ?? 'Digital Marketing');
     setIsApplyModalOpen(true);
   };
 
@@ -133,15 +128,18 @@ export function CareersPage() {
     label: pos.title,
   }));
 
+  // Total openings count
+  const totalOpenings = careerPositions.reduce((acc, curr) => acc + curr.vacancyCount, 0);
+
   return (
     <div className="relative w-full min-h-screen bg-csl-bg overflow-x-hidden">
       {/* ==================================================
-          1. HERO SECTION
+          1. HERO & CAREERS AT A GLANCE
          ================================================== */}
       <motion.section 
         id="hero"
         style={{ scale: heroScale, opacity: heroOpacity, y: heroY }}
-        className="sticky top-0 z-0 w-full min-h-[85vh] lg:min-h-screen flex flex-col justify-center bg-[#FBF7F4] pt-24 pb-12 overflow-hidden"
+        className="sticky top-0 z-0 w-full min-h-[75vh] lg:min-h-[85vh] flex flex-col justify-center bg-[#FBF7F4] pt-28 pb-16 overflow-hidden"
       >
         {/* Floating Voxel Blocks */}
         <div className="absolute inset-0 pointer-events-none z-0 2xl:max-w-[1600px] 2xl:mx-auto">
@@ -150,51 +148,111 @@ export function CareersPage() {
           ))}
         </div>
 
-        <div className="relative z-10 section-container grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left: Text Content */}
-          <div className="order-1 flex flex-col items-start max-w-xl">
-            <div className="section-eyebrow">
-              <span>CAREERS AT CSL</span>
-              <div></div>
+        <div className="relative z-10 section-container">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left Side (Col 7): Headline & Introduction */}
+            <div className="lg:col-span-7 flex flex-col items-start max-w-2xl">
+              <div className="section-eyebrow">
+                <span>CAREERS</span>
+                <div></div>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-csl-text leading-[1.08] tracking-tight mb-5">
+                Build your career <br />
+                <span className="text-csl-blue">with CSL.</span>
+              </h1>
+
+              <p className="text-csl-muted font-medium text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
+                Creator Space Lab offers opportunities for people passionate about technology, continuous learning, professional development, and real-world work across our core multidisciplinary teams.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href="#openings"
+                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-7 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-lg hover:shadow-csl-blue/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer"
+                >
+                  <span>Explore Open Roles</span>
+                  <ArrowDown className="w-4 h-4" />
+                </a>
+
+                <a
+                  href="#apply-form"
+                  className="inline-flex items-center justify-center gap-2 bg-white border border-csl-gold/40 text-csl-text hover:text-csl-blue hover:border-csl-blue px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 cursor-pointer shadow-xs"
+                >
+                  <span>General Application</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.8rem] font-extrabold text-csl-text leading-[1.06] tracking-tight mb-6">
-              Build Your Career <br />
-              <span className="text-csl-blue">With CSL</span>
-            </h1>
+            {/* Right Side (Col 5): Careers at a Glance Card */}
+            <div className="lg:col-span-5 w-full">
+              <div className="relative bg-white/90 backdrop-blur-md border border-csl-gold/35 rounded-3xl p-6 sm:p-7 shadow-lg shadow-csl-blue/5 overflow-hidden">
+                {/* Decorative subtle CSL tint */}
+                <div className="absolute top-0 right-0 w-44 h-44 bg-csl-blue/5 rounded-full blur-2xl pointer-events-none -mr-10 -mt-10" />
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-csl-gold/10 rounded-full blur-xl pointer-events-none -ml-8 -mb-8" />
 
-            <p className="text-csl-muted font-medium text-base sm:text-lg leading-relaxed mb-8">
-              Explore current opportunities at Creator Space Lab and find a role where you can grow, contribute, and build real-world experience.
-            </p>
+                {/* Card Title */}
+                <div className="relative z-10 flex items-center justify-between pb-4 mb-4 border-b border-csl-gold/25">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-csl-blue/10 flex items-center justify-center text-csl-blue">
+                      <Building2 className="w-4 h-4" />
+                    </div>
+                    <h3 className="font-extrabold text-base sm:text-lg text-csl-text tracking-tight">
+                      Careers at a Glance
+                    </h3>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Hiring Active
+                  </span>
+                </div>
 
-            <a
-              href="#open-positions"
-              className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-8 py-4 rounded-xl font-bold text-sm sm:text-base shadow-lg hover:shadow-csl-blue/25 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-            >
-              <span>View Open Positions</span>
-              <ArrowDown className="w-5 h-5" />
-            </a>
-          </div>
+                {/* Compact Info Rows */}
+                <div className="relative z-10 flex flex-col divide-y divide-csl-gold/20 text-xs sm:text-sm">
+                  {/* Row 1: Open Roles */}
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-csl-muted font-semibold">Open Roles</span>
+                    <span className="font-extrabold text-csl-text text-right">
+                      {careerPositions.length} Positions ({totalOpenings} Openings)
+                    </span>
+                  </div>
 
-          {/* Right: Visual Art */}
-          <div className="order-2 flex items-center justify-center relative w-full">
-            <motion.div
-              className="relative w-full max-w-[460px] sm:max-w-[520px]"
-              animate={{ y: [0, -12, 0] }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-csl-gold/25 via-transparent to-csl-blue/20 blur-3xl -z-10 rounded-full scale-90" />
+                  {/* Row 2: Interns / Freshers */}
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-csl-muted font-semibold">Interns / Freshers</span>
+                    <span className="font-extrabold text-csl-blue text-right">
+                      Eligible & Encouraged
+                    </span>
+                  </div>
 
-              <img
-                src={heroCareersVisual}
-                alt="CSL Careers Collaboration"
-                className="w-full h-auto object-contain drop-shadow-[0_25px_45px_rgba(0,30,80,0.14)]"
-              />
-            </motion.div>
+                  {/* Row 3: Location */}
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-csl-muted font-semibold">Location</span>
+                    <span className="font-extrabold text-csl-text text-right flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-csl-blue inline" />
+                      Chennai (OMR)
+                    </span>
+                  </div>
+
+                  {/* Row 4: Domain */}
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-csl-muted font-semibold">Domain</span>
+                    <span className="font-extrabold text-csl-text text-right">
+                      Tech • Digital • HR • Business
+                    </span>
+                  </div>
+
+                  {/* Row 5: Work Format */}
+                  <div className="flex items-center justify-between pt-3">
+                    <span className="text-csl-muted font-semibold">Environment</span>
+                    <span className="font-extrabold text-csl-text text-right">
+                      Collaborative & Hands-on
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </motion.section>
@@ -205,21 +263,21 @@ export function CareersPage() {
       <div className="relative z-10 bg-csl-bg shadow-[0_-25px_60px_rgba(0,0,0,0.06)] border-t border-csl-gold/20">
         
         {/* ==================================================
-            2. OPEN POSITIONS SECTION
+            2. CURRENT OPENINGS SECTION (TABLE / GROUPED LIST)
            ================================================== */}
-        <section id="open-positions" className="relative w-full py-16 md:py-24 section-container">
+        <section id="openings" className="relative w-full py-16 md:py-24 section-container">
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-12">
             <div>
               <div className="section-eyebrow">
-                <span>OPPORTUNITIES</span>
+                <span>CURRENT OPENINGS</span>
                 <div></div>
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-csl-text section-heading tracking-tight mb-3">
-                Current Openings
+                Open roles. Apply directly.
               </h2>
               <p className="text-csl-muted font-medium text-sm sm:text-base section-subheading max-w-xl">
-                Explore our active openings across departments and apply for the role that fits your experience.
+                Explore our active job openings below and click Apply Now to submit your details directly via our application modal.
               </p>
             </div>
 
@@ -256,78 +314,171 @@ export function CareersPage() {
             </div>
           </div>
 
-          {/* Cards Grid — Responsive Multi-Column Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
-            {filteredPositions.map((pos) => {
-              const Icon = pos.icon;
+          {/* Clean Grouped Job-List / Table Presentation */}
+          <div className="bg-white/90 backdrop-blur-sm border border-csl-gold/30 rounded-3xl shadow-sm overflow-hidden">
+            {/* Desktop Table Header */}
+            <div className="hidden md:grid grid-cols-12 gap-4 px-7 py-4 bg-[#FAF7F2] border-b border-csl-gold/25 text-xs font-bold text-csl-muted uppercase tracking-wider">
+              <div className="col-span-5">Role & Department</div>
+              <div className="col-span-3">Experience / Eligibility</div>
+              <div className="col-span-2 text-center">Vacancies</div>
+              <div className="col-span-2 text-right">Action</div>
+            </div>
 
-              return (
-                <div
-                  key={pos.id}
-                  className="group relative flex flex-col justify-between bg-white/85 backdrop-blur-sm border border-csl-gold/30 hover:border-csl-gold/70 rounded-2xl p-6 sm:p-7 shadow-xs hover:shadow-xl hover:shadow-csl-blue/5 transition-all duration-300"
-                >
-                  {/* Top Bar: Icon + Category + Vacancy Count */}
-                  <div>
-                    <div className="flex items-start justify-between gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-csl-blue/10 border border-csl-blue/20 text-csl-blue flex items-center justify-center shrink-0 group-hover:bg-csl-blue group-hover:text-white transition-all duration-300 shadow-xs">
-                        <Icon className="w-6 h-6 stroke-[1.8]" />
+            {/* Rows List */}
+            <div className="divide-y divide-csl-gold/20">
+              {filteredPositions.map((pos) => {
+                const Icon = pos.icon;
+
+                return (
+                  <div
+                    key={pos.id}
+                    className="p-5 sm:p-6 md:px-7 md:py-5 hover:bg-[#FAF8F5]/80 transition-colors duration-200"
+                  >
+                    {/* Desktop Column Layout */}
+                    <div className="hidden md:grid grid-cols-12 gap-4 items-center">
+                      {/* Col 5: Role & Icon & Department */}
+                      <div className="col-span-5 flex items-center gap-3.5 pr-2">
+                        <div className="w-11 h-11 rounded-xl bg-csl-blue/10 border border-csl-blue/20 text-csl-blue flex items-center justify-center shrink-0">
+                          <Icon className="w-5 h-5 stroke-[1.8]" />
+                        </div>
+                        <div>
+                          <h3 className="font-extrabold text-base text-csl-text hover:text-csl-blue transition-colors">
+                            {pos.title}
+                          </h3>
+                          <span className="text-xs font-medium text-csl-muted">
+                            {pos.category}
+                          </span>
+                        </div>
                       </div>
 
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-xs">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        {pos.vacancies}
-                      </span>
+                      {/* Col 3: Experience */}
+                      <div className="col-span-3">
+                        <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-[#F4EFE6] text-csl-text border border-csl-gold/20">
+                          {pos.experience}
+                        </span>
+                      </div>
+
+                      {/* Col 2: Openings / Vacancies */}
+                      <div className="col-span-2 text-center">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          {pos.vacancies}
+                        </span>
+                      </div>
+
+                      {/* Col 2: Apply Now CTA */}
+                      <div className="col-span-2 text-right">
+                        <button
+                          type="button"
+                          onClick={() => handleApplyClick(pos.title)}
+                          className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-md hover:shadow-csl-blue/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                        >
+                          <span>Apply Now</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
 
-                    {/* Role Title */}
-                    <h3 className="text-xl sm:text-2xl font-extrabold text-csl-text group-hover:text-csl-blue transition-colors leading-snug mb-5">
-                      {pos.title}
-                    </h3>
-                  </div>
+                    {/* Mobile Stacked Layout */}
+                    <div className="flex flex-col md:hidden gap-3.5">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-csl-blue/10 border border-csl-blue/20 text-csl-blue flex items-center justify-center shrink-0">
+                            <Icon className="w-5 h-5 stroke-[1.8]" />
+                          </div>
+                          <div>
+                            <h3 className="font-extrabold text-base text-csl-text leading-tight">
+                              {pos.title}
+                            </h3>
+                            <span className="text-xs font-medium text-csl-muted">
+                              {pos.category}
+                            </span>
+                          </div>
+                        </div>
 
-                  {/* Metadata & Apply Button */}
-                  <div>
-                    {/* Consistent Metadata Presentation */}
-                    <div className="bg-[#FAF7F2] border border-csl-gold/25 rounded-xl p-3.5 flex flex-col gap-2.5">
-                      <div className="flex items-center justify-between text-xs sm:text-sm">
-                        <span className="text-[11px] font-bold text-csl-muted uppercase tracking-wider">
-                          Experience
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                          <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                          {pos.vacancies}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between bg-[#FAF7F2] p-2.5 rounded-xl border border-csl-gold/20 text-xs">
+                        <span className="text-csl-muted font-bold uppercase tracking-wider text-[10px]">
+                          Experience / Eligibility
                         </span>
                         <span className="font-extrabold text-csl-text">
                           {pos.experience}
                         </span>
                       </div>
 
-                      <div className="h-[1px] w-full bg-csl-gold/20" />
-
-                      <div className="flex items-center justify-between text-xs sm:text-sm">
-                        <span className="text-[11px] font-bold text-csl-muted uppercase tracking-wider">
-                          Vacancies
-                        </span>
-                        <span className="font-extrabold text-csl-blue">
-                          {pos.vacancies}
-                        </span>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleApplyClick(pos.title)}
+                        className="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white flex items-center justify-center gap-2 shadow-xs cursor-pointer active:scale-[0.99] transition-all"
+                      >
+                        <span>Apply Now</span>
+                      </button>
                     </div>
-
-                    {/* Apply Button */}
-                    <button
-                      type="button"
-                      onClick={() => handleApplyClick(pos.title)}
-                      className="w-full mt-5 py-3 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover:shadow-csl-blue/20 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer"
-                    >
-                      <span>Apply Now</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </button>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </section>
 
         {/* ==================================================
-            3. HOW TO APPLY / APPLICATION FORM SECTION
+            3. CONCISE CSL CAREER ADVANTAGE HIGHLIGHTS
+           ================================================== */}
+        <section className="relative w-full py-12 md:py-16 border-t border-csl-gold/20 bg-[#FAF7F2]/60">
+          <div className="section-container">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white/80 border border-csl-gold/30 rounded-2xl p-6 shadow-xs flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-csl-blue/10 flex items-center justify-center text-csl-blue shrink-0">
+                  <GraduationCap className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-csl-text text-base mb-1">
+                    Continuous Learning
+                  </h4>
+                  <p className="text-xs text-csl-muted leading-relaxed">
+                    Access to structured mentorship, training materials, and workshops across modern digital skills.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white/80 border border-csl-gold/30 rounded-2xl p-6 shadow-xs flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-csl-blue/10 flex items-center justify-center text-csl-blue shrink-0">
+                  <Users className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-csl-text text-base mb-1">
+                    Collaborative Culture
+                  </h4>
+                  <p className="text-xs text-csl-muted leading-relaxed">
+                    Work directly with cross-functional teams in technology, marketing, human resources, and business growth.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white/80 border border-csl-gold/30 rounded-2xl p-6 shadow-xs flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-csl-blue/10 flex items-center justify-center text-csl-blue shrink-0">
+                  <CheckCircle className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-csl-text text-base mb-1">
+                    Direct Impact
+                  </h4>
+                  <p className="text-xs text-csl-muted leading-relaxed">
+                    Engage with genuine client deliverables and educational initiatives from day one.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================
+            4. RESTORED ORIGINAL FULL-PAGE APPLICATION FORM
            ================================================== */}
         <section 
           id="apply-form" 
@@ -337,55 +488,27 @@ export function CareersPage() {
             {/* Header */}
             <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
               <div className="section-eyebrow justify-center">
-                <span>HOW TO APPLY</span>
+                <span>DIRECT APPLICATION</span>
                 <div></div>
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-csl-text section-heading tracking-tight mb-4">
                 Submit Your Application
               </h2>
               <p className="text-csl-muted font-medium text-sm sm:text-base section-subheading">
-                Select your role, enter your details, and submit your application directly to our team.
+                Prefer to apply right here? Fill out the form below to forward your profile directly to our recruitment team.
               </p>
             </div>
 
             {/* Layout: Main Form Box + Contact Sidebar */}
             <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 lg:gap-10 items-start max-w-5xl mx-auto">
               {/* Application Form Box */}
-              <div className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8FBFF] to-[#EDF4FE] backdrop-blur-sm border border-csl-gold/30 rounded-3xl p-6 sm:p-8 md:p-10 shadow-sm w-full">
-                <Edit3 
-                  className="absolute -right-4 -bottom-4 w-36 h-36 md:w-40 md:h-40 text-white/60 drop-shadow-sm pointer-events-none" 
-                  strokeWidth={2.5}
+              <div className="relative overflow-hidden bg-white/90 backdrop-blur-sm border border-csl-gold/30 rounded-3xl p-6 sm:p-8 md:p-10 shadow-sm w-full">
+                <CareerApplicationForm
+                  initialPosition={selectedPosition}
+                  positions={positionDropdownOptions}
+                  context="full-page"
                 />
-
-                <div className="relative z-10 flex flex-col items-start max-w-md">
-                  <span className="text-xs font-bold text-csl-blue uppercase tracking-widest block mb-2">
-                    Direct Recruitment
-                  </span>
-                  
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-csl-text tracking-tight mb-3">
-                    Ready to Apply?
-                  </h3>
-
-                  <p className="text-sm text-csl-muted font-medium leading-relaxed mb-6">
-                    Select a position from our openings above or open the application form to submit your profile directly to our recruitment team.
-                  </p>
-
-                  <button
-                    type="button"
-                    onClick={handleOpenGeneralApply}
-                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-7 py-3.5 rounded-xl font-bold text-sm shadow-md hover:shadow-lg hover:shadow-csl-blue/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
-                  >
-                    <span>Open Application Form</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
               </div>
-
-
-
-
-
-
 
               {/* Sidebar: Recruitment & Office Details */}
               <div className="flex flex-col gap-4 w-full">
@@ -476,7 +599,7 @@ export function CareersPage() {
 
       </div>
 
-      {/* Career Application Modal */}
+      {/* Career Application Modal (Triggered by Apply Now buttons) */}
       <CareerModal
         isOpen={isApplyModalOpen}
         onClose={() => setIsApplyModalOpen(false)}
