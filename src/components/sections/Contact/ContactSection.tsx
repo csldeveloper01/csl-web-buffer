@@ -6,6 +6,7 @@
     Mail, 
     Linkedin, 
     Instagram, 
+    Facebook,
     User, 
     FileText, 
     Edit3, 
@@ -637,6 +638,15 @@
                   Connect with us
                 </span>
                 <div className="flex items-center gap-2">
+                  <a 
+                    href="https://www.facebook.com/creatorspacelab" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    aria-label="Facebook"
+                    className="w-9 h-9 rounded-lg bg-white/80 border border-csl-gold/25 text-csl-text flex items-center justify-center hover:bg-csl-blue hover:text-white hover:border-csl-blue transition-all duration-300"
+                  >
+                    <Facebook className="w-4 h-4" />
+                  </a>
                   <a 
                     href="https://www.linkedin.com/company/creatorspacelab/" 
                     target="_blank" 

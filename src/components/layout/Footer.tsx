@@ -1,4 +1,4 @@
-import { ArrowUpRight, Linkedin, Instagram } from 'lucide-react';
+import { ArrowUpRight, Linkedin, Instagram, Facebook } from 'lucide-react';
 
 // @ts-expect-error
 import cslBook from '../../../Elements/LOGOS/CSL -BOOK.png';
@@ -273,6 +273,15 @@ export function Footer() {
                 Follow Us
               </span>
               <div className="flex items-center gap-2">
+                <a 
+                  href="https://www.facebook.com/creatorspacelab" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  aria-label="Facebook"
+                  className="w-8 h-8 rounded-lg bg-white/90 border border-csl-gold/25 text-csl-text flex items-center justify-center hover:bg-csl-blue hover:text-white hover:border-csl-blue hover:-translate-y-0.5 transition-all duration-300 shadow-sm"
+                >
+                  <Facebook className="w-3.5 h-3.5" />
+                </a>
                 <a 
                   href="https://www.linkedin.com/company/creatorspacelab/" 
                   target="_blank" 
