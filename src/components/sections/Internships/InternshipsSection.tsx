@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   ArrowRight, 
@@ -12,6 +13,7 @@ import {
   CheckCircle2 
 } from 'lucide-react';
 import { YellowBox } from '../../effects/YellowBox';
+import { InternshipModal } from './InternshipModal';
 
 // @ts-expect-error
 import internshipsIllustration from '../../../../Elements/INTERNSHIPS/INTERNSHIPS.png';
@@ -56,6 +58,9 @@ const hotInternshipDomains = [
 ];
 
 export function InternshipsSection() {
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [selectedDomain, setSelectedDomain] = useState('');
+
   const yellowBlocks = [
     { size: 'w-14 h-14', pos: 'top-[12%] left-[48%]', delay: 0.3, duration: 7 },
     { size: 'w-8 h-8', pos: 'top-[22%] left-[6%]', delay: 1.1, duration: 6 },
@@ -70,6 +75,11 @@ export function InternshipsSection() {
     window.history.pushState({}, '', '/internships');
     window.dispatchEvent(new PopStateEvent('popstate'));
     window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleOpenApplyModal = (domainTitle: string) => {
+    setSelectedDomain(domainTitle);
+    setIsApplyModalOpen(true);
   };
 
   return (
@@ -182,11 +192,9 @@ export function InternshipsSection() {
             {hotInternshipDomains.map((track) => {
               const IconComponent = track.icon;
               return (
-                <a
+                <div
                   key={track.id}
-                  href="/internships"
-                  onClick={handleNavigateToInternships}
-                  className="group relative flex flex-col justify-between p-4 sm:p-5 bg-white/75 backdrop-blur-sm border border-csl-gold/25 rounded-2xl hover:border-csl-gold/60 hover:bg-white/95 hover:shadow-lg hover:shadow-csl-gold/10 transition-all duration-300 cursor-pointer"
+                  className="group relative flex flex-col justify-between p-4 sm:p-5 bg-white/75 backdrop-blur-sm border border-csl-gold/25 rounded-2xl hover:border-csl-gold/60 hover:bg-white/95 hover:shadow-lg hover:shadow-csl-gold/10 transition-all duration-300"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-3">
@@ -204,17 +212,30 @@ export function InternshipsSection() {
                       {track.description}
                     </p>
                   </div>
-                  <div className="mt-3.5 pt-2.5 border-t border-csl-gold/15 flex items-center justify-between text-[11px] font-semibold text-csl-muted group-hover:text-csl-blue transition-colors">
-                    <span>View Curriculum</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  <div className="mt-3.5 pt-2.5 border-t border-csl-gold/15">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenApplyModal(track.title)}
+                      className="w-full flex items-center justify-between text-[11px] font-semibold text-csl-muted group-hover:text-csl-blue transition-colors cursor-pointer text-left"
+                    >
+                      <span>Apply for Internship</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </button>
                   </div>
-                </a>
+                </div>
               );
             })}
           </div>
         </div>
 
       </div>
+
+      {/* Internship Application Modal */}
+      <InternshipModal
+        isOpen={isApplyModalOpen}
+        onClose={() => setIsApplyModalOpen(false)}
+        initialDomain={selectedDomain}
+      />
     </section>
   );
 }

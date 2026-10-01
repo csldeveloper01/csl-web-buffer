@@ -54,7 +54,7 @@ export function CoursesPage() {
     return matchCategory && matchLevel;
   });
 
-  const featuredCourse = coursesCatalog[1]; // Full Stack Development with AI - Java
+  const featuredCourse = coursesCatalog[0]; // Full Stack Development with AI - Java
 
   const yellowBlocks = [
     { size: 'w-12 h-12', pos: 'top-[14%] left-[6%]', delay: 0.4, duration: 7 },
