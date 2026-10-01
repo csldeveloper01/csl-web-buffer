@@ -11,6 +11,7 @@ import { InternshipGallery } from '../sections/Internships/InternshipGallery';
 import { InternshipReviewsMarquee } from '../sections/Internships/InternshipReviewsMarquee';
 import { InternshipVideoTestimonials } from '../sections/Internships/InternshipVideoTestimonials';
 import { InternshipModal } from '../sections/Internships/InternshipModal';
+import { InternshipApplicationForm } from '../sections/Internships/InternshipApplicationForm';
 
 // @ts-ignore
 import heroStandaloneVisual from '../../../Elements/INTERNSHIPS/INTERNSHIPS - Standalone.png';
@@ -143,11 +144,6 @@ export function InternshipsPage() {
 
   const handleSelectTrack = (title: string) => {
     setSelectedTrackDomain(title);
-    setIsApplyModalOpen(true);
-  };
-
-  const handleOpenGeneralApply = () => {
-    setSelectedTrackDomain(tracksData[0]?.title ?? '');
     setIsApplyModalOpen(true);
   };
 
@@ -374,7 +370,7 @@ export function InternshipsPage() {
         <InternshipVideoTestimonials />
 
         {/* ==================================================
-            6. INTERNSHIP ENQUIRY FORM SECTION
+            6. ORIGINAL INTERNSHIP ENQUIRY FORM SECTION (FULL PAGE)
           ================================================== */}
         <section id="apply-form" className="relative w-full py-16 md:py-24 section-container">
           
@@ -394,33 +390,19 @@ export function InternshipsPage() {
               </p>
             </div>
 
-            {/* Application Action Card */}
-            <div className="relative w-full bg-white/90 backdrop-blur-md border border-csl-gold/30 rounded-3xl p-8 sm:p-12 shadow-xl shadow-csl-gold/5 overflow-hidden text-center flex flex-col items-center">
-              <div className="max-w-xl mx-auto flex flex-col items-center">
-                <div className="w-16 h-16 rounded-2xl bg-csl-blue/10 border border-csl-blue/20 flex items-center justify-center text-csl-blue mb-6 shadow-md shadow-csl-blue/10">
-                  <Calendar className="w-8 h-8 stroke-[1.8]" />
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-csl-text mb-3 tracking-tight">
-                  Ready to Accelerate Your Career?
-                </h3>
-                <p className="text-csl-muted font-medium text-sm sm:text-base mb-8 leading-relaxed">
-                  Join hundreds of students and graduates who built production-level systems and launched their careers with Creator Space Lab.
-                </p>
-                <button
-                  onClick={handleOpenGeneralApply}
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue via-csl-blue to-csl-deep-blue text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg hover:shadow-csl-blue/25 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-                >
-                  <span>Apply for an Internship</span>
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
+            {/* Application Card Form Container */}
+            <div className="relative w-full bg-white/90 backdrop-blur-md border border-csl-gold/30 rounded-3xl p-6 sm:p-10 shadow-xl shadow-csl-gold/5 overflow-hidden">
+              <InternshipApplicationForm
+                initialDomain=""
+                context="full-page"
+              />
             </div>
 
           </div>
         </section>
 
       </div>
-          {/* Internship Enquiry Modal */}
+      {/* Internship Enquiry Modal (Triggered by CTAs) */}
       <InternshipModal
         isOpen={isApplyModalOpen}
         onClose={() => setIsApplyModalOpen(false)}

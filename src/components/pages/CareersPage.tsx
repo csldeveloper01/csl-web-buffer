@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { 
   Megaphone, 
   Sparkles, 
@@ -14,7 +14,10 @@ import {
   MapPin,
   Building2,
   CheckCircle,
-  GraduationCap
+  GraduationCap,
+  ChevronDown,
+  CheckCircle2,
+  Clock
 } from 'lucide-react';
 import { YellowBox } from '../effects/YellowBox';
 import { CareerModal } from '../sections/Careers/CareerModal';
@@ -28,6 +31,15 @@ export interface CareerPosition {
   vacancies: string;
   vacancyCount: number;
   icon: typeof Megaphone;
+  summary: string;
+  responsibilities: string[];
+  skills: string[];
+  qualifications: string[];
+  internshipStructure?: {
+    duration: string;
+    training: string;
+  };
+  opportunity?: string;
 }
 
 export const careerPositions: CareerPosition[] = [
@@ -39,6 +51,32 @@ export const careerPositions: CareerPosition[] = [
     vacancies: '2 Vacancies',
     vacancyCount: 2,
     icon: Megaphone,
+    summary:
+      'We are looking for creative, enthusiastic, and self-motivated Digital Marketing Interns to join our marketing team. This internship provides hands-on experience in digital marketing strategies, social media management, SEO, paid advertising, content creation, and campaign execution. Candidates will work on live projects and gain practical exposure to modern digital marketing tools and techniques.',
+    opportunity:
+      'Successful candidates who demonstrate creativity, analytical skills, and consistent performance during the internship will have the opportunity to transition into a full-time Digital Marketing Executive role.',
+    responsibilities: [
+      'Plan and execute digital marketing campaigns across multiple platforms.',
+      'Manage and optimize social media accounts including Instagram, Facebook, LinkedIn, YouTube, and X.',
+      'Create engaging content including posts, blogs, banners, and promotional materials.',
+      'Assist in Search Engine Optimization (SEO) and Search Engine Marketing (SEM) activities.',
+      'Run and optimize paid advertising campaigns on Google Ads and Meta Ads.',
+    ],
+    skills: [
+      'Basic understanding of Digital Marketing concepts.',
+      'Knowledge of Social Media Marketing (SMM).',
+      'Basic understanding of SEO and SEM.',
+      'Familiarity with Google Analytics and Google Search Console.',
+      'Basic knowledge of Google Ads and Meta Ads Manager.',
+    ],
+    qualifications: [
+      "Master's Degree in Marketing, Business Administration, Computer Science, Information Technology, Mass Communication, or any related field.",
+      'Freshers are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Training Period',
+    },
   },
   {
     id: 'digital-marketing-intern',
@@ -48,15 +86,83 @@ export const careerPositions: CareerPosition[] = [
     vacancies: '2 Vacancies',
     vacancyCount: 2,
     icon: Sparkles,
+    summary:
+      'We are looking for creative, enthusiastic, and self-motivated Digital Marketing Interns to join our marketing team. This internship provides hands-on experience in digital marketing strategies, social media management, SEO, paid advertising, content creation, and campaign execution. Candidates will work on live projects and gain practical exposure to modern digital marketing tools and techniques.',
+    opportunity:
+      'Successful candidates who demonstrate creativity, analytical skills, consistency, and professional growth during the internship will have the opportunity to transition into a full-time Digital Marketing Executive role.',
+    responsibilities: [
+      'Plan and execute digital marketing campaigns across multiple platforms.',
+      'Manage and optimize social media accounts including Instagram, Facebook, LinkedIn, YouTube, and X.',
+      'Create engaging content including social media posts, blogs, banners, promotional materials, and campaign creatives.',
+      'Assist with Search Engine Optimization (SEO) and Search Engine Marketing (SEM) activities.',
+      'Conduct basic keyword research and competitor analysis.',
+      'Run and optimize paid advertising campaigns on Google Ads and Meta Ads.',
+      'Monitor campaign performance and prepare basic marketing reports.',
+      'Assist in developing content calendars and marketing strategies.',
+      'Track digital marketing trends and identify opportunities for improving online visibility.',
+      'Collaborate with design, technology, and business teams for marketing initiatives.',
+    ],
+    skills: [
+      'Basic understanding of Digital Marketing concepts.',
+      'Knowledge of Social Media Marketing (SMM).',
+      'Basic understanding of SEO and SEM.',
+      'Familiarity with Google Analytics and Google Search Console.',
+      'Basic knowledge of Google Ads and Meta Ads Manager.',
+      'Good written and verbal communication skills.',
+      'Creativity and content-writing ability.',
+      'Basic analytical and research skills.',
+      'Willingness to learn and experiment with new marketing tools and strategies.',
+    ],
+    qualifications: [
+      "Bachelor's or Master's degree in Marketing, Business Administration, Computer Science, Information Technology, Mass Communication, or any related field.",
+      'Freshers are encouraged to apply.',
+      'Candidates with academic projects, certifications, or practical exposure to digital marketing are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Training Period',
+    },
   },
   {
     id: 'human-resources',
-    title: 'Human Resources',
+    title: 'Human Resources / HR Operations',
     category: 'Human Resources',
     experience: '6 months - 1 year',
     vacancies: '2 Vacancies',
     vacancyCount: 2,
     icon: Users,
+    summary:
+      'We are looking for an organized and proactive HR Operations professional/intern to support day-to-day HR activities, employee coordination, recruitment support, documentation, and HR administration. The ideal candidate should have good communication skills, attention to detail, and a strong interest in building a career in Human Resources.',
+    responsibilities: [
+      'Support day-to-day HR operations and employee coordination.',
+      'Assist with recruitment coordination and interview scheduling.',
+      'Coordinate employee onboarding and joining formalities.',
+      'Maintain employee records, attendance, and leave details.',
+      'Prepare and maintain HR documents and employee records.',
+      'Coordinate HR communication with employees and internal teams.',
+      'Assist in implementing HR policies and processes.',
+      'Support employee engagement and internal HR activities.',
+      'Prepare basic HR reports and documentation.',
+      'Maintain confidentiality of employee information.',
+    ],
+    skills: [
+      'Basic understanding of HR Operations concepts.',
+      'Good verbal and written communication skills.',
+      'Strong coordination and organizational skills.',
+      'Basic knowledge of HR processes.',
+      'Proficiency in MS Office / Google Workspace.',
+      'Good documentation and record-keeping skills.',
+      'Attention to detail and time management.',
+      'Professional attitude and willingness to learn.',
+    ],
+    qualifications: [
+      "Master's degree in Human Resources, Business Administration, Management, or a related field.",
+      'Freshers and candidates with HR internship experience are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Technical Training',
+    },
   },
   {
     id: 'hr-intern',
@@ -66,6 +172,45 @@ export const careerPositions: CareerPosition[] = [
     vacancies: '2 Vacancies',
     vacancyCount: 2,
     icon: UserPlus,
+    summary:
+      'We are looking for organized, proactive, and enthusiastic HR Interns to join our Human Resources team. This internship provides hands-on experience in recruitment, employee coordination, onboarding, HR documentation, employee engagement, and day-to-day HR operations. Candidates will gain practical exposure to professional HR processes and will have the opportunity to work closely with employees and internal teams.',
+    opportunity:
+      'Successful candidates who demonstrate strong communication skills, learning ability, organizational skills, teamwork, and professionalism during the internship will have the opportunity to transition into a full-time HR Executive role.',
+    responsibilities: [
+      'Support day-to-day HR operations and employee coordination.',
+      'Assist with recruitment activities including candidate sourcing and screening.',
+      'Coordinate interview scheduling and candidate communication.',
+      'Assist with employee onboarding and joining formalities.',
+      'Maintain employee records, attendance, and leave details.',
+      'Prepare and maintain HR documents and employee records.',
+      'Coordinate HR communication with employees and internal teams.',
+      'Assist in implementing HR policies, procedures, and processes.',
+      'Support employee engagement activities and internal HR initiatives.',
+      'Prepare basic HR reports and documentation.',
+      'Assist with maintaining recruitment trackers and candidate databases.',
+      'Support employee feedback and internal communication activities.',
+      'Maintain confidentiality of employee and organizational information.',
+    ],
+    skills: [
+      'Basic understanding of Human Resources concepts.',
+      'Good verbal and written communication skills.',
+      'Strong coordination and organizational skills.',
+      'Basic knowledge of recruitment and HR processes.',
+      'Proficiency in MS Office / Google Workspace.',
+      'Good documentation and record-keeping skills.',
+      'Attention to detail and time management.',
+      'Ability to communicate professionally with candidates and employees.',
+      'Professional attitude and willingness to learn.',
+    ],
+    qualifications: [
+      "Bachelor's or Master's degree in Human Resources, Business Administration, Management, or a related field.",
+      'Freshers are encouraged to apply.',
+      'Candidates with HR projects, certifications, or internship experience are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Training Period',
+    },
   },
   {
     id: 'full-stack-developer',
@@ -75,6 +220,47 @@ export const careerPositions: CareerPosition[] = [
     vacancies: '2 Vacancies',
     vacancyCount: 2,
     icon: Code2,
+    summary:
+      'We are looking for enthusiastic, motivated, and self-driven Full Stack Developer Interns to join our technology team. This internship provides hands-on experience in frontend and backend development, database management, API development, debugging, testing, and deployment. Candidates will work on live software projects and gain practical exposure to modern web development technologies and development workflows.',
+    opportunity:
+      'Successful candidates who demonstrate strong technical skills, problem-solving ability, learning ability, teamwork, and consistent performance during the internship will have the opportunity to transition into a full-time Full Stack Developer role.',
+    responsibilities: [
+      'Develop responsive and user-friendly web applications.',
+      'Build and maintain frontend interfaces using modern web technologies.',
+      'Develop backend services, APIs, and application logic.',
+      'Integrate frontend applications with backend APIs and databases.',
+      'Design, create, and manage database structures.',
+      'Write clean, maintainable, and reusable code.',
+      'Debug and resolve application issues and technical problems.',
+      'Perform testing and validation of application features.',
+      'Collaborate with UI/UX designers and other developers to implement application requirements.',
+      'Participate in code reviews and follow development best practices.',
+      'Assist with application deployment and maintenance.',
+      'Work with Git and version-control workflows.',
+      'Learn and implement new technologies based on project requirements.',
+      'Document technical implementations and development processes.',
+    ],
+    skills: [
+      'Basic understanding of web development concepts.',
+      'Knowledge of HTML, CSS, and JavaScript.',
+      'Basic understanding of frontend and backend development.',
+      'Familiarity with at least one programming language such as Python, JavaScript, Java, or similar.',
+      'Basic understanding of databases and SQL.',
+      'Familiarity with REST APIs and API integration.',
+      'Basic knowledge of Git and GitHub.',
+      'Understanding of responsive web design.',
+      'Basic debugging and problem-solving skills.',
+      'Willingness to learn new frameworks and technologies.',
+    ],
+    qualifications: [
+      "Bachelor's or Master's degree in Computer Science, Information Technology, Software Engineering, or a related field.",
+      'Freshers are encouraged to apply.',
+      'Candidates with academic projects, personal projects, GitHub repositories, or relevant certifications are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Technical Training',
+    },
   },
   {
     id: 'business-development-executive',
@@ -84,6 +270,47 @@ export const careerPositions: CareerPosition[] = [
     vacancies: '3 Vacancies',
     vacancyCount: 3,
     icon: Briefcase,
+    summary:
+      'We are looking for enthusiastic, confident, and self-motivated Business Development Executive Interns to join our business development team. This internship provides hands-on experience in lead generation, market research, client communication, sales coordination, business analysis, and customer relationship management. Candidates will gain practical exposure to the business development process and will work with internal teams to understand client requirements, identify business opportunities, and support the growth of the organization.',
+    opportunity:
+      'Successful candidates who demonstrate strong communication skills, business understanding, learning ability, teamwork, and consistent performance during the internship will have the opportunity to transition into a full-time Business Development Executive role.',
+    responsibilities: [
+      'Identify and research potential clients and business opportunities.',
+      'Generate and maintain leads through online and offline channels.',
+      'Conduct market research and competitor analysis.',
+      'Communicate with potential clients through calls, emails, LinkedIn, and other professional channels.',
+      'Understand client requirements and coordinate with internal teams.',
+      'Assist in preparing business proposals, presentations, and quotations.',
+      'Schedule and coordinate client meetings and follow-ups.',
+      'Maintain lead and customer information in CRM systems or internal trackers.',
+      'Follow up with prospective clients and maintain professional relationships.',
+      'Support the sales team in achieving business development targets.',
+      'Track sales activities and prepare basic business development reports.',
+      'Research industry trends and identify potential markets.',
+      'Assist in developing strategies for client acquisition and business growth.',
+      'Coordinate with marketing, technology, and management teams for business initiatives.',
+    ],
+    skills: [
+      'Basic understanding of Business Development and Sales concepts.',
+      'Excellent verbal and written communication skills.',
+      'Strong interpersonal and relationship-building skills.',
+      'Good presentation and negotiation skills.',
+      'Basic understanding of lead generation and sales processes.',
+      'Good research and analytical skills.',
+      'Proficiency in MS Office / Google Workspace.',
+      'Ability to communicate professionally with clients and prospects.',
+      'Good follow-up and time-management skills.',
+      'Professional attitude and willingness to learn.',
+    ],
+    qualifications: [
+      "Bachelor's or Master's degree in Business Administration, Marketing, Management, Commerce, Computer Science, Information Technology, or a related field.",
+      'Freshers are encouraged to apply.',
+      'Candidates with sales, marketing, business development projects, certifications, or internship experience are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Training Period',
+    },
   },
 ];
 
@@ -99,6 +326,7 @@ export function CareersPage() {
   const [selectedCategory, setSelectedCategory] = useState<typeof categoryTabs[number]>('All Roles');
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState<string>('');
+  const [expandedPositionId, setExpandedPositionId] = useState<string | null>(null);
 
   // Reclining Hero Scroll Effect
   const { scrollY } = useScroll();
@@ -116,6 +344,10 @@ export function CareersPage() {
   const handleApplyClick = (positionTitle: string) => {
     setSelectedPosition(positionTitle);
     setIsApplyModalOpen(true);
+  };
+
+  const toggleExpandPosition = (id: string) => {
+    setExpandedPositionId((prev) => (prev === id ? null : id));
   };
 
   const filteredPositions = careerPositions.filter((pos) => {
@@ -263,7 +495,7 @@ export function CareersPage() {
       <div className="relative z-10 bg-csl-bg shadow-[0_-25px_60px_rgba(0,0,0,0.06)] border-t border-csl-gold/20">
         
         {/* ==================================================
-            2. CURRENT OPENINGS SECTION (TABLE / GROUPED LIST)
+            2. CURRENT OPENINGS SECTION (WITH DETAILED EXPANDABLE JDS)
            ================================================== */}
         <section id="openings" className="relative w-full py-16 md:py-24 section-container">
           {/* Section Header */}
@@ -277,7 +509,7 @@ export function CareersPage() {
                 Open roles. Apply directly.
               </h2>
               <p className="text-csl-muted font-medium text-sm sm:text-base section-subheading max-w-xl">
-                Explore our active job openings below and click Apply Now to submit your details directly via our application modal.
+                Explore our official openings below. Click any role or "View Details" to inspect the job description, key responsibilities, and required qualifications.
               </p>
             </div>
 
@@ -328,6 +560,7 @@ export function CareersPage() {
             <div className="divide-y divide-csl-gold/20">
               {filteredPositions.map((pos) => {
                 const Icon = pos.icon;
+                const isExpanded = expandedPositionId === pos.id;
 
                 return (
                   <div
@@ -342,9 +575,18 @@ export function CareersPage() {
                           <Icon className="w-5 h-5 stroke-[1.8]" />
                         </div>
                         <div>
-                          <h3 className="font-extrabold text-base text-csl-text hover:text-csl-blue transition-colors">
-                            {pos.title}
-                          </h3>
+                          <button
+                            type="button"
+                            onClick={() => toggleExpandPosition(pos.id)}
+                            className="font-extrabold text-base text-csl-text hover:text-csl-blue transition-colors text-left flex items-center gap-1.5 group/title cursor-pointer"
+                          >
+                            <span>{pos.title}</span>
+                            <ChevronDown
+                              className={`w-4 h-4 text-csl-muted transition-transform duration-200 group-hover/title:text-csl-blue ${
+                                isExpanded ? 'rotate-180 text-csl-blue' : ''
+                              }`}
+                            />
+                          </button>
                           <span className="text-xs font-medium text-csl-muted">
                             {pos.category}
                           </span>
@@ -366,15 +608,21 @@ export function CareersPage() {
                         </span>
                       </div>
 
-                      {/* Col 2: Apply Now CTA */}
-                      <div className="col-span-2 text-right">
+                      {/* Col 2: Actions (Details & Apply Now) */}
+                      <div className="col-span-2 flex items-center justify-end gap-2">
+                        <button
+                          type="button"
+                          onClick={() => toggleExpandPosition(pos.id)}
+                          className="px-3 py-2 rounded-xl text-xs font-bold text-csl-muted hover:text-csl-blue hover:bg-csl-blue/5 transition-all cursor-pointer"
+                        >
+                          {isExpanded ? 'Hide' : 'Details'}
+                        </button>
                         <button
                           type="button"
                           onClick={() => handleApplyClick(pos.title)}
-                          className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-md hover:shadow-csl-blue/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-md hover:shadow-csl-blue/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
                         >
-                          <span>Apply Now</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
+                          <span>Apply</span>
                         </button>
                       </div>
                     </div>
@@ -411,14 +659,150 @@ export function CareersPage() {
                         </span>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => handleApplyClick(pos.title)}
-                        className="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white flex items-center justify-center gap-2 shadow-xs cursor-pointer active:scale-[0.99] transition-all"
-                      >
-                        <span>Apply Now</span>
-                      </button>
+                      <div className="grid grid-cols-2 gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => toggleExpandPosition(pos.id)}
+                          className="py-2.5 px-3 rounded-xl font-bold text-xs bg-white border border-csl-gold/35 text-csl-text hover:text-csl-blue flex items-center justify-center gap-1 shadow-xs cursor-pointer"
+                        >
+                          <span>{isExpanded ? 'Hide Details' : 'View Details'}</span>
+                          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleApplyClick(pos.title)}
+                          className="py-2.5 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white flex items-center justify-center gap-1.5 shadow-xs cursor-pointer active:scale-[0.99] transition-all"
+                        >
+                          <span>Apply Now</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
+
+                    {/* Expandable Accordion: Full Official JD Details */}
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.28, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-5 pt-5 border-t border-csl-gold/25 bg-[#FCFAF6] rounded-2xl p-5 sm:p-7 flex flex-col gap-6">
+                            {/* Job Summary */}
+                            <div>
+                              <span className="text-xs font-bold text-csl-blue uppercase tracking-wider block mb-1.5">
+                                Job Summary
+                              </span>
+                              <p className="text-xs sm:text-sm text-csl-text font-medium leading-relaxed">
+                                {pos.summary}
+                              </p>
+                            </div>
+
+                            {/* Full-time Opportunity Callout if present */}
+                            {pos.opportunity && (
+                              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3.5 flex items-start gap-2.5">
+                                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                                <div className="text-xs sm:text-sm font-semibold text-emerald-900 leading-snug">
+                                  <span className="font-extrabold">Full-Time Opportunity: </span>
+                                  {pos.opportunity}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Key Responsibilities */}
+                            <div>
+                              <span className="text-xs font-bold text-csl-text uppercase tracking-wider block mb-2.5">
+                                Key Responsibilities
+                              </span>
+                              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs sm:text-sm text-csl-muted font-medium">
+                                {pos.responsibilities.map((resp, rIdx) => (
+                                  <li key={rIdx} className="flex items-start gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-csl-blue mt-1.5 shrink-0" />
+                                    <span className="leading-relaxed text-csl-text/90">{resp}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            {/* Required Skills */}
+                            <div>
+                              <span className="text-xs font-bold text-csl-text uppercase tracking-wider block mb-2.5">
+                                Required Skills
+                              </span>
+                              <div className="flex flex-wrap gap-2">
+                                {pos.skills.map((skill, sIdx) => (
+                                  <span
+                                    key={sIdx}
+                                    className="px-3 py-1.5 rounded-xl bg-white border border-csl-gold/30 text-xs font-bold text-csl-text shadow-2xs"
+                                  >
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Qualifications & Structure */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-csl-gold/20">
+                              {/* Qualifications */}
+                              <div>
+                                <span className="text-xs font-bold text-csl-text uppercase tracking-wider block mb-1.5">
+                                  Qualifications
+                                </span>
+                                <ul className="flex flex-col gap-1.5 text-xs sm:text-sm text-csl-muted font-medium">
+                                  {pos.qualifications.map((qual, qIdx) => (
+                                    <li key={qIdx} className="flex items-start gap-2">
+                                      <GraduationCap className="w-4 h-4 text-csl-blue shrink-0 mt-0.5" />
+                                      <span className="leading-snug text-csl-text/90">{qual}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+
+                              {/* Internship Structure */}
+                              {pos.internshipStructure && (
+                                <div>
+                                  <span className="text-xs font-bold text-csl-text uppercase tracking-wider block mb-1.5">
+                                    Internship Structure
+                                  </span>
+                                  <div className="flex flex-col gap-1.5 text-xs sm:text-sm text-csl-muted font-medium">
+                                    <div className="flex items-center gap-2">
+                                      <Clock className="w-4 h-4 text-csl-gold shrink-0" />
+                                      <span className="text-csl-text/90">
+                                        <strong className="text-csl-text">Duration:</strong> {pos.internshipStructure.duration}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <CheckCircle className="w-4 h-4 text-csl-blue shrink-0" />
+                                      <span className="text-csl-text/90">
+                                        <strong className="text-csl-text">Training:</strong> {pos.internshipStructure.training}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Bottom Apply Bar in expanded view */}
+                            <div className="flex items-center justify-between pt-3 border-t border-csl-gold/20 flex-wrap gap-3">
+                              <span className="text-xs font-semibold text-csl-muted">
+                                Ready to join? Submit your details directly to our recruitment team.
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => handleApplyClick(pos.title)}
+                                className="inline-flex items-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                              >
+                                <span>Apply for {pos.title}</span>
+                                <ArrowRight className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 );
               })}
