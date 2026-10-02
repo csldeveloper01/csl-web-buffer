@@ -18,9 +18,9 @@ const coursesData = [
   },
   {
       id: '03',
-      deepLinkId: 'python-programming',
-      title: 'Python Programming',
-      description: 'Learn Python programming from fundamentals to practical application development.',
+      deepLinkId: 'ai-fundamentals',
+      title: 'AI/ML with Automation Process',
+      description: 'Learn how to integrate AI/ML with automation processes for enhanced productivity.',
       image: 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&q=80&w=600&h=400'
   }
 ];

@@ -99,6 +99,8 @@ const courseMenuCategories: CourseMenuCategory[] = COURSE_CATEGORY_ORDER
 
 const mobilePrimaryLabels = ['Home', 'About Us', 'Services', 'Contact'];
 
+const [activeSection, setActiveSection] = useState<string | null>(null);
+
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
@@ -289,11 +291,14 @@ export function Navbar() {
                           </div>
 
                           {/* Multi-Column Category Grid (from existing course data) */}
-                          <div className="px-5 sm:px-7 py-6 overflow-y-auto max-h-[calc(100vh-150px)] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-8 gap-y-7 items-start">
+                          <div className="px-5 sm:px-7 py-6 overflow-y-auto max-h-[calc(100vh-150px)] columns-1 md:columns-2 lg:columns-4 gap-x-8">
                             {courseMenuCategories.map((category) => {
                               const CategoryIcon = category.icon;
                               return (
-                                <div key={category.name} className="w-full self-start">
+                                <div
+                                  key={category.name}
+                                  className="w-full break-inside-avoid mb-7"
+                                >
                                   {/* Category Heading */}
                                   <div className="flex items-center gap-2 mb-3 pb-2 border-b border-csl-gold/25">
                                     <CategoryIcon className="w-3.5 h-3.5 text-csl-gold" />
@@ -339,6 +344,7 @@ export function Navbar() {
                         handleScrollTo(item.targetId, true);
                       } else if (item.targetId === 'contact') {
                         // Contact has no standalone page — scroll to the contact section
+                        setActiveSection('contact');
                         handleScrollTo('contact');
                       } else {
                         // Navigate to standalone page based on targetId
@@ -360,7 +366,8 @@ export function Navbar() {
                         (item.targetId === 'services' && currentPath === '/services') ||
                         (item.targetId === 'internships' && currentPath === '/internships') ||
                         (item.targetId === 'careers' && currentPath === '/careers') ||
-                        (item.targetId === 'workshops' && currentPath === '/workshops')
+                        (item.targetId === 'workshops' && currentPath === '/workshops') ||
+                         (item.targetId === 'contact' && activeSection === 'contact')
                       )
                         ? 'text-csl-blue'
                         : 'text-csl-text hover:text-csl-blue'
