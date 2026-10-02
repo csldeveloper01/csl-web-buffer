@@ -21,7 +21,7 @@ const coursesData = [
       deepLinkId: 'ai-fundamentals',
       title: 'AI/ML with Automation Process',
       description: 'Learn how to integrate AI/ML with automation processes for enhanced productivity.',
-      image: 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&q=80&w=600&h=400'
+      image: 'https://images.unsplash.com/photo-1745674684539-d90293d659a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   }
 ];
 

@@ -133,7 +133,7 @@ Message: ${formData.message || 'N/A'}`;
   return (
     <div className="w-full">
       {/* Top Header of the form container */}
-      <div className="mb-6 pb-3 border-b border-csl-gold/20 flex items-center justify-between flex-wrap gap-2">
+      <div className="mb-6 pb-3 border-b border-csl-gold/20 flex items-center justify-between flex-wrap gap-2 mr-4">
         <div>
           <span className="text-[11px] font-bold text-csl-blue uppercase tracking-widest block mb-0.5">
             CSL Direct Recruitment

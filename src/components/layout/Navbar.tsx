@@ -99,17 +99,20 @@ const courseMenuCategories: CourseMenuCategory[] = COURSE_CATEGORY_ORDER
 
 const mobilePrimaryLabels = ['Home', 'About Us', 'Services', 'Contact'];
 
-const [activeSection, setActiveSection] = useState<string | null>(null);
+
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isMobileCoursesOpen, setIsMobileCoursesOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
   const [currentPath, setCurrentPath] = useState(
     typeof window !== 'undefined' ? window.location.pathname : '/'
   );
   const [isScrolled, setIsScrolled] = useState(false);
   const coursesCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
 
   const openCoursesMenu = () => {
     if (coursesCloseTimer.current) {
@@ -160,8 +163,12 @@ export function Navbar() {
     };
   }, []);
 
-  const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
-    setIsMenuOpen(false);
+const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
+  // Only Contact can use activeSection.
+  // Navigating anywhere else clears the Contact active state.
+  setActiveSection(targetId === 'contact' ? 'contact' : null);
+
+  setIsMenuOpen(false);
     setIsCoursesOpen(false);
     setIsMobileCoursesOpen(false);
 
@@ -199,6 +206,8 @@ export function Navbar() {
   };
 
   const handleNavigateToCoursesPage = () => {
+    setActiveSection(null);
+    
     setIsMenuOpen(false);
     setIsCoursesOpen(false);
     setIsMobileCoursesOpen(false);
@@ -295,10 +304,7 @@ export function Navbar() {
                             {courseMenuCategories.map((category) => {
                               const CategoryIcon = category.icon;
                               return (
-                                <div
-                                  key={category.name}
-                                  className="w-full break-inside-avoid mb-7"
-                                >
+                              <div key={category.name} className="w-full break-inside-avoid mb-7">
                                   {/* Category Heading */}
                                   <div className="flex items-center gap-2 mb-3 pb-2 border-b border-csl-gold/25">
                                     <CategoryIcon className="w-3.5 h-3.5 text-csl-gold" />
@@ -342,11 +348,14 @@ export function Navbar() {
                     onClick={() => {
                       if (item.isHomeLink) {
                         handleScrollTo(item.targetId, true);
-                      } else if (item.targetId === 'contact') {
-                        // Contact has no standalone page — scroll to the contact section
-                        setActiveSection('contact');
-                        handleScrollTo('contact');
-                      } else {
+                    } else if (item.targetId === 'contact') {
+                      // Contact has no standalone page — scroll to the contact section
+                      handleScrollTo('contact');
+                    } else {
+
+                        // Clear Contact active state when navigating to another page
+                        setActiveSection(null);
+
                         // Navigate to standalone page based on targetId
                         const path = `/${item.targetId}`;
                         setIsMenuOpen(false);
@@ -392,28 +401,30 @@ export function Navbar() {
                   <button
                     key={item.label}
                     onClick={() => {
-                    if (item.isHomeLink) {
-                      handleScrollTo(item.targetId, true);
-                    } else if (item.targetId === 'contact') {
-                      handleScrollTo('contact');
-                    } else {
-                      const path = `/${item.targetId}`;
+                      if (item.isHomeLink) {
+                        setActiveSection(null);
+                        handleScrollTo(item.targetId, true);
+                      } else if (item.targetId === 'contact') {
+                        handleScrollTo('contact');  
+                      } else {
+                        // Clear Contact active state when navigating to another page
+                        setActiveSection(null);
 
-                      setIsMenuOpen(false);
-                      setIsCoursesOpen(false);
-                      setIsMobileCoursesOpen(false);
+                        // Navigate to standalone page based on targetId
+                        const path = `/${item.targetId}`;
 
-                      if (window.location.pathname !== path) {
-                        window.history.pushState({}, '', path);
-                        window.dispatchEvent(new PopStateEvent('popstate'));
+                        setIsMenuOpen(false);
+                        setIsCoursesOpen(false);
+                        setIsMobileCoursesOpen(false);
+
+                        if (window.location.pathname !== path) {
+                          window.history.pushState({}, '', path);
+                          window.dispatchEvent(new PopStateEvent('popstate'));
+                        }
+
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                       }
-
-                      window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth',
-                      });
-                    }
-                  }}
+                    }}
                     aria-label={item.label}
                     title={item.label}
                     className="flex items-center justify-center w-9 h-9 rounded-lg text-csl-text hover:text-csl-blue hover:bg-csl-gold/10 transition-colors"

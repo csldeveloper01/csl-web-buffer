@@ -26,7 +26,7 @@ import { CareerApplicationForm } from '../sections/Careers/CareerApplicationForm
 export interface CareerPosition {
   id: string;
   title: string;
-  category: 'Marketing' | 'Human Resources' | 'Technology' | 'Business';
+  category: 'Marketing' | 'Human Resources' | 'Technical' | 'Business';
   experience: string;
   vacancies: string;
   vacancyCount: number;
@@ -215,7 +215,7 @@ export const careerPositions: CareerPosition[] = [
   {
     id: 'full-stack-developer',
     title: 'Full Stack Developer',
-    category: 'Technology',
+    category: 'Technical',
     experience: 'Freshers',
     vacancies: '2 Vacancies',
     vacancyCount: 2,
@@ -318,7 +318,7 @@ const categoryTabs = [
   'All Roles',
   'Marketing',
   'Human Resources',
-  'Technology',
+  'Technical',
   'Business',
 ] as const;
 
@@ -972,6 +972,14 @@ export function CareersPage() {
                         className="hover:text-csl-blue transition-colors"
                       >
                         +91 95008 02806
+                      </a>
+                      <a
+                        href="https://wa.me/919500802806"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-csl-blue transition-colors"
+                      >
+                        +91 96801 00306
                       </a>
                     </div>
                   </div>
