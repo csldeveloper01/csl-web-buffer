@@ -19,6 +19,15 @@ import imgAyeesha from '../../../../Elements/SUCCESS STORIES/Ayesha.jpg';
 import imgSwetha from '../../../../Elements/SUCCESS STORIES/Swetha.jpeg';
 // @ts-expect-error
 import imgMuaz from '../../../../Elements/SUCCESS STORIES/MUAZ.jpeg';
+// @ts-expect-error
+import imgMana from '../../../../Elements/SUCCESS STORIES/Manasa.jpeg'
+// @ts-expect-error
+import imgAdar from '../../../../Elements/SUCCESS STORIES/Adarsh.jpeg'
+// @ts-expect-error
+import imgYuv from '../../../../Elements/SUCCESS STORIES/Yuvraj.jpeg'
+// @ts-expect-error
+import imgSakshi from '../../../../Elements/SUCCESS STORIES/Sakshi.jpeg'
+
 
 const successStories = [
   {
@@ -93,6 +102,38 @@ const successStories = [
     timeline: 'Placed in 1 month',
     image: imgEzhil,
   },
+    {
+      name: 'Sakshi Pandey',
+      role: 'Python Developer',
+      package: '4.5 LPA',
+      achievement: 'Career growth achieved',
+      timeline: 'Placed in 4 months',
+      image: imgSakshi,
+    },
+    {
+      name: 'Adarsh',
+      role: 'Python Developer',
+      package: '4.5 LPA',
+      achievement: 'Career growth achieved',
+      timeline: 'Placed in 4 months',
+      image: imgAdar,
+    },
+    {
+      name: 'Manasa',
+      role: 'Python Developer',
+      package: '4.5 LPA',
+      achievement: 'Career growth achieved',
+      timeline: 'Placed in 4 months',
+      image: imgMana,
+    },
+    {
+      name: 'Yuvraj Sonar',
+      role: 'Python Developer',
+      package: '4.5 LPA',
+      achievement: 'Career growth achieved',
+      timeline: 'Placed in 4 months',
+      image: imgYuv,
+    }
 ];
 
 export function SuccessStoriesSection() {
