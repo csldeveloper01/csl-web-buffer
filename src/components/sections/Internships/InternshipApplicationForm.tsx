@@ -66,12 +66,16 @@ export function InternshipApplicationForm({
   const [errorMessage, setErrorMessage] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Sync initialDomain when changed
+  // Sync initialDomain when changed (supports exact match or partial match from cards)
   useEffect(() => {
     if (initialDomain) {
+      const matched = INTERNSHIP_DOMAINS.find(d => 
+        d.toLowerCase().includes(initialDomain.toLowerCase()) || 
+        initialDomain.toLowerCase().includes(d.toLowerCase())
+      );
       setFormData(prev => ({
         ...prev,
-        domain: initialDomain
+        domain: matched || initialDomain
       }));
     } else if (!formData.domain && INTERNSHIP_DOMAINS.length > 0) {
       setFormData(prev => ({

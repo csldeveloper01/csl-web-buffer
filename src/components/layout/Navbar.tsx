@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, BookOpen, Briefcase, Layers, Mail, Menu, X, Cpu, Info, ArrowUpRight, ChevronDown, ChevronRight, Cloud, Brain, BarChart3, PieChart, Palette, ShieldCheck, CheckSquare, Megaphone } from 'lucide-react';
+import { Home, BookOpen, Briefcase, Layers, Mail, X, Cpu, Info, ArrowUpRight, ChevronDown, ChevronRight, Cloud, Brain, BarChart3, PieChart, Palette, ShieldCheck, CheckSquare, Megaphone } from 'lucide-react';
 import { coursesCatalog } from '../pages/CoursesPage';
 
 // @ts-ignore
@@ -315,21 +315,21 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                             </button>
                           </div>
 
-                          {/* Multi-Column Category Grid (from existing course data) */}
-                          <div className="px-5 sm:px-7 py-6 overflow-y-auto max-h-[calc(100vh-150px)] columns-1 md:columns-2 lg:columns-4 gap-x-8">
+                          {/* Compact Multi-Column Masonry/Grid Category Layout */}
+                          <div className="px-5 sm:px-7 py-4 overflow-y-auto max-h-[calc(100vh-160px)] columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
                             {courseMenuCategories.map((category) => {
                               const CategoryIcon = category.icon;
                               return (
-                              <div key={category.name} className="w-full break-inside-avoid mb-7">
+                                <div key={category.name} className="break-inside-avoid w-full bg-white/70 p-3 rounded-xl border border-csl-gold/20 hover:border-csl-gold/50 hover:bg-white transition-all shadow-xs">
                                   {/* Category Heading */}
-                                  <div className="flex items-center gap-2 mb-3 pb-2 border-b border-csl-gold/25">
-                                    <CategoryIcon className="w-3.5 h-3.5 text-csl-gold" />
+                                  <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-csl-gold/25">
+                                    <CategoryIcon className="w-3.5 h-3.5 text-csl-gold shrink-0" />
                                     <span className="text-[11px] font-extrabold tracking-wider uppercase text-csl-text">
                                       {category.name}
                                     </span>
                                   </div>
                                   {/* Course Links — deep links to course cards on the Courses page */}
-                                  <ul className="flex flex-col">
+                                  <ul className="flex flex-col space-y-0.5">
                                     {category.courses.map((course) => (
                                       <li key={course.id}>
                                         <a
@@ -341,10 +341,10 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                                             window.dispatchEvent(new PopStateEvent('popstate'));
                                             window.dispatchEvent(new HashChangeEvent('hashchange'));
                                           }}
-                                          className="group/item flex items-center justify-between gap-2 py-1.5 text-[13px] font-semibold text-csl-muted hover:text-csl-blue transition-colors cursor-pointer"
+                                          className="group/item flex items-center justify-between gap-1.5 py-1 px-1.5 rounded text-[12px] font-semibold text-csl-muted hover:text-csl-blue hover:bg-csl-blue/[0.04] transition-colors cursor-pointer"
                                         >
-                                          <span className="leading-snug">{course.title}</span>
-                                          <ChevronRight className="w-3 h-3 shrink-0 opacity-0 -translate-x-0.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" />
+                                          <span className="leading-snug line-clamp-1">{course.title}</span>
+                                          <ChevronRight className="w-3 h-3 shrink-0 opacity-0 -translate-x-0.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-csl-blue" />
                                         </a>
                                       </li>
                                     ))}
@@ -401,23 +401,57 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
             ))}
           </div>
 
-          {/* Mobile/Tablet Hamburger Button */}
-          <div className="hidden custom1195:flex items-center justify-end gap-3 ml-auto">
+          {/* Mobile/Tablet Header Actions: [ Student Portal ] then [ Custom Menu Icon ] */}
+          <div className="hidden custom1195:flex items-center justify-end gap-2.5 sm:gap-3 ml-auto shrink-0">
+            {/* Student Portal Button FIRST */}
+            <button
+              onClick={() => {
+                window.history.pushState({}, '', '/student-portal');
+                window.dispatchEvent(new PopStateEvent('popstate'));
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'instant',
+                });
+              }}
+              className="group inline-flex items-center justify-center gap-1.5 h-10 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-md hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 cursor-pointer shrink-0 leading-none"
+            >
+              <span>Student Portal</span>
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+
+            {/* Custom Bold Sharp 2x2 Outlined Square Boxes Icon */}
             <button
               onClick={() => setIsMenuOpen(prev => !prev)}
-              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMenuOpen}
-              className="flex items-center justify-center w-10 h-10 rounded-xl text-csl-text bg-white/80 border border-csl-gold/30 hover:border-csl-gold/70 hover:text-csl-blue hover:bg-white transition-all shadow-xs"
+              className="group inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 border border-csl-gold/35 hover:border-csl-blue/60 hover:bg-white transition-all shadow-xs shrink-0 cursor-pointer"
             >
               {isMenuOpen ? (
-                <X className="w-5 h-5 text-csl-blue" />
+                <X className="w-5 h-5 text-csl-blue stroke-[2.2]" />
               ) : (
-                <Menu className="w-5 h-5 text-csl-text" />
+                <svg
+                  viewBox="0 0 16 16"
+                  className="w-4 h-4 text-csl-blue group-hover:scale-105 transition-transform"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  {/* Exactly 4 sharp-cornered outlined squares in a 2x2 grid with bold CSL-blue stroke */}
+                  {/* Top-Left */}
+                  <rect x="1" y="1" width="5.5" height="5.5" stroke="currentColor" strokeWidth="2" strokeLinejoin="miter" />
+                  {/* Top-Right */}
+                  <rect x="9.5" y="1" width="5.5" height="5.5" stroke="currentColor" strokeWidth="2" strokeLinejoin="miter" />
+                  {/* Bottom-Left */}
+                  <rect x="1" y="9.5" width="5.5" height="5.5" stroke="currentColor" strokeWidth="2" strokeLinejoin="miter" />
+                  {/* Bottom-Right */}
+                  <rect x="9.5" y="9.5" width="5.5" height="5.5" stroke="currentColor" strokeWidth="2" strokeLinejoin="miter" />
+                </svg>
               )}
             </button>
           </div>
-          {/* CTA (Desktop) */}
-          <div className="hidden md:block">
+
+          {/* CTA (Desktop Only) */}
+          <div className="hidden custom1195:hidden md:flex items-center shrink-0">
             <button
               onClick={() => {
                 window.history.pushState({}, '', '/student-portal');
@@ -428,9 +462,9 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                   behavior: 'instant',
                 });
               }}
-              className="group flex items-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-5 py-2.5 rounded-lg font-semibold text-xs md:text-sm hover:shadow-lg hover:shadow-csl-blue/20 transition-all duration-300 cursor-pointer"
+              className="group inline-flex items-center justify-center gap-2 h-10 px-5 rounded-xl font-bold text-xs md:text-sm bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-lg hover:shadow-csl-blue/20 hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 cursor-pointer leading-none"
             >
-              Student Portal
+              <span>Student Portal</span>
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
           </div>
@@ -448,7 +482,7 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
             className="fixed inset-0 z-[100] backdrop-blur-2xl bg-csl-bg flex flex-col justify-between p-5 sm:p-7 overflow-y-auto"
           >
             {/* Header: Logo & Close Button */}
-            <div className="flex items-center justify-between pb-4 border-b border-csl-gold/25">
+            <div className="flex items-center justify-between pb-3.5 border-b border-csl-gold/25 max-w-2xl mx-auto w-full">
               <img
                 src={cslTypography}
                 alt="Creator Space Lab"
@@ -458,43 +492,43 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
               <button
                 onClick={() => setIsMenuOpen(false)}
                 aria-label="Close menu"
-                className="w-9 h-9 rounded-full bg-white/90 border border-csl-gold/30 text-csl-text flex items-center justify-center hover:bg-csl-blue hover:text-white hover:scale-105 transition-all shadow-sm"
+                className="w-9 h-9 rounded-full bg-white/95 border border-csl-gold/30 text-csl-text flex items-center justify-center hover:bg-csl-blue hover:text-white hover:scale-105 transition-all shadow-xs cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Animated In Content Grid */}
+            {/* Structured Navigation Grid (Clean Tablet 2-column & Compact Mobile presentation) */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.93, y: 20 }}
+              initial={{ opacity: 0, scale: 0.96, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="my-auto py-5 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-lg mx-auto w-full"
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              className="my-auto py-4 grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 max-w-2xl mx-auto w-full"
             >
               {activeDrawerSections.map((section, idx) => (
                 section.label === 'Courses' ? (
                   /* COURSES — Expandable Section with Course List */
                   <div
                     key={section.label}
-                    className={`col-span-1 sm:col-span-2 flex flex-col backdrop-blur-md rounded-2xl transition-all duration-300 overflow-hidden ${
+                    className={`col-span-1 md:col-span-2 flex flex-col backdrop-blur-md rounded-2xl transition-all duration-300 overflow-hidden ${
                       currentPath === '/courses'
-                        ? 'border-2 border-csl-blue bg-white/95 shadow-md'
+                        ? 'border-2 border-csl-blue bg-white/95 shadow-sm'
                         : isMobileCoursesOpen
-                        ? 'border border-csl-gold/70 bg-white/95 shadow-lg shadow-csl-gold/10'
-                        : 'border border-csl-gold/25 bg-white/70'
+                        ? 'border border-csl-gold/70 bg-white/95 shadow-md shadow-csl-gold/10'
+                        : 'border border-csl-gold/25 bg-white/75 hover:bg-white/90'
                     }`}
                   >
                     <button
                       onClick={() => setIsMobileCoursesOpen((prev) => !prev)}
                       aria-expanded={isMobileCoursesOpen}
-                      className="flex flex-col text-left p-3.5 cursor-pointer"
+                      className="flex flex-col text-left p-3 sm:p-3.5 cursor-pointer"
                     >
                       <div className="flex items-center justify-between w-full mb-0.5">
                         <span className={`flex items-center gap-2 text-sm font-bold transition-colors ${
                           currentPath === '/courses' ? 'text-csl-blue' : 'text-csl-text group-hover:text-csl-blue'
                         }`}>
-                          <BookOpen className="hidden sm:block w-3.5 h-3.5 text-csl-blue" />
+                          <BookOpen className="w-3.5 h-3.5 text-csl-blue" />
                           {section.label}
                         </span>
                         <span className="flex items-center gap-2">
@@ -502,7 +536,7 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                             0{idx + 1}
                           </span>
                           <ChevronDown
-                            className={`hidden sm:block w-4 h-4 text-csl-blue transition-transform duration-300 ${
+                            className={`w-3.5 h-3.5 text-csl-blue transition-transform duration-300 ${
                               isMobileCoursesOpen ? 'rotate-180' : ''
                             }`}
                           />
@@ -520,24 +554,24 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                           className="overflow-hidden"
                         >
-                          <div className="px-3.5 pb-3.5 flex flex-col gap-3 max-h-[46vh] overflow-y-auto">
+                          <div className="px-3 pb-3 flex flex-col gap-2.5 max-h-[38vh] overflow-y-auto">
                             <button
                               onClick={handleNavigateToCoursesPage}
-                              className="flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl bg-csl-blue/10 border border-csl-blue/20 text-csl-blue font-bold text-xs hover:bg-csl-blue hover:text-white transition-all cursor-pointer"
+                              className="flex items-center justify-between w-full px-3 py-2 rounded-xl bg-csl-blue/10 border border-csl-blue/20 text-csl-blue font-bold text-xs hover:bg-csl-blue hover:text-white transition-all cursor-pointer"
                             >
-                              Explore All Courses
-                              <ArrowUpRight className="hidden sm:block w-3.5 h-3.5" />
+                              <span>Explore All Courses</span>
+                              <ArrowUpRight className="w-3.5 h-3.5" />
                             </button>
 
                             {courseMenuCategories.map((category) => (
-                              <div key={category.name}>
+                              <div key={category.name} className="bg-white/60 p-2 rounded-lg border border-csl-gold/15">
                                 <span className="block px-1 mb-1 text-[10px] font-extrabold tracking-wider uppercase text-csl-gold">
                                   {category.name}
                                 </span>
-                                <div className="flex flex-col">
+                                <div className="flex flex-col space-y-0.5">
                                   {category.courses.map((course) => (
                                     <button
                                       key={course.id}
@@ -548,10 +582,10 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                                         window.dispatchEvent(new PopStateEvent('popstate'));
                                         window.dispatchEvent(new HashChangeEvent('hashchange'));
                                       }}
-                                      className="flex items-center justify-between gap-2 w-full text-left px-3.5 py-2.5 rounded-xl text-[13px] font-semibold text-csl-text hover:bg-white hover:text-csl-blue active:bg-csl-blue/10 transition-colors cursor-pointer"
+                                      className="flex items-center justify-between gap-2 w-full text-left px-2 py-1.5 rounded-lg text-xs font-semibold text-csl-text hover:bg-white hover:text-csl-blue active:bg-csl-blue/10 transition-colors cursor-pointer"
                                     >
-                                      <span className="leading-snug">{course.title}</span>
-                                      <ChevronRight className="hidden sm:block w-3.5 h-3.5 shrink-0 text-csl-gold" />
+                                      <span className="leading-snug line-clamp-1">{course.title}</span>
+                                      <ChevronRight className="w-3 h-3 shrink-0 text-csl-gold" />
                                     </button>
                                   ))}
                                 </div>
@@ -593,10 +627,10 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                         });
                       }
                     }}
-                    className={`group flex flex-col text-left p-3.5 backdrop-blur-md rounded-2xl transition-all duration-300 ${
+                    className={`group flex flex-col text-left p-3 sm:p-3.5 backdrop-blur-md rounded-2xl transition-all duration-200 cursor-pointer ${
                       isItemActive(section.targetId, section.isHomeLink)
-                        ? 'bg-white/95 border-2 border-csl-blue text-csl-blue shadow-md'
-                        : 'bg-white/70 border border-csl-gold/25 hover:border-csl-gold/70 hover:bg-white/95 hover:shadow-lg hover:shadow-csl-gold/10'
+                        ? 'bg-white/95 border-2 border-csl-blue text-csl-blue shadow-sm'
+                        : 'bg-white/75 border border-csl-gold/25 hover:border-csl-gold/60 hover:bg-white/95'
                     }`}
                   >
                     <div className="flex items-center justify-between w-full mb-0.5">
@@ -618,9 +652,10 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
             </motion.div>
 
             {/* Footer Area */}
-            <div className="pt-4 border-t border-csl-gold/20 flex flex-col w-full max-w-lg mx-auto">
+            <div className="pt-3 border-t border-csl-gold/20 flex flex-col w-full max-w-2xl mx-auto shrink-0">
               <button
                 onClick={() => {
+                  setIsMenuOpen(false);
                   window.history.pushState({}, '', '/student-portal');
                   window.dispatchEvent(new PopStateEvent('popstate'));
 
@@ -629,9 +664,9 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                     behavior: 'instant',
                   });
                 }}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white py-3 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all"
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white py-2.5 sm:py-3 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
-                Student Portal
+                <span>Student Portal</span>
                 <ArrowUpRight className="w-4 h-4" />
               </button>
             </div>

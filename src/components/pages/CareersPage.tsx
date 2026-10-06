@@ -531,260 +531,260 @@ export function CareersPage() {
 
         <div className="relative z-10 section-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Side (Col 7): Headline & Introduction */}
-            <div className="lg:col-span-7 flex flex-col items-start max-w-2xl">
-              <div className="section-eyebrow">
-                <span>CAREERS</span>
-                <div></div>
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-csl-text leading-[1.08] tracking-tight mb-5">
-                Build your career <br />
-                <span className="text-csl-blue">with CSL.</span>
-              </h1>
-
-              <p className="text-csl-muted font-medium text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
-                Creator Space Lab offers opportunities for people passionate about technology, continuous learning, professional development, and real-world work across our core multidisciplinary teams.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href="#openings"
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-7 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-lg hover:shadow-csl-blue/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer"
-                >
-                  <span>Explore Open Roles</span>
-                  <ArrowDown className="w-4 h-4" />
-                </a>
-
-                <a
-                  href="#apply-form"
-                  className="inline-flex items-center justify-center gap-2 bg-white border border-csl-gold/40 text-csl-text hover:text-csl-blue hover:border-csl-blue px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 cursor-pointer shadow-xs"
-                >
-                  <span>General Application</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-
-            {/* Right Side (Col 5): Careers at a Glance Card */}
-            <div className="lg:col-span-5 w-full">
-              <div className="relative bg-white/90 backdrop-blur-md border border-csl-gold/35 rounded-3xl p-6 sm:p-7 shadow-lg shadow-csl-blue/5 overflow-hidden">
-                {/* Decorative subtle CSL tint */}
-                <div className="absolute top-0 right-0 w-44 h-44 bg-csl-blue/5 rounded-full blur-2xl pointer-events-none -mr-10 -mt-10" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-csl-gold/10 rounded-full blur-xl pointer-events-none -ml-8 -mb-8" />
-
-                {/* Card Title */}
-                <div className="relative z-10 flex items-center justify-between pb-4 mb-4 border-b border-csl-gold/25">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-csl-blue/10 flex items-center justify-center text-csl-blue">
-                      <Building2 className="w-4 h-4" />
-                    </div>
-                    <h3 className="font-extrabold text-base sm:text-lg text-csl-text tracking-tight">
-                      Careers at a Glance
-                    </h3>
-                  </div>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Hiring Active
-                  </span>
+              {/* Left Side: Headline & Introduction */}
+              <div className="lg:col-span-7 flex flex-col items-start max-w-2xl">
+                <div className="section-eyebrow">
+                  <span>CAREERS</span>
+                  <div></div>
                 </div>
 
-                {/* Compact Info Rows */}
-                <div className="relative z-10 flex flex-col divide-y divide-csl-gold/20 text-xs sm:text-sm">
-                  {/* Row 1: Open Roles */}
-                  <div className="flex items-center justify-between py-3">
-                    <span className="text-csl-muted font-semibold">Open Roles</span>
-                    <span className="font-extrabold text-csl-text text-right">
-                      {careerPositions.length} Positions ({totalOpenings} Openings)
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-csl-text leading-[1.1] tracking-tight mb-4 md:mb-5">
+                  Build your career <br />
+                  <span className="text-csl-blue">with CSL.</span>
+                </h1>
+
+                <p className="text-csl-muted font-medium text-sm sm:text-base md:text-lg leading-relaxed mb-6 md:mb-8 max-w-xl">
+                  Creator Space Lab offers opportunities for people passionate about technology, continuous learning, professional development, and real-world work across our core multidisciplinary teams.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                  <a
+                    href="#openings"
+                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm md:text-base shadow-lg hover:shadow-csl-blue/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer"
+                  >
+                    <span>Explore Open Roles</span>
+                    <ArrowDown className="w-4 h-4" />
+                  </a>
+
+                  <a
+                    href="#apply-form"
+                    className="inline-flex items-center justify-center gap-2 bg-white border border-csl-gold/40 text-csl-text hover:text-csl-blue hover:border-csl-blue px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm md:text-base transition-all duration-300 cursor-pointer shadow-xs"
+                  >
+                    <span>General Application</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Side: Careers at a Glance Card */}
+              <div className="lg:col-span-5 w-full">
+                <div className="relative bg-white/90 backdrop-blur-md border border-csl-gold/35 rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-7 shadow-lg shadow-csl-blue/5 overflow-hidden">
+                  {/* Decorative subtle CSL tint */}
+                  <div className="absolute top-0 right-0 w-44 h-44 bg-csl-blue/5 rounded-full blur-2xl pointer-events-none -mr-10 -mt-10" />
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-csl-gold/10 rounded-full blur-xl pointer-events-none -ml-8 -mb-8" />
+
+                  {/* Card Title */}
+                  <div className="relative z-10 flex items-center justify-between pb-3.5 mb-3.5 md:pb-4 md:mb-4 border-b border-csl-gold/25">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-csl-blue/10 flex items-center justify-center text-csl-blue">
+                        <Building2 className="w-4 h-4" />
+                      </div>
+                      <h3 className="font-extrabold text-base sm:text-lg text-csl-text tracking-tight">
+                        Careers at a Glance
+                      </h3>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Hiring Active
                     </span>
                   </div>
 
-                  {/* Row 2: Interns / Freshers */}
-                  <div className="flex items-center justify-between py-3">
-                    <span className="text-csl-muted font-semibold">Interns / Freshers</span>
-                    <span className="font-extrabold text-csl-blue text-right">
-                      Eligible & Encouraged
-                    </span>
-                  </div>
+                  {/* Compact Info Rows */}
+                  <div className="relative z-10 flex flex-col divide-y divide-csl-gold/20 text-xs sm:text-sm">
+                    {/* Row 1: Open Roles */}
+                    <div className="flex items-center justify-between py-2.5 md:py-3">
+                      <span className="text-csl-muted font-semibold">Open Roles</span>
+                      <span className="font-extrabold text-csl-text text-right">
+                        {careerPositions.length} Positions ({totalOpenings} Openings)
+                      </span>
+                    </div>
 
-                  {/* Row 3: Location */}
-                  <div className="flex items-center justify-between py-3">
-                    <span className="text-csl-muted font-semibold">Location</span>
-                    <span className="font-extrabold text-csl-text text-right flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-csl-blue inline" />
-                      Chennai (OMR)
-                    </span>
-                  </div>
+                    {/* Row 2: Interns / Freshers */}
+                    <div className="flex items-center justify-between py-2.5 md:py-3">
+                      <span className="text-csl-muted font-semibold">Interns / Freshers</span>
+                      <span className="font-extrabold text-csl-blue text-right">
+                        Eligible & Encouraged
+                      </span>
+                    </div>
 
-                  {/* Row 4: Domain */}
-                  <div className="flex items-center justify-between py-3">
-                    <span className="text-csl-muted font-semibold">Domain</span>
-                    <span className="font-extrabold text-csl-text text-right">
-                      Tech • Digital • HR • Business
-                    </span>
-                  </div>
+                    {/* Row 3: Location */}
+                    <div className="flex items-center justify-between py-2.5 md:py-3">
+                      <span className="text-csl-muted font-semibold">Location</span>
+                      <span className="font-extrabold text-csl-text text-right flex items-center gap-1">
+                        <MapPin className="w-3.5 h-3.5 text-csl-blue inline" />
+                        Chennai (OMR)
+                      </span>
+                    </div>
 
-                  {/* Row 5: Work Format */}
-                  <div className="flex items-center justify-between pt-3">
-                    <span className="text-csl-muted font-semibold">Environment</span>
-                    <span className="font-extrabold text-csl-text text-right">
-                      Collaborative & Hands-on
-                    </span>
+                    {/* Row 4: Domain */}
+                    <div className="flex items-center justify-between py-2.5 md:py-3">
+                      <span className="text-csl-muted font-semibold">Domain</span>
+                      <span className="font-extrabold text-csl-text text-right">
+                        Tech • Digital • HR • Business
+                      </span>
+                    </div>
+
+                    {/* Row 5: Work Format */}
+                    <div className="flex items-center justify-between pt-2.5 md:pt-3">
+                      <span className="text-csl-muted font-semibold">Environment</span>
+                      <span className="font-extrabold text-csl-text text-right">
+                        Collaborative & Hands-on
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ==================================================
-          FOREGROUND SLIDING CONTENT WRAPPER
-         ================================================== */}
-      <div className="relative z-10 bg-csl-bg shadow-[0_-25px_60px_rgba(0,0,0,0.06)] border-t border-csl-gold/20">
-        
         {/* ==================================================
-            2. CURRENT OPENINGS SECTION (WITH DETAILED EXPANDABLE JDS)
+            FOREGROUND SLIDING CONTENT WRAPPER
            ================================================== */}
-        <section id="openings" className="relative w-full py-16 md:py-24 section-container">
-          {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-12">
-            <div>
-              <div className="section-eyebrow">
-                <span>CURRENT OPENINGS</span>
-                <div></div>
+        <div className="relative z-10 bg-csl-bg shadow-[0_-25px_60px_rgba(0,0,0,0.06)] border-t border-csl-gold/20">
+          
+          {/* ==================================================
+              2. CURRENT OPENINGS SECTION (WITH DETAILED EXPANDABLE JDS)
+             ================================================== */}
+          <section id="openings" className="relative w-full py-12 md:py-16 lg:py-24 section-container">
+            {/* Section Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-10 lg:mb-12">
+              <div>
+                <div className="section-eyebrow">
+                  <span>CURRENT OPENINGS</span>
+                  <div></div>
+                </div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-csl-text section-heading tracking-tight mb-2.5">
+                  Open roles. Apply directly.
+                </h2>
+                <p className="text-csl-muted font-medium text-xs sm:text-sm md:text-base section-subheading max-w-xl">
+                  Explore our official openings below. Click any role or "View Details" to inspect the job description, key responsibilities, and required qualifications.
+                </p>
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-csl-text section-heading tracking-tight mb-3">
-                Open roles. Apply directly.
-              </h2>
-              <p className="text-csl-muted font-medium text-sm sm:text-base section-subheading max-w-xl">
-                Explore our official openings below. Click any role or "View Details" to inspect the job description, key responsibilities, and required qualifications.
-              </p>
-            </div>
 
-            {/* Category Filter Pills */}
-            <div className="flex flex-wrap items-center gap-2">
-              {categoryTabs.map((tab) => {
-                const isActive = selectedCategory === tab;
-                const count = tab === 'All Roles' 
-                  ? careerPositions.length 
-                  : careerPositions.filter(p => p.category === tab).length;
+              {/* Category Filter Pills */}
+              <div className="flex flex-wrap items-center gap-2">
+                {categoryTabs.map((tab) => {
+                  const isActive = selectedCategory === tab;
+                  const count = tab === 'All Roles' 
+                    ? careerPositions.length 
+                    : careerPositions.filter(p => p.category === tab).length;
 
-                return (
-                  <button
-                    key={tab}
-                    type="button"
-                    onClick={() => setSelectedCategory(tab)}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? 'bg-csl-blue text-white shadow-sm shadow-csl-blue/20'
-                        : 'bg-white/80 text-csl-text border border-csl-gold/25 hover:border-csl-gold hover:text-csl-blue'
-                    }`}
-                  >
-                    <span>{tab}</span>
-                    <span
-                      className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                        isActive ? 'bg-white/20 text-white' : 'bg-csl-gold/15 text-csl-text'
+                  return (
+                    <button
+                      key={tab}
+                      type="button"
+                      onClick={() => setSelectedCategory(tab)}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                        isActive
+                          ? 'bg-csl-blue text-white shadow-sm shadow-csl-blue/20'
+                          : 'bg-white/80 text-csl-text border border-csl-gold/25 hover:border-csl-gold hover:text-csl-blue'
                       }`}
                     >
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Clean Grouped Job-List / Table Presentation */}
-          <div className="bg-white/90 backdrop-blur-sm border border-csl-gold/30 rounded-3xl shadow-sm overflow-hidden">
-            {/* Desktop Table Header */}
-            <div className="hidden md:grid grid-cols-12 gap-4 px-7 py-4 bg-[#FAF7F2] border-b border-csl-gold/25 text-xs font-bold text-csl-muted uppercase tracking-wider">
-              <div className="col-span-5">Role & Department</div>
-              <div className="col-span-3">Experience / Eligibility</div>
-              <div className="col-span-2 text-center">Vacancies</div>
-              <div className="col-span-2 text-right">Action</div>
+                      <span>{tab}</span>
+                      <span
+                        className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                          isActive ? 'bg-white/20 text-white' : 'bg-csl-gold/15 text-csl-text'
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Rows List */}
-            <div className="divide-y divide-csl-gold/20">
-              {filteredPositions.map((pos) => {
-                const Icon = pos.icon;
-                const isExpanded = expandedPositionId === pos.id;
+            {/* Clean Grouped Job-List / Table Presentation */}
+            <div className="bg-white/90 backdrop-blur-sm border border-csl-gold/30 rounded-2xl md:rounded-3xl shadow-sm overflow-hidden">
+              {/* Desktop Table Header (1024px+) */}
+              <div className="hidden lg:grid grid-cols-12 gap-4 px-7 py-4 bg-[#FAF7F2] border-b border-csl-gold/25 text-xs font-bold text-csl-muted uppercase tracking-wider items-center">
+                <div className="col-span-5">Role & Department</div>
+                <div className="col-span-3">Experience / Eligibility</div>
+                <div className="col-span-2 text-center">Vacancies</div>
+                <div className="col-span-2 text-right">Action</div>
+              </div>
 
-                return (
-                  <div
-                    key={pos.id}
-                    className="p-5 sm:p-6 md:px-7 md:py-5 hover:bg-[#FAF8F5]/80 transition-colors duration-200"
-                  >
-                    {/* Desktop Column Layout */}
-                    <div className="hidden md:grid grid-cols-12 gap-4 items-center">
-                      {/* Col 5: Role & Icon & Department */}
-                      <div className="col-span-5 flex items-center gap-3.5 pr-2">
-                        <div className="w-11 h-11 rounded-xl bg-csl-blue/10 border border-csl-blue/20 text-csl-blue flex items-center justify-center shrink-0">
-                          <Icon className="w-5 h-5 stroke-[1.8]" />
+              {/* Rows List */}
+              <div className="divide-y divide-csl-gold/20">
+                {filteredPositions.map((pos) => {
+                  const Icon = pos.icon;
+                  const isExpanded = expandedPositionId === pos.id;
+
+                  return (
+                    <div
+                      key={pos.id}
+                      className="p-4 sm:p-5 md:p-6 lg:px-7 lg:py-5 hover:bg-[#FAF8F5]/80 transition-colors duration-200"
+                    >
+                      {/* Desktop Full 12-Column Row (lg: 1024px+) */}
+                      <div className="hidden lg:grid grid-cols-12 gap-4 items-center">
+                        {/* Col 5: Role & Icon & Department */}
+                        <div className="col-span-5 flex items-center gap-3 pr-2">
+                          <div className="w-11 h-11 rounded-xl bg-csl-blue/10 border border-csl-blue/20 text-csl-blue flex items-center justify-center shrink-0">
+                            <Icon className="w-5 h-5 stroke-[1.8]" />
+                          </div>
+                          <div className="min-w-0">
+                            <button
+                              type="button"
+                              onClick={() => toggleExpandPosition(pos.id)}
+                              className="font-extrabold text-base text-csl-text hover:text-csl-blue transition-colors text-left flex items-center gap-1.5 group/title cursor-pointer leading-snug"
+                            >
+                              <span className="truncate">{pos.title}</span>
+                              <ChevronDown
+                                className={`w-4 h-4 text-csl-muted shrink-0 transition-transform duration-200 group-hover/title:text-csl-blue ${
+                                  isExpanded ? 'rotate-180 text-csl-blue' : ''
+                                }`}
+                              />
+                            </button>
+                            <span className="text-xs font-medium text-csl-muted block">
+                              {pos.category}
+                            </span>
+                          </div>
                         </div>
-                        <div>
+
+                        {/* Col 3: Experience */}
+                        <div className="col-span-3">
+                          <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-[#F4EFE6] text-csl-text border border-csl-gold/20 max-w-full truncate">
+                            {pos.experience}
+                          </span>
+                        </div>
+
+                        {/* Col 2: Openings / Vacancies */}
+                        <div className="col-span-2 text-center">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                            {pos.vacancies}
+                          </span>
+                        </div>
+
+                        {/* Col 2: Actions (Details & Apply Now) */}
+                        <div className="col-span-2 flex items-center justify-end gap-2">
                           <button
                             type="button"
                             onClick={() => toggleExpandPosition(pos.id)}
-                            className="font-extrabold text-base text-csl-text hover:text-csl-blue transition-colors text-left flex items-center gap-1.5 group/title cursor-pointer"
+                            className="px-3 py-2 rounded-xl text-xs font-bold text-csl-muted hover:text-csl-blue hover:bg-csl-blue/5 transition-all cursor-pointer whitespace-nowrap"
                           >
-                            <span>{pos.title}</span>
-                            <ChevronDown
-                              className={`w-4 h-4 text-csl-muted transition-transform duration-200 group-hover/title:text-csl-blue ${
-                                isExpanded ? 'rotate-180 text-csl-blue' : ''
-                              }`}
-                            />
+                            {isExpanded ? 'Hide' : 'Details'}
                           </button>
-                          <span className="text-xs font-medium text-csl-muted">
-                            {pos.category}
-                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleApplyClick(pos.title)}
+                            className="inline-flex items-center justify-center gap-1 px-4 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-md hover:shadow-csl-blue/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer whitespace-nowrap"
+                          >
+                            <span>Apply</span>
+                          </button>
                         </div>
                       </div>
 
-                      {/* Col 3: Experience */}
-                      <div className="col-span-3">
-                        <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-[#F4EFE6] text-csl-text border border-csl-gold/20">
-                          {pos.experience}
-                        </span>
-                      </div>
-
-                      {/* Col 2: Openings / Vacancies */}
-                      <div className="col-span-2 text-center">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                          {pos.vacancies}
-                        </span>
-                      </div>
-
-                      {/* Col 2: Actions (Details & Apply Now) */}
-                      <div className="col-span-2 flex items-center justify-end gap-2">
-                        <button
-                          type="button"
-                          onClick={() => toggleExpandPosition(pos.id)}
-                          className="px-3 py-2 rounded-xl text-xs font-bold text-csl-muted hover:text-csl-blue hover:bg-csl-blue/5 transition-all cursor-pointer"
-                        >
-                          {isExpanded ? 'Hide' : 'Details'}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleApplyClick(pos.title)}
-                          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-md hover:shadow-csl-blue/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
-                        >
-                          <span>Apply</span>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Mobile Stacked Layout */}
-                    <div className="flex flex-col md:hidden gap-3.5">
+                    {/* Mobile & Tablet (iPad Mini) Clean Stacked Layout (<1024px) */}
+                    <div className="flex flex-col lg:hidden gap-3.5">
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-csl-blue/10 border border-csl-blue/20 text-csl-blue flex items-center justify-center shrink-0">
+                          <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-csl-blue/10 border border-csl-blue/20 text-csl-blue flex items-center justify-center shrink-0">
                             <Icon className="w-5 h-5 stroke-[1.8]" />
                           </div>
                           <div>
-                            <h3 className="font-extrabold text-base text-csl-text leading-tight">
+                            <h3 className="font-extrabold text-base md:text-lg text-csl-text leading-tight">
                               {pos.title}
                             </h3>
                             <span className="text-xs font-medium text-csl-muted">
@@ -793,14 +793,14 @@ export function CareersPage() {
                           </div>
                         </div>
 
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
-                          <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                        <span className="inline-flex items-center gap-1 md:gap-1.5 px-2.5 md:px-3 py-1 rounded-full text-[11px] md:text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                           {pos.vacancies}
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between bg-[#FAF7F2] p-2.5 rounded-xl border border-csl-gold/20 text-xs">
-                        <span className="text-csl-muted font-bold uppercase tracking-wider text-[10px]">
+                      <div className="flex items-center justify-between bg-[#FAF7F2] p-2.5 md:p-3 rounded-xl border border-csl-gold/20 text-xs md:text-sm">
+                        <span className="text-csl-muted font-bold uppercase tracking-wider text-[10px] md:text-xs">
                           Experience / Eligibility
                         </span>
                         <span className="font-extrabold text-csl-text">
@@ -808,23 +808,23 @@ export function CareersPage() {
                         </span>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-2 pt-1">
+                      <div className="grid grid-cols-2 gap-2.5 pt-1">
                         <button
                           type="button"
                           onClick={() => toggleExpandPosition(pos.id)}
-                          className="py-2.5 px-3 rounded-xl font-bold text-xs bg-white border border-csl-gold/35 text-csl-text hover:text-csl-blue flex items-center justify-center gap-1 shadow-xs cursor-pointer"
+                          className="py-2.5 md:py-3 px-3 md:px-4 rounded-xl font-bold text-xs md:text-sm bg-white border border-csl-gold/35 text-csl-text hover:text-csl-blue flex items-center justify-center gap-1.5 shadow-xs cursor-pointer transition-colors"
                         >
                           <span>{isExpanded ? 'Hide Details' : 'View Details'}</span>
-                          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                          <ChevronDown className={`w-3.5 h-3.5 md:w-4 md:h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                         </button>
 
                         <button
                           type="button"
                           onClick={() => handleApplyClick(pos.title)}
-                          className="py-2.5 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white flex items-center justify-center gap-1.5 shadow-xs cursor-pointer active:scale-[0.99] transition-all"
+                          className="py-2.5 md:py-3 px-4 rounded-xl font-bold text-xs md:text-sm bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white flex items-center justify-center gap-1.5 shadow-xs cursor-pointer active:scale-[0.99] hover:shadow-md transition-all"
                         >
                           <span>Apply Now</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
+                          <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
                         </button>
                       </div>
                     </div>

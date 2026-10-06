@@ -216,10 +216,13 @@ export function InternshipsSection() {
                     <button
                       type="button"
                       onClick={() => handleOpenApplyModal(track.title)}
-                      className="w-full flex items-center justify-between text-[11px] font-semibold text-csl-muted group-hover:text-csl-blue transition-colors cursor-pointer text-left"
+                      className="w-full flex items-center justify-between py-1 px-1.5 rounded-lg text-xs font-bold text-csl-text hover:text-csl-blue hover:bg-csl-blue/[0.04] transition-colors cursor-pointer text-left"
                     >
-                      <span>Apply for Internship</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-csl-gold" />
+                        Apply
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-csl-blue" />
                     </button>
                   </div>
                 </div>

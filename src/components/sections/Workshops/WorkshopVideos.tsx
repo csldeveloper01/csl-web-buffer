@@ -68,7 +68,7 @@ export function WorkshopVideos() {
             <div></div>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-csl-text section-heading tracking-tight mb-4">
-            Inside Our <span className="text-csl-blue">Workshops</span>
+            Workshop <span className="text-csl-blue">Experiences</span>
           </h2>
           <p className="text-csl-muted font-medium text-sm md:text-base max-w-2xl section-subheading">
             Authentic footage from live university workshops, hands-on programming labs, and interactive seminars conducted across premier engineering and arts colleges.

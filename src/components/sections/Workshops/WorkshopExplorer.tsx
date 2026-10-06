@@ -25,8 +25,9 @@ import {
 import { 
   WORKSHOP_DOMAINS,
   ALL_WORKSHOPS, 
+  FOUNDATION_WORKSHOPS,
   WorkshopItem, 
-  WorkshopLevel 
+  WorkshopLevel
 } from './workshopsData';
 import { CustomDropdown, DropdownOption } from '../../ui/CustomDropdown';
 
@@ -81,9 +82,12 @@ export function WorkshopExplorer({
   const [searchQuery, setSearchQuery] = useState('');
   const [activeModalWorkshop, setActiveModalWorkshop] = useState<WorkshopItem | null>(null);
 
-  // Active domain object if a specific domain is chosen
-  const activeDomain = useMemo(() => {
-    return WORKSHOP_DOMAINS.find((d) => d.id === selectedDomainId) || null;
+  // Domains to display based on domain filter
+  const displayedDomains = useMemo(() => {
+    if (selectedDomainId !== 'all') {
+      return WORKSHOP_DOMAINS.filter((d) => d.id === selectedDomainId);
+    }
+    return WORKSHOP_DOMAINS;
   }, [selectedDomainId]);
 
   // Filter workshops based on Domain, Level, and Search Query
@@ -113,17 +117,6 @@ export function WorkshopExplorer({
       return true;
     });
   }, [selectedDomainId, selectedLevel, searchQuery]);
-
-  // Group workshops of the active domain by level
-  const groupedActiveWorkshops = useMemo(() => {
-    if (!activeDomain) return null;
-    const domainItems = ALL_WORKSHOPS.filter((item) => item.domainId === activeDomain.id);
-    return {
-      Basic: domainItems.filter((i) => i.level === 'Basic'),
-      Intermediate: domainItems.filter((i) => i.level === 'Intermediate'),
-      Advanced: domainItems.filter((i) => i.level === 'Advanced'),
-    };
-  }, [activeDomain]);
 
   // WhatsApp quick enquiry link generator
   const getWhatsAppLink = (workshop: WorkshopItem) => {
@@ -291,12 +284,12 @@ export function WorkshopExplorer({
         )}
 
         {/* ==================================================
-            4. MAIN PRESENTATION: SEARCH RESULTS / ACTIVE DOMAIN / 11 DOMAIN DIRECTORY
+            4. MAIN PRESENTATION: SEARCH RESULTS / 11 DOMAIN DIRECTORY
            ================================================== */}
 
         {/* CASE A: USER SEARCHED KEYWORD */}
         {searchQuery.trim() !== '' ? (
-          <div className="relative z-10">
+          <div className="relative z-10 mb-12">
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs font-mono font-bold text-csl-muted">
                 Found {filteredWorkshops.length} workshops matching "{searchQuery}"
@@ -334,209 +327,180 @@ export function WorkshopExplorer({
               </div>
             )}
           </div>
-        ) : selectedDomainId !== 'all' && activeDomain && groupedActiveWorkshops ? (
-          /* CASE B: ACTIVE DOMAIN EXPANDED (6 Workshops grouped by Basic, Intermediate, Advanced) */
-          <div className="relative z-10">
-            {/* Active Domain Header Card */}
-            <div className="bg-white rounded-2xl p-5 sm:p-6 border border-csl-gold/30 shadow-md mb-8">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-start sm:items-center gap-3.5">
-                  <div className="w-12 h-12 rounded-xl bg-csl-blue/[0.08] border border-csl-blue/20 flex items-center justify-center text-csl-blue shrink-0">
-                    {(() => {
-                      const IconComp = DOMAIN_ICONS[activeDomain.id] || Cpu;
-                      return <IconComp className="w-6 h-6 stroke-[1.8]" />;
-                    })()}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-mono font-extrabold text-csl-gold">
-                        DOMAIN 0{activeDomain.domainNumber}
-                      </span>
-                      {activeDomain.trending && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/15 to-csl-gold/20 text-amber-800 border border-amber-500/35 shadow-2xs">
-                          <Flame className="w-2.5 h-2.5 text-amber-600 fill-amber-500" />
-                          TRENDING
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-lg sm:text-2xl font-extrabold text-csl-text leading-tight">
-                      {activeDomain.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5">
-                  <span className="text-xs font-bold text-csl-blue hidden sm:inline-block">
-                    6 Workshops (2 Basic • 2 Int • 2 Adv)
-                  </span>
-                  <button
-                    onClick={() => onSelectDomain('all')}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-csl-gold/30 hover:border-csl-gold bg-csl-bg text-csl-text text-xs font-bold transition-all cursor-pointer"
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5" />
-                    <span>View All 11 Domains</span>
-                  </button>
-                </div>
-              </div>
-
-              <p className="text-xs sm:text-sm text-csl-muted font-medium mt-3 pt-3 border-t border-csl-gold/15 leading-relaxed">
-                {activeDomain.description}
-              </p>
-            </div>
-
-            {/* 6 Workshops Grouped by Level Tier Columns */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              
-              {/* BASIC TIER */}
-              {(selectedLevel === 'All' || selectedLevel === 'Basic') && (
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between pb-2.5 border-b border-emerald-500/30">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-emerald-800">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                      BASIC TIER (2 MODULES)
-                    </span>
-                    <span className="text-[11px] font-semibold text-csl-muted">Fundamentals</span>
-                  </div>
-                  {groupedActiveWorkshops.Basic.map((workshop) => (
-                    <WorkshopCard 
-                      key={workshop.id} 
-                      workshop={workshop} 
-                      onViewDetails={() => setActiveModalWorkshop(workshop)}
-                      getWhatsAppLink={getWhatsAppLink}
-                      getLevelBadgeClass={getLevelBadgeClass}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* INTERMEDIATE TIER */}
-              {(selectedLevel === 'All' || selectedLevel === 'Intermediate') && (
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between pb-2.5 border-b border-blue-500/30">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-blue-800">
-                      <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-                      INTERMEDIATE TIER (2 MODULES)
-                    </span>
-                    <span className="text-[11px] font-semibold text-csl-muted">Applied Workflows</span>
-                  </div>
-                  {groupedActiveWorkshops.Intermediate.map((workshop) => (
-                    <WorkshopCard 
-                      key={workshop.id} 
-                      workshop={workshop} 
-                      onViewDetails={() => setActiveModalWorkshop(workshop)}
-                      getWhatsAppLink={getWhatsAppLink}
-                      getLevelBadgeClass={getLevelBadgeClass}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* ADVANCED TIER */}
-              {(selectedLevel === 'All' || selectedLevel === 'Advanced') && (
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between pb-2.5 border-b border-purple-500/30">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-extrabold text-purple-800">
-                      <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
-                      ADVANCED TIER (2 MODULES)
-                    </span>
-                    <span className="text-[11px] font-semibold text-csl-muted">Production & AI</span>
-                  </div>
-                  {groupedActiveWorkshops.Advanced.map((workshop) => (
-                    <WorkshopCard 
-                      key={workshop.id} 
-                      workshop={workshop} 
-                      onViewDetails={() => setActiveModalWorkshop(workshop)}
-                      getWhatsAppLink={getWhatsAppLink}
-                      getLevelBadgeClass={getLevelBadgeClass}
-                    />
-                  ))}
-                </div>
-              )}
-
-            </div>
-          </div>
         ) : (
-          /* CASE C: 11 DOMAIN DIRECTORY CARDS (Enhanced Visual Hierarchy) */
-          <div className="relative z-10">
-            <div className="flex items-center justify-between mb-5 px-1">
+          /* CASE B: CLEAN DOMAIN CATALOGUE (ONE CARD PER DOMAIN) */
+          <div className="relative z-10 mb-14">
+            <div className="flex items-center justify-between mb-6 px-1">
               <div>
                 <span className="text-xs font-mono font-extrabold uppercase text-csl-gold tracking-wider block">
-                  11 SPECIALIZATION DOMAINS
+                  {displayedDomains.length === 1 ? 'SELECTED DOMAIN WORKSHOPS' : '11 DOMAIN WORKSHOPS'}
                 </span>
                 <span className="text-xs text-csl-muted font-medium">
-                  Click any domain to inspect its 6 structured workshops
+                  {displayedDomains.length === 1
+                    ? 'Hands-on curriculum structured across Basic, Intermediate, and Advanced tiers'
+                    : 'Structured curriculum across 11 domains with hands-on deliverables'}
                 </span>
               </div>
               <span className="text-xs font-mono font-bold text-csl-blue">
-                11 Domains
+                {displayedDomains.length} {displayedDomains.length === 1 ? 'Domain' : 'Domains'}
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-              {WORKSHOP_DOMAINS.map((domain) => {
+            {/* Grid of Domain Cards - 2 Columns on Desktop & Tablet, 1 on Mobile */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+              {displayedDomains.map((domain) => {
                 const IconComponent = DOMAIN_ICONS[domain.id] || Cpu;
+                const domainWorkshops = ALL_WORKSHOPS.filter((w) => w.domainId === domain.id);
+                const basicWorkshops = domainWorkshops.filter((w) => w.level === 'Basic');
+                const intermediateWorkshops = domainWorkshops.filter((w) => w.level === 'Intermediate');
+                const advancedWorkshops = domainWorkshops.filter((w) => w.level === 'Advanced');
+
+                const showBasic = selectedLevel === 'All' || selectedLevel === 'Basic';
+                const showIntermediate = selectedLevel === 'All' || selectedLevel === 'Intermediate';
+                const showAdvanced = selectedLevel === 'All' || selectedLevel === 'Advanced';
+
                 return (
                   <div
                     key={domain.id}
-                    onClick={() => onSelectDomain(domain.id)}
-                    className="group relative flex flex-col justify-between p-6 bg-white/90 backdrop-blur-sm border border-csl-gold/25 rounded-2xl hover:border-csl-gold/70 hover:bg-white hover:shadow-xl hover:shadow-csl-gold/10 transition-all duration-300 cursor-pointer"
+                    className="group relative flex flex-col justify-between bg-white/95 backdrop-blur-sm rounded-2xl p-6 border border-csl-gold/30 hover:border-csl-gold/80 hover:shadow-lg transition-all duration-300"
                   >
                     <div>
-                      {/* 1. Small Domain Number / Index + Trending Badge */}
-                      <div className="flex items-center justify-between gap-2 mb-3.5">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-lg bg-csl-blue/[0.08] text-csl-blue font-mono font-extrabold text-xs flex items-center justify-center border border-csl-blue/15 group-hover:bg-csl-blue group-hover:text-white transition-all duration-300">
-                            <IconComponent className="w-4 h-4 stroke-[1.8]" />
+                      {/* Top Header: Icon + Title + Trending Badge */}
+                      <div className="flex items-start justify-between gap-3 mb-2.5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-csl-blue/[0.08] text-csl-blue flex items-center justify-center border border-csl-blue/15 group-hover:bg-csl-blue group-hover:text-white transition-all duration-300 shrink-0">
+                            <IconComponent className="w-5 h-5 stroke-[1.8]" />
                           </div>
-                          <span className="text-[11px] font-mono font-extrabold text-csl-gold tracking-wider">
-                            DOMAIN 0{domain.domainNumber}
-                          </span>
+                          <div>
+                            <span className="text-[10px] font-mono font-extrabold text-csl-gold uppercase tracking-wider block">
+                              DOMAIN 0{domain.domainNumber}
+                            </span>
+                            <h3 className="text-base sm:text-lg font-extrabold text-csl-text group-hover:text-csl-blue transition-colors leading-snug">
+                              {domain.title}
+                            </h3>
+                          </div>
                         </div>
 
                         {domain.trending && (
-                          <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/15 to-csl-gold/20 text-amber-800 border border-amber-500/35 shadow-2xs">
+                          <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-800 border border-amber-500/30 shrink-0">
                             <Flame className="w-3 h-3 text-amber-600 fill-amber-500" />
                             <span>TRENDING</span>
                           </span>
                         )}
                       </div>
 
-                      {/* 2. Large Domain Title */}
-                      <h3 className="text-base sm:text-lg font-extrabold text-csl-text group-hover:text-csl-blue transition-colors leading-snug mb-2.5">
-                        {domain.title}
-                      </h3>
-
-                      {/* 3. Short Metadata / Tagline */}
-                      <p className="text-xs text-csl-muted line-clamp-2 leading-relaxed font-medium mb-4">
+                      {/* Short Description */}
+                      <p className="text-xs text-csl-muted line-clamp-2 leading-relaxed font-medium mb-4 pl-0.5">
                         {domain.tagline || domain.description}
                       </p>
+
+                      {/* Compact Curriculum by Level (Basic, Intermediate, Advanced) */}
+                      <div className="space-y-3 pt-3 border-t border-csl-gold/15 mb-5">
+                        
+                        {/* BASIC LEVEL */}
+                        {showBasic && (
+                          <div className="bg-csl-bg/60 rounded-xl p-3 border border-csl-gold/20">
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 uppercase tracking-wider">
+                                BASIC
+                              </span>
+                              <span className="text-[10px] text-csl-muted font-medium">Fundamentals</span>
+                            </div>
+                            <ul className="space-y-1">
+                              {basicWorkshops.map((w) => (
+                                <li key={w.id}>
+                                  <button
+                                    onClick={() => setActiveModalWorkshop(w)}
+                                    className="w-full text-left text-xs font-semibold text-csl-text hover:text-csl-blue transition-colors flex items-center justify-between group/topic cursor-pointer py-0.5"
+                                  >
+                                    <span className="flex items-center gap-2 truncate">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                                      <span className="truncate">{w.title}</span>
+                                    </span>
+                                    <ChevronRight className="w-3 h-3 text-csl-muted group-hover/topic:text-csl-blue group-hover/topic:translate-x-0.5 shrink-0 transition-transform" />
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* INTERMEDIATE LEVEL */}
+                        {showIntermediate && (
+                          <div className="bg-csl-bg/60 rounded-xl p-3 border border-csl-gold/20">
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-800 border border-blue-500/30 uppercase tracking-wider">
+                                INTERMEDIATE
+                              </span>
+                              <span className="text-[10px] text-csl-muted font-medium">Applied Workflows</span>
+                            </div>
+                            <ul className="space-y-1">
+                              {intermediateWorkshops.map((w) => (
+                                <li key={w.id}>
+                                  <button
+                                    onClick={() => setActiveModalWorkshop(w)}
+                                    className="w-full text-left text-xs font-semibold text-csl-text hover:text-csl-blue transition-colors flex items-center justify-between group/topic cursor-pointer py-0.5"
+                                  >
+                                    <span className="flex items-center gap-2 truncate">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+                                      <span className="truncate">{w.title}</span>
+                                    </span>
+                                    <ChevronRight className="w-3 h-3 text-csl-muted group-topic:text-csl-blue group-hover/topic:translate-x-0.5 shrink-0 transition-transform" />
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* ADVANCED LEVEL */}
+                        {showAdvanced && (
+                          <div className="bg-csl-bg/60 rounded-xl p-3 border border-csl-gold/20">
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-800 border border-purple-500/30 uppercase tracking-wider">
+                                ADVANCED
+                              </span>
+                              <span className="text-[10px] text-csl-muted font-medium">Production & AI</span>
+                            </div>
+                            <ul className="space-y-1">
+                              {advancedWorkshops.map((w) => (
+                                <li key={w.id}>
+                                  <button
+                                    onClick={() => setActiveModalWorkshop(w)}
+                                    className="w-full text-left text-xs font-semibold text-csl-text hover:text-csl-blue transition-colors flex items-center justify-between group/topic cursor-pointer py-0.5"
+                                  >
+                                    <span className="flex items-center gap-2 truncate">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
+                                      <span className="truncate">{w.title}</span>
+                                    </span>
+                                    <ChevronRight className="w-3 h-3 text-csl-muted group-hover/topic:text-csl-blue group-hover/topic:translate-x-0.5 shrink-0 transition-transform" />
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                      </div>
                     </div>
 
-                    {/* 4. Basic / Intermediate / Advanced Level Indicators + Workshop Count */}
-                    <div className="pt-3.5 border-t border-csl-gold/15 flex flex-col gap-2.5">
-                      <div className="flex items-center justify-between gap-1 text-[10px] font-mono font-bold">
-                        <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-800 border border-emerald-500/25">
-                          2 Basic
-                        </span>
-                        <span className="text-csl-gold font-bold">→</span>
-                        <span className="px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-800 border border-blue-500/25">
-                          2 Int
-                        </span>
-                        <span className="text-csl-gold font-bold">→</span>
-                        <span className="px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-800 border border-purple-500/25">
-                          2 Adv
-                        </span>
+                    {/* Card Footer: One simple CTA "Explore Workshop" */}
+                    <div className="pt-3 border-t border-csl-gold/15 flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-1.5 text-xs text-csl-muted font-medium">
+                        <BookOpen className="w-3.5 h-3.5 text-csl-gold" />
+                        <span>6 Hands-On Modules</span>
                       </div>
 
-                      <div className="flex items-center justify-between pt-1">
-                        <span className="text-xs font-bold text-csl-blue">
-                          6 Workshops
-                        </span>
-                        <div className="inline-flex items-center gap-1 text-xs font-bold text-csl-deep-blue group-hover:text-csl-blue group-hover:translate-x-0.5 transition-all">
-                          <span>View Modules</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </div>
-                      </div>
+                      <button
+                        onClick={() => {
+                          const firstWorkshop = domainWorkshops[0];
+                          if (firstWorkshop) setActiveModalWorkshop(firstWorkshop);
+                        }}
+                        className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-md hover:scale-102 active:scale-98 transition-all cursor-pointer"
+                      >
+                        <span>Explore Workshop</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   </div>
                 );
@@ -544,6 +508,59 @@ export function WorkshopExplorer({
             </div>
           </div>
         )}
+
+        {/* ==================================================
+            5. COMMON FOUNDATION SECTION (Immediately After Domain Cards)
+           ================================================== */}
+        <div className="relative z-10 mb-10 bg-white/95 rounded-2xl p-5 sm:p-6 border border-csl-gold/30 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-csl-gold/15">
+            <div>
+              <span className="text-[10px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-csl-blue/10 text-csl-blue border border-csl-blue/20 inline-block mb-1">
+                UNIVERSAL PREREQUISITE
+              </span>
+              <h3 className="text-base sm:text-lg font-extrabold text-csl-text">
+                Common Foundation
+              </h3>
+            </div>
+            <p className="text-xs text-csl-muted max-w-sm sm:text-right font-medium">
+              Foundational skills designed to support all engineering and technology domains.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {FOUNDATION_WORKSHOPS.map((fw) => (
+              <div 
+                key={fw.id}
+                className="p-4 rounded-xl bg-csl-bg/70 border border-csl-gold/20 flex flex-col justify-between hover:border-csl-gold/60 transition-colors"
+              >
+                <div>
+                  <div className="flex items-center justify-between text-[11px] font-mono font-bold mb-1.5">
+                    <span className="text-csl-gold">0{fw.number}</span>
+                    <span className="text-csl-muted">{fw.duration}</span>
+                  </div>
+                  <h4 className="text-sm font-extrabold text-csl-text mb-1">
+                    {fw.title}
+                  </h4>
+                  <p className="text-xs text-csl-muted line-clamp-2 mb-3 font-medium">
+                    {fw.description}
+                  </p>
+                </div>
+
+                <a
+                  href={`https://wa.me/919940166299?text=${encodeURIComponent(
+                    `Hi Creator Space Lab! I would like to enquire about the Common Foundation workshop: "${fw.title}". Could you please share the syllabus and booking details?`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-csl-blue text-white text-xs font-bold hover:bg-csl-deep-blue transition-colors cursor-pointer"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>Enquire Syllabus</span>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* ==================================================
             5. WORKSHOP DETAIL MODAL
