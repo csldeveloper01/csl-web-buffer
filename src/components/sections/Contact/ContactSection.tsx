@@ -233,7 +233,7 @@
           <div className="w-full flex flex-col lg:grid lg:grid-cols-[0.85fr_1.15fr] gap-8 items-start">
             
             {/* Message Form Box (order-1 on mobile, right column on desktop) */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8FBFF] to-[#EDF4FE] backdrop-blur-sm border border-csl-gold/30 rounded-3xl p-6 sm:p-7 md:p-9 shadow-sm flex flex-col w-full order-1 lg:order-2">
+            <div id="contact-form" className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8FBFF] to-[#EDF4FE] backdrop-blur-sm border border-csl-gold/30 rounded-3xl p-6 sm:p-7 md:p-9 shadow-sm flex flex-col w-full order-1 lg:order-2 scroll-mt-28">
               <Edit3 
                 className="absolute -right-4 -bottom-4 w-36 h-36 md:w-40 md:h-40 text-white/60 drop-shadow-sm pointer-events-none" 
                 strokeWidth={2.5}

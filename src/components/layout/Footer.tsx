@@ -135,8 +135,9 @@ export function Footer() {
       return;
     }
 
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
+    const rawTargetId = href.replace('#', '');
+    const targetId = rawTargetId === 'contact' ? 'contact-form' : rawTargetId;
+    const element = document.getElementById(targetId) || document.getElementById(rawTargetId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     } else if (href === '#hero' || href === '/') {

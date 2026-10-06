@@ -179,14 +179,17 @@ export function Navbar() {
     return currentPath === `/${targetId}`;
   };
 
-const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
-  // Only Contact can use activeSection.
-  // Navigating anywhere else clears the Contact active state.
-  setActiveSection(targetId === 'contact' ? 'contact' : null);
+  const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
+    // Only Contact can use activeSection.
+    // Navigating anywhere else clears the Contact active state.
+    setActiveSection(targetId === 'contact' ? 'contact' : null);
 
-  setIsMenuOpen(false);
+    setIsMenuOpen(false);
     setIsCoursesOpen(false);
     setIsMobileCoursesOpen(false);
+
+    // If target is contact, scroll specifically to the contact form rather than the section heading
+    const resolvedTargetId = targetId === 'contact' ? 'contact-form' : targetId;
 
     if (isHomeLink || targetId === 'hero') {
       if (window.location.pathname !== '/') {
@@ -203,7 +206,7 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
       window.history.pushState({}, '', '/');
       window.dispatchEvent(new PopStateEvent('popstate'));
       setTimeout(() => {
-        const el = document.getElementById(targetId);
+        const el = document.getElementById(resolvedTargetId) || document.getElementById(targetId);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
         } else {
@@ -213,7 +216,7 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
       return;
     }
 
-    const el = document.getElementById(targetId);
+    const el = document.getElementById(resolvedTargetId) || document.getElementById(targetId);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     } else if (targetId === 'hero') {
