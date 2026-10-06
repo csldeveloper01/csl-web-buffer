@@ -203,8 +203,8 @@ export function CoursesSection() {
             {trendingWorkshopsData.map((workshop) => (
               <a 
                 key={workshop.id} 
-                href={`/workshops#domains`}
-                onClick={(e) => handleNavigateToPath(e, `/workshops#domains`)}
+                href="/workshops"
+                onClick={(e) => handleNavigateToPath(e, '/workshops')}
                 className="group relative flex flex-col p-3.5 sm:p-4 bg-white/75 backdrop-blur-sm border border-csl-gold/25 rounded-2xl hover:border-csl-gold/60 hover:bg-white/95 hover:shadow-md transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-start justify-between gap-3 mb-2">

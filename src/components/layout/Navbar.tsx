@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, BookOpen, Briefcase, Layers, Mail, LayoutGrid, X, Cpu, Info, ArrowUpRight, ChevronDown, ChevronRight, Cloud, Brain, BarChart3, PieChart, Palette, ShieldCheck, CheckSquare, Megaphone } from 'lucide-react';
+import { Home, BookOpen, Briefcase, Layers, Mail, Menu, X, Cpu, Info, ArrowUpRight, ChevronDown, ChevronRight, Cloud, Brain, BarChart3, PieChart, Palette, ShieldCheck, CheckSquare, Megaphone } from 'lucide-react';
 import { coursesCatalog } from '../pages/CoursesPage';
 
 // @ts-ignore
@@ -97,9 +97,6 @@ const courseMenuCategories: CourseMenuCategory[] = COURSE_CATEGORY_ORDER
   }))
   .filter((category) => category.courses.length > 0);
 
-const mobilePrimaryLabels = ['Home', 'About Us', 'Services', 'Contact'];
-
-
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -154,14 +151,33 @@ export function Navbar() {
       setIsMobileCoursesOpen(false);
       handleScroll();
     };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+        setIsCoursesOpen(false);
+        setIsMobileCoursesOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('popstate', handleLocationChange);
     handleScroll();
     return () => {
+      window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('popstate', handleLocationChange);
     };
   }, []);
+
+  const isItemActive = (targetId: string, isHomeLink?: boolean) => {
+    if (isHomeLink || targetId === 'hero') {
+      return currentPath === '/' && !activeSection;
+    }
+    if (targetId === 'contact') {
+      return activeSection === 'contact';
+    }
+    return currentPath === `/${targetId}`;
+  };
 
 const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
   // Only Contact can use activeSection.
@@ -369,79 +385,35 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                       }
                     }}
                     className={`group flex items-center gap-2.5 font-bold text-sm lg:text-[15px] transition-colors cursor-pointer ${
-                      (
-                        (item.targetId === 'about' && currentPath === '/about') ||
-                        (item.targetId === 'courses' && currentPath === '/courses') ||
-                        (item.targetId === 'services' && currentPath === '/services') ||
-                        (item.targetId === 'internships' && currentPath === '/internships') ||
-                        (item.targetId === 'careers' && currentPath === '/careers') ||
-                        (item.targetId === 'workshops' && currentPath === '/workshops') ||
-                         (item.targetId === 'contact' && activeSection === 'contact')
-                      )
+                      isItemActive(item.targetId, item.isHomeLink)
                         ? 'text-csl-blue'
                         : 'text-csl-text hover:text-csl-blue'
                     }`} 
                   >
                     {item.label}
-                    <span className="w-1.5 h-1.5 rounded-[1px] bg-csl-gold transition-all shadow-xs opacity-80 group-hover:opacity-100 group-hover:scale-125" />
+                    <span className={`w-1.5 h-1.5 rounded-[1px] transition-all shadow-xs ${
+                      isItemActive(item.targetId, item.isHomeLink)
+                        ? 'bg-csl-blue opacity-100 scale-125'
+                        : 'bg-csl-gold opacity-80 group-hover:opacity-100 group-hover:scale-125'
+                    }`} />
                   </button>
                 )
             ))}
           </div>
 
-          {/* Mobile Navigation Icons */}
-          {/* Mobile Navigation */}
-          <div className="hidden custom1195:flex items-center justify-end gap-2.5 sm:gap-3.5 ml-auto">
-            {activeNavItems
-              .filter(item => mobilePrimaryLabels.includes(item.label))
-              .map(item => {
-                const Icon = item.icon;
-
-                return (
-                  <button
-                    key={item.label}
-                    onClick={() => {
-                      if (item.isHomeLink) {
-                        setActiveSection(null);
-                        handleScrollTo(item.targetId, true);
-                      } else if (item.targetId === 'contact') {
-                        handleScrollTo('contact');  
-                      } else {
-                        // Clear Contact active state when navigating to another page
-                        setActiveSection(null);
-
-                        // Navigate to standalone page based on targetId
-                        const path = `/${item.targetId}`;
-
-                        setIsMenuOpen(false);
-                        setIsCoursesOpen(false);
-                        setIsMobileCoursesOpen(false);
-
-                        if (window.location.pathname !== path) {
-                          window.history.pushState({}, '', path);
-                          window.dispatchEvent(new PopStateEvent('popstate'));
-                        }
-
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }
-                    }}
-                    aria-label={item.label}
-                    title={item.label}
-                    className="flex items-center justify-center w-9 h-9 rounded-lg text-csl-text hover:text-csl-blue hover:bg-csl-gold/10 transition-colors"
-                  >
-                    <Icon className="w-5 h-5" />
-                  </button>
-                );
-              })}
-
-            {/* More */}
+          {/* Mobile/Tablet Hamburger Button */}
+          <div className="hidden custom1195:flex items-center justify-end gap-3 ml-auto">
             <button
-              onClick={() => setIsMenuOpen(true)}
-              aria-label="More navigation options"
-              title="More"
-              className="flex items-center justify-center w-9 h-9 rounded-lg text-csl-blue bg-csl-blue/10 border border-csl-blue/20 hover:bg-csl-blue hover:text-white transition-all shadow-sm"
+              onClick={() => setIsMenuOpen(prev => !prev)}
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isMenuOpen}
+              className="flex items-center justify-center w-10 h-10 rounded-xl text-csl-text bg-white/80 border border-csl-gold/30 hover:border-csl-gold/70 hover:text-csl-blue hover:bg-white transition-all shadow-xs"
             >
-              <LayoutGrid className="w-5 h-5" />
+              {isMenuOpen ? (
+                <X className="w-5 h-5 text-csl-blue" />
+              ) : (
+                <Menu className="w-5 h-5 text-csl-text" />
+              )}
             </button>
           </div>
           {/* CTA (Desktop) */}
@@ -505,10 +477,12 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                   /* COURSES — Expandable Section with Course List */
                   <div
                     key={section.label}
-                    className={`col-span-1 sm:col-span-2 flex flex-col bg-white/70 backdrop-blur-md border rounded-2xl transition-all duration-300 overflow-hidden ${
-                      isMobileCoursesOpen
-                        ? 'border-csl-gold/70 bg-white/95 shadow-lg shadow-csl-gold/10'
-                        : 'border-csl-gold/25'
+                    className={`col-span-1 sm:col-span-2 flex flex-col backdrop-blur-md rounded-2xl transition-all duration-300 overflow-hidden ${
+                      currentPath === '/courses'
+                        ? 'border-2 border-csl-blue bg-white/95 shadow-md'
+                        : isMobileCoursesOpen
+                        ? 'border border-csl-gold/70 bg-white/95 shadow-lg shadow-csl-gold/10'
+                        : 'border border-csl-gold/25 bg-white/70'
                     }`}
                   >
                     <button
@@ -517,7 +491,9 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                       className="flex flex-col text-left p-3.5 cursor-pointer"
                     >
                       <div className="flex items-center justify-between w-full mb-0.5">
-                        <span className="flex items-center gap-2 text-sm font-bold text-csl-text group-hover:text-csl-blue transition-colors">
+                        <span className={`flex items-center gap-2 text-sm font-bold transition-colors ${
+                          currentPath === '/courses' ? 'text-csl-blue' : 'text-csl-text group-hover:text-csl-blue'
+                        }`}>
                           <BookOpen className="hidden sm:block w-3.5 h-3.5 text-csl-blue" />
                           {section.label}
                         </span>
@@ -616,10 +592,17 @@ const handleScrollTo = (targetId: string, isHomeLink: boolean = false) => {
                           behavior: 'smooth',
                         });
                       }
-                    }}                    className="group flex flex-col text-left p-3.5 bg-white/70 backdrop-blur-md border border-csl-gold/25 hover:border-csl-gold/70 rounded-2xl hover:bg-white/95 hover:shadow-lg hover:shadow-csl-gold/10 transition-all duration-300"
+                    }}
+                    className={`group flex flex-col text-left p-3.5 backdrop-blur-md rounded-2xl transition-all duration-300 ${
+                      isItemActive(section.targetId, section.isHomeLink)
+                        ? 'bg-white/95 border-2 border-csl-blue text-csl-blue shadow-md'
+                        : 'bg-white/70 border border-csl-gold/25 hover:border-csl-gold/70 hover:bg-white/95 hover:shadow-lg hover:shadow-csl-gold/10'
+                    }`}
                   >
                     <div className="flex items-center justify-between w-full mb-0.5">
-                      <span className="text-sm font-bold text-csl-text group-hover:text-csl-blue transition-colors">
+                      <span className={`text-sm font-bold transition-colors ${
+                        isItemActive(section.targetId, section.isHomeLink) ? 'text-csl-blue' : 'text-csl-text group-hover:text-csl-blue'
+                      }`}>
                         {section.label}
                       </span>
                       <span className="text-[10px] font-mono font-bold text-csl-blue">

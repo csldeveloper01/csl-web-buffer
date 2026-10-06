@@ -17,7 +17,11 @@ import {
   GraduationCap,
   ChevronDown,
   CheckCircle2,
-  Clock
+  Clock,
+  CheckSquare,
+  Brain,
+  BarChart3,
+  Cloud
 } from 'lucide-react';
 import { YellowBox } from '../effects/YellowBox';
 import { CareerModal } from '../sections/Careers/CareerModal';
@@ -310,6 +314,151 @@ export const careerPositions: CareerPosition[] = [
     internshipStructure: {
       duration: '6 Months',
       training: 'Month 1, 2: Training Period',
+    },
+  },
+  {
+    id: 'software-testing',
+    title: 'Software Testing',
+    category: 'Technical',
+    experience: 'Freshers / 0-1 year',
+    vacancies: '2 Vacancies',
+    vacancyCount: 2,
+    icon: CheckSquare,
+    summary:
+      'We are looking for detail-oriented and analytical Software Testing / QA Interns to join our engineering team. Candidates will gain hands-on experience in manual testing methodologies, test case design, defect tracking, automated testing frameworks, and API validation across modern web applications.',
+    opportunity:
+      'Successful candidates demonstrating rigorous testing acumen, automation proficiency, and problem-solving skills will have the opportunity to transition into a full-time QA / Test Automation Engineer role.',
+    responsibilities: [
+      'Design, review, and execute manual and automated test cases.',
+      'Perform functional, regression, integration, and UI testing on web and mobile applications.',
+      'Log, track, and verify defects using issue-tracking platforms.',
+      'Conduct API testing using Postman and automated test suites.',
+      'Work closely with developers to understand application requirements and isolate bugs.',
+      'Participate in release readiness verification and documentation of test reports.',
+    ],
+    skills: [
+      'Understanding of SDLC, STLC, and software testing lifecycles.',
+      'Knowledge of manual testing concepts and test case authoring.',
+      'Familiarity with test automation tools (Selenium, Cypress, or Playwright).',
+      'Basic knowledge of API testing using Postman.',
+      'Good analytical, debugging, and defect-reporting skills.',
+      'Familiarity with Git and bug tracking workflows.',
+    ],
+    qualifications: [
+      "Bachelor's or Master's degree in Computer Science, Information Technology, MCA, or related disciplines.",
+      'Freshers and candidates with testing certifications (ISTQB, Selenium) are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Technical Training Period',
+    },
+  },
+  {
+    id: 'ai-ml-architect',
+    title: 'AI/ML Architect',
+    category: 'Technical',
+    experience: 'Freshers / Junior',
+    vacancies: '2 Vacancies',
+    vacancyCount: 2,
+    icon: Brain,
+    summary:
+      'We are looking for innovative and research-minded AI/ML candidates to architect machine learning pipelines, deep learning models, generative AI architectures, and intelligent agent workflows. You will work on real-world datasets, neural architectures, and enterprise AI integrations.',
+    opportunity:
+      'Successful candidates will have the opportunity to transition into a full-time AI/ML Architect or Applied AI Engineer role building intelligent autonomous software systems.',
+    responsibilities: [
+      'Design, develop, and benchmark machine learning and deep learning models.',
+      'Architect RAG (Retrieval-Augmented Generation) pipelines and Agentic AI workflows.',
+      'Preprocess, clean, and analyze complex unstructured and structured datasets.',
+      'Integrate AI/ML models into scalable production web services via REST APIs.',
+      'Evaluate model performance, latency, accuracy, and token optimization.',
+      'Document model architectures, system designs, and experiment results.',
+    ],
+    skills: [
+      'Strong proficiency in Python, NumPy, Pandas, and Scikit-Learn.',
+      'Experience with deep learning frameworks (PyTorch or TensorFlow).',
+      'Understanding of LLMs, Prompt Engineering, RAG architectures, and Vector Databases.',
+      'Knowledge of model deployment, FastAPI/Flask, and containerization.',
+      'Solid mathematical foundation in linear algebra, calculus, and probability.',
+    ],
+    qualifications: [
+      "Bachelor's or Master's degree in Computer Science, AI, Data Science, Mathematics, or related field.",
+      'Candidates with AI projects, Kaggle experience, or published work are highly preferred.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Advanced AI Training Period',
+    },
+  },
+  {
+    id: 'business-analyst',
+    title: 'Business Analyst',
+    category: 'Business',
+    experience: 'Freshers / 0-1 year',
+    vacancies: '2 Vacancies',
+    vacancyCount: 2,
+    icon: BarChart3,
+    summary:
+      'We are looking for structured, inquisitive Business Analyst candidates to bridge business requirements and engineering deliverables. You will collaborate with stakeholders, map out workflow diagrams, document system specifications, and analyze business intelligence metrics.',
+    opportunity:
+      'Successful candidates who show strong analytical acumen, clear communication, and stakeholder management will be offered full-time placement as an Associate Business Analyst.',
+    responsibilities: [
+      'Gather, analyze, and document business and functional software requirements.',
+      'Create process flows, use cases, user stories, and wireframe prototypes.',
+      'Collaborate with development and product teams to ensure requirement alignment.',
+      'Perform data analysis, reporting, and dashboard creation for key metrics.',
+      'Facilitate sprint planning, backlog grooming, and requirement walkthroughs.',
+      'Assist in user acceptance testing (UAT) and validate deliverable quality.',
+    ],
+    skills: [
+      'Basic understanding of Business Analysis methodologies, Agile, and Scrum.',
+      'Strong analytical thinking, problem-solving, and requirements documentation skills.',
+      'Proficiency in Excel, SQL, and business visualization tools (Power BI, Tableau).',
+      'Excellent verbal and written communication and presentation skills.',
+      'Familiarity with Jira, Confluence, and process flow modeling tools.',
+    ],
+    qualifications: [
+      "Bachelor's or Master's degree in Business Administration, Computer Science, IT, Commerce, or related disciplines.",
+      'Freshers with analytical projects or certifications are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Business Analysis Training Period',
+    },
+  },
+  {
+    id: 'devops-engineer',
+    title: 'DevOps Engineer',
+    category: 'Technical',
+    experience: 'Freshers / 0-1 year',
+    vacancies: '2 Vacancies',
+    vacancyCount: 2,
+    icon: Cloud,
+    summary:
+      'We are looking for motivated DevOps Engineer candidates to assist in cloud infrastructure automation, CI/CD pipeline development, containerization, and system reliability engineering. You will work with cloud platforms, Linux environments, and modern deployment tools.',
+    opportunity:
+      'Outstanding performers with solid automation skills and cloud systems knowledge will transition into a full-time Cloud & DevOps Engineer role.',
+    responsibilities: [
+      'Build and maintain automated continuous integration and continuous delivery (CI/CD) pipelines.',
+      'Containerize applications using Docker and manage container lifecycles.',
+      'Assist in provisioning cloud infrastructure on AWS and Linux server management.',
+      'Monitor system performance, application uptime, and logging metrics.',
+      'Implement security best practices and automated deployment scripts.',
+      'Collaborate with developers to streamline deployment and environment configurations.',
+    ],
+    skills: [
+      'Solid foundation in Linux administration and bash/shell scripting.',
+      'Understanding of Docker containerization and Kubernetes concepts.',
+      'Experience with CI/CD tools (GitHub Actions, GitLab CI, or Jenkins).',
+      'Basic knowledge of AWS cloud services (EC2, S3, RDS, IAM).',
+      'Familiarity with Git and version-control workflows.',
+    ],
+    qualifications: [
+      "Bachelor's or Master's degree in Computer Science, IT, Computer Engineering, or related fields.",
+      'Freshers with cloud/DevOps projects or AWS certifications are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      training: 'Month 1, 2: Cloud & DevOps Training Period',
     },
   },
 ];

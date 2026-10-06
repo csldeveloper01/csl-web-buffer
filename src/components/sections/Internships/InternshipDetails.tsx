@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Clock, IndianRupee, Globe2, GraduationCap, CheckCircle2 } from 'lucide-react';
+import { Clock, Globe2, GraduationCap, CheckCircle2 } from 'lucide-react';
 
 export function InternshipDetails() {
   const details = [
@@ -11,16 +11,6 @@ export function InternshipDetails() {
       items: [
         { label: '15 Days Internship', desc: 'Accelerated intensive project curriculum' },
         { label: '30 Days Internship', desc: 'Comprehensive end-to-end practical training' },
-      ],
-    },
-    {
-      icon: IndianRupee,
-      title: 'Paid Internship',
-      subtitle: 'Transparent program fee structure',
-      badge: 'Fees',
-      items: [
-        { label: '₹1,000', desc: 'For 15 Days Internship Program' },
-        { label: '₹2,000', desc: 'For 30 Days Internship Program' },
       ],
     },
     {
@@ -39,6 +29,7 @@ export function InternshipDetails() {
       subtitle: 'Open for students & graduates',
       badge: 'Who Can Apply',
       items: [
+        { label: 'B.E / B.Tech', desc: 'Engineering & technology disciplines' },
         { label: 'B.Sc IT, CS, AI & DS', desc: 'Undergraduate science & tech tracks' },
         { label: 'BCA / BA / B.Com', desc: 'Computer applications & commerce graduates' },
         { label: 'MBA / MCA', desc: 'Postgraduate management & computer disciplines' },
@@ -65,12 +56,12 @@ export function InternshipDetails() {
             Internship <span className="text-csl-blue">Details</span>
           </h2>
           <p className="text-csl-muted font-medium text-sm md:text-base max-w-xl section-subheading mx-auto">
-            Clear guidelines on program durations, fee structures, delivery modes, and academic eligibility requirements.
+            Clear guidelines on program durations, delivery modes, and academic eligibility requirements.
           </p>
         </div>
 
-        {/* 4 Detail Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+        {/* 3 Detail Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
           {details.map((card, idx) => {
             const IconComp = card.icon;
             return (

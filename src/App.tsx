@@ -55,6 +55,9 @@ export function App() {
 
       assetLoader.then(() => {
         setDisplayedPath(targetPath);
+        if (!window.location.hash) {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        }
         setTimeout(() => {
           setIsNavigating(false);
         }, 150);

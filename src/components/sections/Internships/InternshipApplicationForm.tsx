@@ -27,8 +27,8 @@ export const INTERNSHIP_DOMAINS = [
 ];
 
 export const DURATION_OPTIONS = [
-  '15 Days (₹1,000)',
-  '30 Days (₹2,000)',
+  '15 Days',
+  '30 Days',
   'Flexible / Open to Discussion',
 ];
 

@@ -138,7 +138,7 @@ export function InternshipsSection() {
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-bold text-emerald-700">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              Paid Internship
+              Industry Certified
             </span>
           </div>
 
