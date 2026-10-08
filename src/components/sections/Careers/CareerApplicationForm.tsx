@@ -50,13 +50,8 @@ export function CareerApplicationForm({
         ...prev,
         position: initialPosition
       }));
-    } else if (!formData.position && positions.length > 0) {
-      setFormData(prev => ({
-        ...prev,
-        position: prev.position || (positions[0]?.value ?? '')
-      }));
     }
-  }, [initialPosition, positions]);
+  }, [initialPosition]);
 
   // Submitting dots animation loop
   useEffect(() => {
@@ -214,7 +209,7 @@ Message: ${formData.message || 'N/A'}`;
             {/* Position Dropdown */}
             <div className="flex flex-col">
               <label className="text-xs font-bold text-csl-text uppercase tracking-wider mb-1.5 pl-1">
-                Position Applied For <span className="text-red-500">*</span>
+                Select <span className="text-red-500">*</span>
               </label>
               <CustomDropdown
                 name="position"
@@ -228,7 +223,7 @@ Message: ${formData.message || 'N/A'}`;
                   });
                 }}
                 options={positions}
-                placeholder="Select Position *"
+                placeholder="Select"
                 icon={Briefcase}
                 error={errors.position}
               />

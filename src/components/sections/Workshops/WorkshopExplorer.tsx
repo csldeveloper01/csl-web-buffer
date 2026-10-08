@@ -20,12 +20,13 @@ import {
   Briefcase,
   Workflow,
   Palette,
-  Flame
+  ChevronDown
 } from 'lucide-react';
 import { 
   WORKSHOP_DOMAINS,
   ALL_WORKSHOPS, 
   FOUNDATION_WORKSHOPS,
+  WorkshopDomain,
   WorkshopItem, 
   WorkshopLevel
 } from './workshopsData';
@@ -71,6 +72,21 @@ const DOMAIN_ICONS: Record<string, any> = {
   'business-analyst': Briefcase,
   'crm-cloud': Workflow,
   'ui-ux': Palette,
+};
+
+// Plain-English beginner-friendly summaries for each domain
+const DOMAIN_PLAIN_DESCRIPTIONS: Record<string, string> = {
+  'ai-ml': 'Learn how AI helps computers understand information, recognize patterns, and make intelligent decisions.',
+  'full-stack': 'Learn how websites and applications are built from the user interface to the systems working behind the scenes.',
+  'data-analyst': 'Learn how businesses use data to understand what is happening and make better decisions.',
+  'data-science': 'Learn how to analyze complex data, discover hidden trends, and build automated prediction models.',
+  'cyber-security': 'Learn how digital systems are protected from threats, attacks, and unauthorized access.',
+  'cloud-devops': 'Learn how applications are deployed, managed, and kept running reliably in the cloud.',
+  'mobile-dev': 'Learn how mobile apps are designed, coded, and published for iOS and Android smartphones.',
+  'software-testing': 'Learn how software is tested for bugs, speed, and reliability using automated testing tools.',
+  'business-analyst': 'Learn how to translate business needs into practical software requirements and workflows.',
+  'crm-cloud': 'Learn how companies manage client relationships and streamline business processes on Salesforce and ServiceNow.',
+  'ui-ux': 'Learn how to design websites and apps that are easy, clear, and enjoyable to use.',
 };
 
 export function WorkshopExplorer({
@@ -346,165 +362,18 @@ export function WorkshopExplorer({
               </span>
             </div>
 
-            {/* Grid of Domain Cards - 2 Columns on Desktop & Tablet, 1 on Mobile */}
+            {/* Grid of Clean Domain Cards - 2 Columns on Desktop, 1 on Mobile */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
-              {displayedDomains.map((domain) => {
-                const IconComponent = DOMAIN_ICONS[domain.id] || Cpu;
-                const domainWorkshops = ALL_WORKSHOPS.filter((w) => w.domainId === domain.id);
-                const basicWorkshops = domainWorkshops.filter((w) => w.level === 'Basic');
-                const intermediateWorkshops = domainWorkshops.filter((w) => w.level === 'Intermediate');
-                const advancedWorkshops = domainWorkshops.filter((w) => w.level === 'Advanced');
-
-                const showBasic = selectedLevel === 'All' || selectedLevel === 'Basic';
-                const showIntermediate = selectedLevel === 'All' || selectedLevel === 'Intermediate';
-                const showAdvanced = selectedLevel === 'All' || selectedLevel === 'Advanced';
-
-                return (
-                  <div
-                    key={domain.id}
-                    className="group relative flex flex-col justify-between bg-white/95 backdrop-blur-sm rounded-2xl p-6 border border-csl-gold/30 hover:border-csl-gold/80 hover:shadow-lg transition-all duration-300"
-                  >
-                    <div>
-                      {/* Top Header: Icon + Title + Trending Badge */}
-                      <div className="flex items-start justify-between gap-3 mb-2.5">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-csl-blue/[0.08] text-csl-blue flex items-center justify-center border border-csl-blue/15 group-hover:bg-csl-blue group-hover:text-white transition-all duration-300 shrink-0">
-                            <IconComponent className="w-5 h-5 stroke-[1.8]" />
-                          </div>
-                          <div>
-                            <span className="text-[10px] font-mono font-extrabold text-csl-gold uppercase tracking-wider block">
-                              DOMAIN 0{domain.domainNumber}
-                            </span>
-                            <h3 className="text-base sm:text-lg font-extrabold text-csl-text group-hover:text-csl-blue transition-colors leading-snug">
-                              {domain.title}
-                            </h3>
-                          </div>
-                        </div>
-
-                        {domain.trending && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-800 border border-amber-500/30 shrink-0">
-                            <Flame className="w-3 h-3 text-amber-600 fill-amber-500" />
-                            <span>TRENDING</span>
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Short Description */}
-                      <p className="text-xs text-csl-muted line-clamp-2 leading-relaxed font-medium mb-4 pl-0.5">
-                        {domain.tagline || domain.description}
-                      </p>
-
-                      {/* Compact Curriculum by Level (Basic, Intermediate, Advanced) */}
-                      <div className="space-y-3 pt-3 border-t border-csl-gold/15 mb-5">
-                        
-                        {/* BASIC LEVEL */}
-                        {showBasic && (
-                          <div className="bg-csl-bg/60 rounded-xl p-3 border border-csl-gold/20">
-                            <div className="flex items-center justify-between mb-1.5">
-                              <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 uppercase tracking-wider">
-                                BASIC
-                              </span>
-                              <span className="text-[10px] text-csl-muted font-medium">Fundamentals</span>
-                            </div>
-                            <ul className="space-y-1">
-                              {basicWorkshops.map((w) => (
-                                <li key={w.id}>
-                                  <button
-                                    onClick={() => setActiveModalWorkshop(w)}
-                                    className="w-full text-left text-xs font-semibold text-csl-text hover:text-csl-blue transition-colors flex items-center justify-between group/topic cursor-pointer py-0.5"
-                                  >
-                                    <span className="flex items-center gap-2 truncate">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
-                                      <span className="truncate">{w.title}</span>
-                                    </span>
-                                    <ChevronRight className="w-3 h-3 text-csl-muted group-hover/topic:text-csl-blue group-hover/topic:translate-x-0.5 shrink-0 transition-transform" />
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-
-                        {/* INTERMEDIATE LEVEL */}
-                        {showIntermediate && (
-                          <div className="bg-csl-bg/60 rounded-xl p-3 border border-csl-gold/20">
-                            <div className="flex items-center justify-between mb-1.5">
-                              <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-800 border border-blue-500/30 uppercase tracking-wider">
-                                INTERMEDIATE
-                              </span>
-                              <span className="text-[10px] text-csl-muted font-medium">Applied Workflows</span>
-                            </div>
-                            <ul className="space-y-1">
-                              {intermediateWorkshops.map((w) => (
-                                <li key={w.id}>
-                                  <button
-                                    onClick={() => setActiveModalWorkshop(w)}
-                                    className="w-full text-left text-xs font-semibold text-csl-text hover:text-csl-blue transition-colors flex items-center justify-between group/topic cursor-pointer py-0.5"
-                                  >
-                                    <span className="flex items-center gap-2 truncate">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-                                      <span className="truncate">{w.title}</span>
-                                    </span>
-                                    <ChevronRight className="w-3 h-3 text-csl-muted group-topic:text-csl-blue group-hover/topic:translate-x-0.5 shrink-0 transition-transform" />
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-
-                        {/* ADVANCED LEVEL */}
-                        {showAdvanced && (
-                          <div className="bg-csl-bg/60 rounded-xl p-3 border border-csl-gold/20">
-                            <div className="flex items-center justify-between mb-1.5">
-                              <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-800 border border-purple-500/30 uppercase tracking-wider">
-                                ADVANCED
-                              </span>
-                              <span className="text-[10px] text-csl-muted font-medium">Production & AI</span>
-                            </div>
-                            <ul className="space-y-1">
-                              {advancedWorkshops.map((w) => (
-                                <li key={w.id}>
-                                  <button
-                                    onClick={() => setActiveModalWorkshop(w)}
-                                    className="w-full text-left text-xs font-semibold text-csl-text hover:text-csl-blue transition-colors flex items-center justify-between group/topic cursor-pointer py-0.5"
-                                  >
-                                    <span className="flex items-center gap-2 truncate">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                                      <span className="truncate">{w.title}</span>
-                                    </span>
-                                    <ChevronRight className="w-3 h-3 text-csl-muted group-hover/topic:text-csl-blue group-hover/topic:translate-x-0.5 shrink-0 transition-transform" />
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-
-                      </div>
-                    </div>
-
-                    {/* Card Footer: One simple CTA "Explore Workshop" */}
-                    <div className="pt-3 border-t border-csl-gold/15 flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-1.5 text-xs text-csl-muted font-medium">
-                        <BookOpen className="w-3.5 h-3.5 text-csl-gold" />
-                        <span>6 Hands-On Modules</span>
-                      </div>
-
-                      <button
-                        onClick={() => {
-                          const firstWorkshop = domainWorkshops[0];
-                          if (firstWorkshop) setActiveModalWorkshop(firstWorkshop);
-                        }}
-                        className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-xs hover:shadow-md hover:scale-102 active:scale-98 transition-all cursor-pointer"
-                      >
-                        <span>Explore Workshop</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
+              {displayedDomains.map((domain) => (
+                <DomainCard
+                  key={domain.id}
+                  domain={domain}
+                  selectedLevel={selectedLevel}
+                  onSelectWorkshop={(w) => setActiveModalWorkshop(w)}
+                  getLevelBadgeClass={getLevelBadgeClass}
+                  DOMAIN_ICONS={DOMAIN_ICONS}
+                />
+              ))}
             </div>
           </div>
         )}
@@ -657,6 +526,233 @@ export function WorkshopExplorer({
 
       </div>
     </section>
+  );
+}
+
+// ==================================================
+// Clean Domain Card (One Card per Domain with Expandable Topics)
+// ==================================================
+interface DomainCardProps {
+  domain: WorkshopDomain;
+  selectedLevel: WorkshopLevel | 'All';
+  onSelectWorkshop: (w: WorkshopItem) => void;
+  getLevelBadgeClass: (l: WorkshopLevel) => string;
+  DOMAIN_ICONS: Record<string, React.ComponentType<{ className?: string }>>;
+}
+
+function DomainCard({
+  domain,
+  selectedLevel,
+  onSelectWorkshop,
+  getLevelBadgeClass,
+  DOMAIN_ICONS,
+}: DomainCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const IconComponent = DOMAIN_ICONS[domain.id] || Sparkles;
+  const plainDesc = DOMAIN_PLAIN_DESCRIPTIONS[domain.id] || domain.description;
+
+  // Retrieve the 6 workshops for this domain from ALL_WORKSHOPS
+  const domainWorkshops = useMemo(() => {
+    return ALL_WORKSHOPS.filter((w) => w.domainId === domain.id);
+  }, [domain.id]);
+
+  const basicWorkshops = domainWorkshops.filter((w) => w.level === 'Basic');
+  const intermediateWorkshops = domainWorkshops.filter((w) => w.level === 'Intermediate');
+  const advancedWorkshops = domainWorkshops.filter((w) => w.level === 'Advanced');
+
+  // If a specific level filter is selected and the card is expanded, we can filter or highlight
+  const visibleWorkshops = useMemo(() => {
+    if (selectedLevel === 'All') return domainWorkshops;
+    return domainWorkshops.filter((w) => w.level === selectedLevel);
+  }, [domainWorkshops, selectedLevel]);
+
+  return (
+    <div className="bg-white rounded-2xl border border-csl-gold/30 hover:border-csl-gold/70 transition-all duration-300 shadow-xs hover:shadow-md p-6 flex flex-col justify-between">
+      <div>
+        {/* Card Header: Icon, Number, Title, and Trending Badge */}
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-csl-gold/15 border border-csl-gold/30 flex items-center justify-center text-csl-blue shrink-0">
+              <IconComponent className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="text-[10px] font-mono font-bold text-csl-gold uppercase block leading-none mb-1">
+                DOMAIN 0{domain.domainNumber}
+              </span>
+              <h3 className="text-base sm:text-lg font-extrabold text-csl-text leading-snug">
+                {domain.title}
+              </h3>
+            </div>
+          </div>
+
+          {domain.trending && (
+            <span className="shrink-0 text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 border border-amber-500/30">
+              TRENDING
+            </span>
+          )}
+        </div>
+
+        {/* Plain-English Approachable Summary */}
+        <p className="text-xs sm:text-sm text-csl-muted font-medium leading-relaxed mb-4">
+          {plainDesc}
+        </p>
+
+        {/* 3 Skill Level Tier Pills */}
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-800 border border-emerald-500/30">
+            Basic (2)
+          </span>
+          <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-800 border border-blue-500/30">
+            Intermediate (2)
+          </span>
+          <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-800 border border-purple-500/30">
+            Advanced (2)
+          </span>
+          <span className="text-[11px] text-csl-muted font-medium ml-auto">
+            6 Hands-on Modules
+          </span>
+        </div>
+
+        {/* Expandable Workshop Topics List */}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25 }}
+              className="overflow-hidden pt-3 border-t border-csl-gold/15 mb-4"
+            >
+              {selectedLevel === 'All' ? (
+                <div className="space-y-4">
+                  {/* Basic */}
+                  <div>
+                    <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase block mb-1.5">
+                      BASIC LEVEL
+                    </span>
+                    <div className="space-y-1.5">
+                      {basicWorkshops.map((w) => (
+                        <div
+                          key={w.id}
+                          onClick={() => onSelectWorkshop(w)}
+                          className="p-2.5 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold text-csl-text leading-tight">
+                              {w.title}
+                            </span>
+                          </div>
+                          <ChevronRight className="w-3.5 h-3.5 text-csl-muted shrink-0" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Intermediate */}
+                  <div>
+                    <span className="text-[10px] font-mono font-bold text-blue-800 uppercase block mb-1.5">
+                      INTERMEDIATE LEVEL
+                    </span>
+                    <div className="space-y-1.5">
+                      {intermediateWorkshops.map((w) => (
+                        <div
+                          key={w.id}
+                          onClick={() => onSelectWorkshop(w)}
+                          className="p-2.5 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold text-csl-text leading-tight">
+                              {w.title}
+                            </span>
+                          </div>
+                          <ChevronRight className="w-3.5 h-3.5 text-csl-muted shrink-0" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Advanced */}
+                  <div>
+                    <span className="text-[10px] font-mono font-bold text-purple-800 uppercase block mb-1.5">
+                      ADVANCED LEVEL
+                    </span>
+                    <div className="space-y-1.5">
+                      {advancedWorkshops.map((w) => (
+                        <div
+                          key={w.id}
+                          onClick={() => onSelectWorkshop(w)}
+                          className="p-2.5 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold text-csl-text leading-tight">
+                              {w.title}
+                            </span>
+                          </div>
+                          <ChevronRight className="w-3.5 h-3.5 text-csl-muted shrink-0" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-mono font-bold text-csl-blue uppercase block mb-1.5">
+                    {selectedLevel.toUpperCase()} LEVEL WORKSHOPS
+                  </span>
+                  {visibleWorkshops.map((w) => (
+                    <div
+                      key={w.id}
+                      onClick={() => onSelectWorkshop(w)}
+                      className="p-2.5 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${getLevelBadgeClass(w.level)}`}>
+                          {w.level}
+                        </span>
+                        <span className="text-xs font-bold text-csl-text leading-tight">
+                          {w.title}
+                        </span>
+                      </div>
+                      <ChevronRight className="w-3.5 h-3.5 text-csl-muted shrink-0" />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Card Footer Actions */}
+      <div className="pt-4 border-t border-csl-gold/15 flex items-center justify-between gap-3">
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="inline-flex items-center gap-1.5 text-xs font-extrabold text-csl-blue hover:text-csl-deep-blue cursor-pointer transition-colors"
+        >
+          <span>{isExpanded ? 'Hide Topics' : 'Explore Topics'}</span>
+          <ChevronDown
+            className={`w-3.5 h-3.5 transition-transform duration-200 ${
+              isExpanded ? 'rotate-180' : ''
+            }`}
+          />
+        </button>
+
+        <button
+          onClick={() => {
+            // Open modal with the first workshop or toggle expand
+            if (!isExpanded) {
+              setIsExpanded(true);
+            } else if (domainWorkshops.length > 0) {
+              onSelectWorkshop(domainWorkshops[0]);
+            }
+          }}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-csl-blue text-white text-xs font-bold shadow-xs hover:bg-csl-deep-blue hover:scale-102 active:scale-98 transition-all cursor-pointer"
+        >
+          <BookOpen className="w-3.5 h-3.5" />
+          <span>View Curriculum</span>
+        </button>
+      </div>
+    </div>
   );
 }
 
