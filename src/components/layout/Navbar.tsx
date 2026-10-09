@@ -248,14 +248,14 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className={`fixed top-0 inset-x-0 w-full z-50 px-4 sm:px-6 py-2 sm:py-2.5 md:px-8 lg:px-12 flex items-center justify-between bg-csl-bg border border-csl-gold/20 rounded-2xl ${isScrolled ? 'shadow-md' : ''}`}
+          className={`fixed top-0 inset-x-0 w-full z-50 px-3.5 xs:px-4.5 sm:px-6 py-2 sm:py-2.5 md:px-8 lg:px-12 flex items-center justify-between bg-csl-bg border border-csl-gold/20 rounded-2xl ${isScrolled ? 'shadow-md' : ''}`}
         >
           {/* Left side: Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center shrink-0">
             <img
               src={cslTypography}
               alt="Creator Space Lab"
-              className="h-6 sm:h-7 md:h-8 w-auto object-contain cursor-pointer drop-shadow-sm"
+              className="h-6 sm:h-7 md:h-8 w-auto object-contain cursor-pointer drop-shadow-sm max-w-[130px] xs:max-w-none"
               onClick={() => handleScrollTo('hero', true)}
             />
           </div>
@@ -405,7 +405,7 @@ export function Navbar() {
           </div>
 
           {/* Mobile/Tablet Header Actions: [ Student Portal ] then [ Custom Menu Icon ] */}
-          <div className="hidden custom1195:flex items-center justify-end gap-2.5 sm:gap-3 ml-auto shrink-0">
+          <div className="hidden custom1195:flex items-center justify-end gap-1.5 xs:gap-2 sm:gap-2.5 ml-auto shrink-0">
             {/* Student Portal Button FIRST */}
             <button
               onClick={() => {
@@ -416,10 +416,10 @@ export function Navbar() {
                   behavior: 'instant',
                 });
               }}
-              className="group inline-flex items-center justify-center gap-1.5 h-10 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-md hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 cursor-pointer shrink-0 leading-none"
+              className="group inline-flex items-center justify-center gap-1 xs:gap-1.5 h-8.5 px-2.5 xs:px-3 rounded-lg font-bold text-[10px] xs:text-[11px] bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-md hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 cursor-pointer shrink-0 leading-none whitespace-nowrap"
             >
               <span>Student Portal</span>
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="w-3 xs:w-3.5 h-3 xs:h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
 
             {/* Custom Bold Sharp 2x2 Outlined Square Boxes Icon */}
@@ -427,7 +427,7 @@ export function Navbar() {
               onClick={() => setIsMenuOpen(prev => !prev)}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMenuOpen}
-              className="group inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 border border-csl-gold/35 hover:border-csl-blue/60 hover:bg-white transition-all shadow-xs shrink-0 cursor-pointer"
+              className="group inline-flex items-center justify-center w-8.5 h-8.5 rounded-lg bg-white/90 border border-csl-gold/35 hover:border-csl-blue/60 hover:bg-white transition-all shadow-xs shrink-0 cursor-pointer"
             >
               {isMenuOpen ? (
                 <X className="w-5 h-5 text-csl-blue stroke-[2.2]" />

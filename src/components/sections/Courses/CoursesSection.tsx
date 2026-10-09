@@ -121,20 +121,63 @@ export function CoursesSection() {
             Industry-focused courses designed around practical skills, real projects, and technologies that actually get used.
           </p>
 
-          {/* Courses List */}
-          <div className="flex flex-col gap-6">
+          {/* Mobile & Tablet Courses: Compact Course List */}
+          <div className="lg:hidden flex flex-col gap-3 w-full mb-4">
+            {coursesData.map((course) => (
+              <a
+                key={`mobile-${course.id}`}
+                href={`/courses#${course.deepLinkId}`}
+                onClick={(e) => handleNavigateToPath(e, `/courses#${course.deepLinkId}`)}
+                className="group flex items-center justify-between p-3 sm:p-3.5 bg-white/95 rounded-2xl border border-csl-gold/30 hover:border-csl-blue/60 hover:bg-white shadow-xs hover:shadow-md transition-all duration-200 gap-3.5 sm:gap-4 cursor-pointer"
+              >
+                {/* LEFT: Small course thumbnail */}
+                <div className="relative w-[78px] sm:w-[96px] h-[64px] sm:h-[76px] rounded-xl overflow-hidden shrink-0 bg-csl-bg border border-csl-gold/25">
+                  <img 
+                    src={course.image} 
+                    alt={course.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                  />
+                </div>
+
+                {/* CENTER: Course title + short existing description */}
+                <div className="flex flex-col flex-1 min-w-0 pr-1">
+                  <span className="text-[10px] font-mono font-extrabold text-csl-gold leading-none mb-1">
+                    PROGRAM {course.id}
+                  </span>
+                  <h3 className="text-sm sm:text-[15px] font-extrabold text-csl-text group-hover:text-csl-blue transition-colors leading-snug line-clamp-2 mb-0.5">
+                    {course.title}
+                  </h3>
+                  <p className="text-[11px] sm:text-xs text-csl-muted line-clamp-1 font-medium leading-relaxed">
+                    {course.description}
+                  </p>
+                </div>
+
+                {/* RIGHT: Arrow icon */}
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-csl-gold/35 flex items-center justify-center text-csl-text group-hover:bg-csl-blue group-hover:text-white group-hover:border-csl-blue transition-all duration-200 shrink-0">
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </a>
+            ))}
+          </div>
+
+          {/* Desktop Courses List: Retained existing layout */}
+          <div className="hidden lg:flex flex-col gap-6">
             {coursesData.map((course) => (
               <a
                 key={course.id}
                 href={`/courses#${course.deepLinkId}`}
                 onClick={(e) => handleNavigateToPath(e, `/courses#${course.deepLinkId}`)}
-                className="group flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-5 border border-csl-gold/25 rounded-2xl bg-white/60 backdrop-blur-sm hover:border-csl-gold hover:bg-white/90 hover:shadow-lg transition-all duration-300 gap-4 cursor-pointer"
+                className="group flex flex-row items-center justify-between p-4 sm:p-5 border border-csl-gold/25 rounded-2xl bg-white/60 backdrop-blur-sm hover:border-csl-gold hover:bg-white/90 hover:shadow-lg transition-all duration-300 gap-4 cursor-pointer"
               >
                 <div className="flex items-center gap-4 sm:gap-6 flex-1">
                   <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 border border-csl-gold/30">
                     <img 
                       src={course.image} 
                       alt={course.title} 
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                     />
                   </div>
@@ -152,7 +195,7 @@ export function CoursesSection() {
                   </div>
                 </div>
 
-                <div className="self-end sm:self-center w-8 h-8 rounded-full border border-csl-gold/40 flex items-center justify-center text-csl-text group-hover:bg-csl-blue group-hover:text-white group-hover:border-csl-blue transition-all duration-300 shrink-0">
+                <div className="self-center w-8 h-8 rounded-full border border-csl-gold/40 flex items-center justify-center text-csl-text group-hover:bg-csl-blue group-hover:text-white group-hover:border-csl-blue transition-all duration-300 shrink-0">
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </a>

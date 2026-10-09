@@ -159,6 +159,8 @@ export function InternshipsSection() {
               <img 
                 src={internshipsIllustration} 
                 alt="Internships 3D Workspace" 
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,30,80,0.12)]"
               />
             </motion.div>

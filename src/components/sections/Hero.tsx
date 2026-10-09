@@ -5,7 +5,7 @@
   // @ts-expect-error
   import cslBook from '../../../Elements/LOGOS/CSL -BOOK.png';
   // @ts-expect-error
-  import cslC from '../../../Elements/LOGOS/CSL-C.svg';
+  import cslC from '../../../Elements/LOGOS/CSL-C.png';
 
   const navigateToStudentPortal = () => {
     window.history.pushState({}, '', '/student-portal');

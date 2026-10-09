@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Pause, Volume2, VolumeX, Maximize2, MapPin, Sparkles } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize2, MapPin, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { WORKSHOP_VIDEOS, WorkshopVideoItem } from './workshopsData';
 
 export function WorkshopVideos() {
@@ -14,6 +14,31 @@ export function WorkshopVideos() {
   });
 
   const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScrollState = () => {
+    if (!carouselRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  useEffect(() => {
+    checkScrollState();
+    window.addEventListener('resize', checkScrollState);
+    return () => window.removeEventListener('resize', checkScrollState);
+  }, []);
+
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (!carouselRef.current) return;
+    const scrollAmount = carouselRef.current.clientWidth * 0.75;
+    carouselRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  };
 
   const handlePlayToggle = (video: WorkshopVideoItem) => {
     const currentRef = videoRefs.current[video.id];
@@ -181,9 +206,159 @@ export function WorkshopVideos() {
         )}
 
         {/* ==================================================
-            PORTRAIT VIDEOS (4-Card Mobile / Reel Showcase)
+            PORTRAIT VIDEOS
+            Mobile & Tablet: Compact YouTube Shorts-style swipeable carousel with arrow navigation (9:16 aspect ratio, partial next card)
+            Desktop (lg+): Retain existing 4-card grid layout unchanged
            ================================================== */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        {/* MOBILE & TABLET SHORTS FEED HEADER (Title + Navigation Arrows) */}
+        <div className="lg:hidden flex items-center justify-between mb-3 px-1">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-csl-text tracking-wide uppercase font-mono">
+            <span className="w-2 h-2 rounded-full bg-csl-blue animate-pulse"></span>
+            <span>Student & Campus Reels</span>
+          </div>
+          
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => scrollCarousel('left')}
+              disabled={!canScrollLeft}
+              aria-label="Previous reel"
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+                canScrollLeft
+                  ? 'border-csl-gold/40 bg-white text-csl-text shadow-xs hover:border-csl-blue hover:text-csl-blue active:scale-95'
+                  : 'border-csl-gold/15 bg-white/50 text-csl-muted/40 cursor-not-allowed'
+              }`}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => scrollCarousel('right')}
+              disabled={!canScrollRight}
+              aria-label="Next reel"
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+                canScrollRight
+                  ? 'border-csl-gold/40 bg-white text-csl-text shadow-xs hover:border-csl-blue hover:text-csl-blue active:scale-95'
+                  : 'border-csl-gold/15 bg-white/50 text-csl-muted/40 cursor-not-allowed'
+              }`}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* MOBILE & TABLET SHORTS FEED (Swipeable horizontal row with snap + arrow navigation) */}
+        <div
+          ref={carouselRef}
+          onScroll={checkScrollState}
+          className="lg:hidden flex gap-4 overflow-x-auto pb-4 pt-1 px-1 snap-x snap-mandatory scrollbar-none scroll-smooth"
+        >
+          {portraitVideos.map((video) => {
+            const isPlaying = playingId === video.id;
+            const isMuted = mutedStates[video.id] ?? false;
+
+            return (
+              <div
+                key={`mobile-${video.id}`}
+                className="w-[230px] sm:w-[270px] shrink-0 snap-start bg-white rounded-2xl p-3 border border-csl-gold/30 shadow-sm flex flex-col justify-between"
+              >
+                {/* 9:16 Compact Portrait Container */}
+                <div className="relative aspect-[9/16] bg-black rounded-xl overflow-hidden mb-2.5 shadow-inner">
+                  <video
+                    ref={(el) => { 
+                      // If on mobile/tablet, bind ref if desktop ref not active
+                      if (!videoRefs.current[video.id] || window.innerWidth < 1024) {
+                        videoRefs.current[video.id] = el; 
+                      }
+                    }}
+                    src={video.src}
+                    poster={video.poster}
+                    preload="none"
+                    playsInline
+                    controls={isPlaying}
+                    onEnded={() => setPlayingId(null)}
+                    className="w-full h-full object-cover"
+                  />
+
+                  {/* Play Button Overlay */}
+                  {!isPlaying && (
+                    <div
+                      onClick={() => handlePlayToggle(video)}
+                      className="absolute inset-0 bg-black/40 hover:bg-black/30 flex items-center justify-center cursor-pointer transition-all"
+                    >
+                      <div className="w-12 h-12 rounded-full bg-white/95 text-csl-blue flex items-center justify-center shadow-lg active:scale-95 transition-all">
+                        <Play className="w-5 h-5 ml-0.5 text-csl-blue fill-csl-blue" />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Shorts Badge */}
+                  <div className="absolute top-2 left-2 pointer-events-none">
+                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-sm text-white border border-white/20">
+                      {video.tag}
+                    </span>
+                  </div>
+
+                  {/* Controls */}
+                  {isPlaying && (
+                    <div className="absolute top-2 right-2 flex items-center gap-1 z-20">
+                      <button
+                        onClick={(e) => toggleMute(video.id, e)}
+                        className="p-1 rounded-full bg-black/60 text-white"
+                        title={isMuted ? 'Unmute' : 'Mute'}
+                      >
+                        {isMuted ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
+                      </button>
+                      <button
+                        onClick={(e) => handleFullscreen(video.id, e)}
+                        className="p-1 rounded-full bg-black/60 text-white"
+                        title="Fullscreen"
+                      >
+                        <Maximize2 className="w-3 h-3" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Compact Info */}
+                <div>
+                  <div className="flex items-center gap-1 text-[10px] font-bold text-csl-gold font-mono mb-1 truncate">
+                    <MapPin className="w-2.5 h-2.5 text-csl-gold shrink-0" />
+                    <span className="truncate">{video.collegeOrEvent}</span>
+                  </div>
+
+                  <h4 className="text-xs font-extrabold text-csl-text mb-1 line-clamp-1 leading-snug">
+                    {video.title}
+                  </h4>
+
+                  <p className="text-[11px] text-csl-muted line-clamp-2 leading-tight mb-2">
+                    {video.caption}
+                  </p>
+                </div>
+
+                {/* Action button */}
+                <button
+                  onClick={() => handlePlayToggle(video)}
+                  className="w-full py-1.5 rounded-lg border border-csl-gold/30 text-[11px] font-bold text-csl-text flex items-center justify-center gap-1 transition-all cursor-pointer"
+                >
+                  {isPlaying ? (
+                    <>
+                      <Pause className="w-3 h-3 text-csl-gold" />
+                      <span>Pause</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-3 h-3 text-csl-blue fill-csl-blue" />
+                      <span>Play Reel</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* DESKTOP (lg+) GRID VIEW (Retained unchanged) */}
+        <div className="hidden lg:grid lg:grid-cols-4 gap-6">
           {portraitVideos.map((video, idx) => {
             const isPlaying = playingId === video.id;
             const isMuted = mutedStates[video.id] ?? false;
@@ -200,7 +375,11 @@ export function WorkshopVideos() {
                 {/* 9:16 Video Player Container */}
                 <div className="relative aspect-[9/16] bg-black rounded-2xl overflow-hidden mb-4 shadow-inner">
                   <video
-                    ref={(el) => { videoRefs.current[video.id] = el; }}
+                    ref={(el) => { 
+                      if (window.innerWidth >= 1024 || !videoRefs.current[video.id]) {
+                        videoRefs.current[video.id] = el; 
+                      }
+                    }}
                     src={video.src}
                     poster={video.poster}
                     preload="none"

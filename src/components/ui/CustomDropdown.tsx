@@ -45,6 +45,7 @@ export function CustomDropdown({
   const [openUpward, setOpenUpward] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuListRef = useRef<HTMLDivElement>(null);
 
   // Normalize options to DropdownOption objects
   const normalizedOptions: DropdownOption[] = options.map((opt) =>
@@ -53,6 +54,21 @@ export function CustomDropdown({
 
   const selectedOption = normalizedOptions.find((opt) => opt.value === value);
   const displayLabel = selectedOption ? selectedOption.label : '';
+
+  // Center selected option in the scrollable menu when opened
+  useEffect(() => {
+    if (isOpen && menuListRef.current) {
+      const selectedEl = menuListRef.current.querySelector<HTMLElement>('[data-selected="true"]');
+      if (selectedEl) {
+        const container = menuListRef.current;
+        const targetScrollTop = selectedEl.offsetTop - (container.clientHeight / 2) + (selectedEl.clientHeight / 2);
+        container.scrollTo({
+          top: Math.max(0, targetScrollTop),
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [isOpen, value]);
 
   // Determine opening direction based on viewport space
   const handleToggle = () => {
@@ -171,7 +187,7 @@ export function CustomDropdown({
             {/* Subtle CSL Glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-csl-blue/5 via-transparent to-csl-gold/10 pointer-events-none" />
 
-            <div className="relative p-1.5 max-h-64 overflow-y-auto scrollbar-thin">
+            <div ref={menuListRef} className="relative p-1.5 max-h-64 overflow-y-auto scrollbar-thin">
               {normalizedOptions.map((option) => {
                 const isSelected = value === option.value;
 
@@ -179,6 +195,7 @@ export function CustomDropdown({
                   <motion.button
                     key={option.value}
                     type="button"
+                    data-selected={isSelected}
                     whileHover={{ x: 2 }}
                     transition={{ duration: 0.15 }}
                     onClick={() => {

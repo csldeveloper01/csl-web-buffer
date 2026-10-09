@@ -25,7 +25,7 @@ const tracksData = [
     image: 'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=2006&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     techs: ['Python', 'TensorFlow', 'PyTorch', 'Scikit-Learn', 'Neural Networks', 'MLOps'],
     duration: '15 or 30 Days',
-    mode: 'Online / Offline',
+    mode: 'Hybrid',
     projects: [
       'Supervised & unsupervised predictive models',
       'Computer vision classification pipeline',
@@ -39,7 +39,7 @@ const tracksData = [
     image: 'https://images.unsplash.com/photo-1677691824188-3e266886cb27?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     techs: ['LLMs', 'Prompt Engineering', 'RAG Pipelines', 'OpenAI API', 'LangChain', 'Vector DBs'],
     duration: '15 or 30 Days',
-    mode: 'Online / Offline',
+    mode: 'Hybrid',
     projects: [
       'Context-aware knowledge base assistant',
       'Advanced prompt chaining pipeline',
@@ -53,7 +53,7 @@ const tracksData = [
     image: 'https://images.unsplash.com/photo-1746286720984-72f386e1872e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     techs: ['AI Agents', 'Autonomous Workflows', 'Tool Calling', 'CrewAI', 'LangGraph', 'Automations'],
     duration: '15 or 30 Days',
-    mode: 'Online / Offline',
+    mode: 'Hybrid',
     projects: [
       'Multi-agent collaborative research system',
       'Autonomous task executor with external tool calling',
@@ -67,7 +67,7 @@ const tracksData = [
     image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=600&h=450',
     techs: ['React', 'Node.js', 'Next.js', 'PostgreSQL', 'Tailwind CSS', 'REST APIs'],
     duration: '15 or 30 Days',
-    mode: 'Online / Offline',
+    mode: 'Hybrid',
     projects: [
       'Responsive web portal with secure authentication',
       'Full-stack dynamic data-driven dashboard',
@@ -81,7 +81,7 @@ const tracksData = [
     image: 'https://images.unsplash.com/photo-1690627931320-16ac56eb2588?q=80&w=2093&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     techs: ['AWS', 'Docker', 'Kubernetes', 'CI/CD Pipelines', 'Linux', 'Terraform'],
     duration: '15 or 30 Days',
-    mode: 'Online / Offline',
+    mode: 'Hybrid',
     projects: [
       'Automated GitHub Actions build & deploy pipeline',
       'Containerized multi-service Docker deployment',
@@ -95,7 +95,7 @@ const tracksData = [
     image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600&h=450',
     techs: ['Selenium', 'Cypress', 'API Testing', 'Postman', 'TestNG', 'QA Frameworks'],
     duration: '15 or 30 Days',
-    mode: 'Online / Offline',
+    mode: 'Hybrid',
     projects: [
       'Automated UI test suite for web applications',
       'Comprehensive REST API integration test collection',
@@ -109,7 +109,7 @@ const tracksData = [
     image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=600&h=450',
     techs: ['Figma', 'User Research', 'Design Systems', 'Wireframing', 'Prototyping', 'Usability'],
     duration: '15 or 30 Days',
-    mode: 'Online / Offline',
+    mode: 'Hybrid',
     projects: [
       'Complete product design system and component library',
       'High-fidelity interactive prototype with micro-interactions',
@@ -123,7 +123,7 @@ const tracksData = [
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600&h=450',
     techs: ['Power BI', 'SQL', 'Python', 'Excel', 'Tableau', 'Data Modeling'],
     duration: '15 or 30 Days',
-    mode: 'Online / Offline',
+    mode: 'Hybrid',
     projects: [
       'Interactive Power BI executive performance dashboard',
       'Relational database querying and data modeling',
@@ -258,8 +258,59 @@ export function InternshipsPage() {
             </p>
           </div>
 
-          {/* Tracks Cards Grid */}
-          <div className="flex flex-col gap-6 md:gap-8 w-full">
+          {/* MOBILE & TABLET: COMPACT INTERNSHIP TRACK LIST (lg:hidden) */}
+          <div className="lg:hidden flex flex-col gap-3 w-full">
+            {tracksData.map((track) => (
+              <div
+                key={`mobile-${track.id}`}
+                onClick={() => handleSelectTrack(track.title)}
+                className="group flex items-center justify-between p-3 bg-white/95 rounded-2xl border border-csl-gold/30 hover:border-csl-blue/60 hover:bg-white shadow-xs hover:shadow-md transition-all duration-200 gap-3 cursor-pointer"
+              >
+                {/* LEFT: Small Thumbnail with ID badge */}
+                <div className="relative w-[76px] sm:w-[92px] h-[66px] sm:h-[76px] rounded-xl overflow-hidden shrink-0 bg-csl-bg border border-csl-gold/25">
+                  <img 
+                    src={track.image} 
+                    alt={track.title} 
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                  />
+                  <div className="absolute top-1 left-1 bg-csl-deep-blue/90 px-1.5 py-0.5 rounded-md border border-csl-blue/30">
+                    <span className="text-[9px] font-extrabold text-csl-gold font-mono leading-none">
+                      {track.id}
+                    </span>
+                  </div>
+                </div>
+
+                {/* CENTER: Track title + short description + duration/mode */}
+                <div className="flex flex-col flex-1 min-w-0 pr-1">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="text-[9px] font-mono font-extrabold text-csl-gold leading-none">
+                      {track.duration}
+                    </span>
+                    <span className="text-[9px] text-csl-muted leading-none">•</span>
+                    <span className="text-[9px] font-medium text-csl-blue leading-none">
+                      {track.mode}
+                    </span>
+                  </div>
+                  <h3 className="text-xs sm:text-[13px] font-extrabold text-csl-text group-hover:text-csl-blue transition-colors leading-snug line-clamp-1 mb-0.5">
+                    {track.title}
+                  </h3>
+                  <p className="text-[10px] sm:text-[11px] text-csl-muted line-clamp-2 font-medium leading-relaxed">
+                    {track.description}
+                  </p>
+                </div>
+
+                {/* RIGHT: Arrow Icon */}
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-csl-gold/35 flex items-center justify-center text-csl-text group-hover:bg-csl-blue group-hover:text-white group-hover:border-csl-blue transition-all duration-200 shrink-0">
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* DESKTOP: EXISTING TRACK CARDS (hidden lg:flex) */}
+          <div className="hidden lg:flex flex-col gap-6 md:gap-8 w-full">
             {tracksData.map((track, idx) => (
               <motion.div
                 key={track.id}

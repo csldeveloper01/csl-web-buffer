@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, 
@@ -9,7 +9,6 @@ import {
   MessageCircle, 
   BookOpen, 
   ChevronRight,
-  ArrowLeft,
   Layers,
   Cpu,
   BarChart3,
@@ -20,7 +19,8 @@ import {
   Briefcase,
   Workflow,
   Palette,
-  ChevronDown
+  ChevronDown,
+  Filter
 } from 'lucide-react';
 import { 
   WORKSHOP_DOMAINS,
@@ -97,6 +97,26 @@ export function WorkshopExplorer({
   const [selectedLevel, setSelectedLevel] = useState<WorkshopLevel | 'All'>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeModalWorkshop, setActiveModalWorkshop] = useState<WorkshopItem | null>(null);
+  const [expandedWorkshopId, setExpandedWorkshopId] = useState<string | null>(null);
+  const tagsContainerRef = useRef<HTMLDivElement>(null);
+  const tagButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  useEffect(() => {
+    const activeBtn = tagButtonRefs.current[selectedDomainId];
+    const container = tagsContainerRef.current;
+    if (activeBtn && container) {
+      const containerWidth = container.clientWidth;
+      const targetScrollLeft = activeBtn.offsetLeft + activeBtn.offsetWidth / 2 - containerWidth / 2;
+      container.scrollTo({
+        left: targetScrollLeft,
+        behavior: 'smooth'
+      });
+    }
+  }, [selectedDomainId]);
+
+  const handleToggleExpandCard = (domainId: string) => {
+    setExpandedWorkshopId((prev) => (prev === domainId ? null : domainId));
+  };
 
   // Domains to display based on domain filter
   const displayedDomains = useMemo(() => {
@@ -196,27 +216,30 @@ export function WorkshopExplorer({
         {/* ==================================================
             3. WORKSHOP FILTER AREA (Enhanced Hierarchy & Proper Stacking)
            ================================================== */}
-        <div className="relative z-30 bg-white/95 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-csl-gold/30 shadow-md mb-8">
+        {/* ==================================================
+            3. WORKSHOP FILTER AREA (Compact Mobile/Tablet + Structured Desktop)
+           ================================================== */}
+        <div className="relative z-30 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 sm:p-5 md:p-6 border border-csl-gold/30 shadow-md mb-6 md:mb-8">
           
-          {/* Filter Area Title & Supporting Text */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-4 pb-3 border-b border-csl-gold/15">
+          {/* Filter Area Title & Supporting Text (Compact on Mobile/Tablet) */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1 sm:gap-2 mb-3 sm:mb-4 pb-2.5 sm:pb-3 border-b border-csl-gold/15">
             <div>
-              <span className="text-[10px] sm:text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider block">
+              <span className="text-[9px] sm:text-[10px] md:text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider block">
                 EXPLORE BY DOMAIN & LEVEL
               </span>
-              <h3 className="text-sm sm:text-base font-extrabold text-csl-text">
+              <h3 className="text-xs sm:text-sm md:text-base font-extrabold text-csl-text">
                 Filter by Technology Domain and Skill Level
               </h3>
             </div>
-            <span className="text-xs text-csl-muted font-medium">
+            <span className="text-[11px] sm:text-xs text-csl-muted font-medium">
               11 Domains • 66 Specialized Modules
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
-            
-            {/* Domain Dropdown Column (relative z-20 to layer above level dropdown) */}
-            <div className="md:col-span-5 flex flex-col relative z-20">
+          {/* DESKTOP LAYOUT (lg: 1024px+) - Exactly Preserved */}
+          <div className="hidden lg:grid lg:grid-cols-12 gap-4 items-end">
+            {/* Domain Dropdown Column */}
+            <div className="lg:col-span-5 flex flex-col relative z-20">
               <label className="text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <Layers className="w-3.5 h-3.5 text-csl-blue" />
                 <span>Domain</span>
@@ -230,8 +253,8 @@ export function WorkshopExplorer({
               />
             </div>
 
-            {/* Level Dropdown Column (relative z-10) */}
-            <div className="md:col-span-3 flex flex-col relative z-10">
+            {/* Level Dropdown Column */}
+            <div className="lg:col-span-3 flex flex-col relative z-10">
               <label className="text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-csl-gold" />
                 <span>Level</span>
@@ -245,7 +268,7 @@ export function WorkshopExplorer({
             </div>
 
             {/* Search Input Column */}
-            <div className="md:col-span-4 flex flex-col relative">
+            <div className="lg:col-span-4 flex flex-col relative">
               <label className="text-[11px] font-mono font-bold text-csl-gold uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <Search className="w-3.5 h-3.5 text-csl-blue" />
                 <span>Search Topics</span>
@@ -269,28 +292,107 @@ export function WorkshopExplorer({
                 )}
               </div>
             </div>
-
           </div>
+
+          {/* MOBILE & TABLET COMPACT LAYOUT (<1024px) - Clean 2-Row Layout */}
+          <div className="flex flex-col gap-2.5 lg:hidden">
+            {/* Row 1: Search Field + Domain Filter side-by-side or stacked cleanly */}
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-center">
+              {/* Search Field (7 cols on tablet sm:, full width on phone) */}
+              <div className="sm:col-span-7 relative h-10 flex items-center">
+                <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-csl-muted pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Search topics (e.g. Python, RAG)..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full h-full pl-10 pr-9 py-2 rounded-xl bg-white/95 border border-csl-gold/30 text-xs font-medium text-csl-text placeholder:text-csl-muted/80 placeholder:font-normal focus:outline-none focus:ring-1 focus:ring-csl-blue focus:border-csl-blue shadow-2xs leading-normal"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-csl-muted hover:text-csl-text p-1 cursor-pointer flex items-center justify-center"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+
+              {/* Domain Dropdown (5 cols on tablet sm:, full width on phone) */}
+              <div className="sm:col-span-5 relative z-20">
+                <CustomDropdown
+                  value={selectedDomainId}
+                  onChange={(val) => onSelectDomain(val)}
+                  options={DOMAIN_OPTIONS}
+                  placeholder="All Domains"
+                  icon={Layers}
+                  triggerClassName="!h-10 !py-0 !text-xs !bg-white/95"
+                />
+              </div>
+            </div>
+
+            {/* Row 2: Level Filter Pills for Quick One-Tap Filtering on Mobile/Tablet */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pt-0.5 pb-0.5 scrollbar-none">
+              <span className="text-[10px] font-mono font-bold text-csl-muted uppercase mr-1 shrink-0 flex items-center gap-1">
+                <Filter className="w-3 h-3 text-csl-gold" />
+                <span>Level:</span>
+              </span>
+              {(['All', 'Basic', 'Intermediate', 'Advanced'] as const).map((lvl) => {
+                const isActive = selectedLevel === lvl;
+                return (
+                  <button
+                    key={lvl}
+                    type="button"
+                    onClick={() => setSelectedLevel(lvl)}
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition-all cursor-pointer ${
+                      isActive
+                        ? lvl === 'Basic'
+                          ? 'bg-emerald-600 text-white shadow-2xs'
+                          : lvl === 'Intermediate'
+                          ? 'bg-blue-600 text-white shadow-2xs'
+                          : lvl === 'Advanced'
+                          ? 'bg-purple-600 text-white shadow-2xs'
+                          : 'bg-csl-blue text-white shadow-2xs'
+                        : 'bg-white/90 text-csl-muted hover:text-csl-text border border-csl-gold/25'
+                    }`}
+                  >
+                    {lvl === 'All' ? 'All Levels' : lvl}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
 
-        {/* Quick Domain Switcher Ribbon (when inside a specific domain) */}
-        {selectedDomainId !== 'all' && searchQuery.trim() === '' && (
-          <div className="relative z-10 flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
+        {/* Horizontal Domain Filter Tag Row (Desktop & Mobile) */}
+        {searchQuery.trim() === '' && (
+          <div 
+            ref={tagsContainerRef}
+            className="relative z-10 flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none"
+          >
             <button
+              ref={(el) => { tagButtonRefs.current['all'] = el; }}
               onClick={() => onSelectDomain('all')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-csl-gold/30 bg-white text-csl-text hover:text-csl-blue hover:border-csl-gold shrink-0 transition-colors cursor-pointer"
+              className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold border shrink-0 transition-all cursor-pointer ${
+                selectedDomainId === 'all'
+                  ? 'bg-csl-blue text-white border-csl-blue shadow-xs'
+                  : 'bg-white/90 text-csl-text hover:text-csl-blue hover:border-csl-gold border-csl-gold/30'
+              }`}
             >
-              <ArrowLeft className="w-3 h-3" />
+              <Layers className="w-3.5 h-3.5" />
               <span>All 11 Domains</span>
             </button>
             {WORKSHOP_DOMAINS.map((dom) => (
               <button
                 key={dom.id}
+                ref={(el) => { tagButtonRefs.current[dom.id] = el; }}
                 onClick={() => onSelectDomain(dom.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition-all cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all cursor-pointer ${
                   selectedDomainId === dom.id
-                    ? 'bg-csl-blue text-white shadow-xs'
-                    : 'bg-white/80 text-csl-muted hover:text-csl-text border border-csl-gold/20'
+                    ? 'bg-csl-blue text-white border border-csl-blue shadow-xs'
+                    : 'bg-white/90 text-csl-muted hover:text-csl-text border border-csl-gold/25 hover:border-csl-gold/60'
                 }`}
               >
                 0{dom.domainNumber}. {dom.shortTitle}
@@ -363,11 +465,13 @@ export function WorkshopExplorer({
             </div>
 
             {/* Grid of Clean Domain Cards - 2 Columns on Desktop, 1 on Mobile */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full items-start">
               {displayedDomains.map((domain) => (
                 <DomainCard
                   key={domain.id}
                   domain={domain}
+                  isExpanded={expandedWorkshopId === domain.id}
+                  onToggleExpand={() => handleToggleExpandCard(domain.id)}
                   selectedLevel={selectedLevel}
                   onSelectWorkshop={(w) => setActiveModalWorkshop(w)}
                   getLevelBadgeClass={getLevelBadgeClass}
@@ -534,6 +638,8 @@ export function WorkshopExplorer({
 // ==================================================
 interface DomainCardProps {
   domain: WorkshopDomain;
+  isExpanded: boolean;
+  onToggleExpand: () => void;
   selectedLevel: WorkshopLevel | 'All';
   onSelectWorkshop: (w: WorkshopItem) => void;
   getLevelBadgeClass: (l: WorkshopLevel) => string;
@@ -542,12 +648,13 @@ interface DomainCardProps {
 
 function DomainCard({
   domain,
+  isExpanded,
+  onToggleExpand,
   selectedLevel,
   onSelectWorkshop,
   getLevelBadgeClass,
   DOMAIN_ICONS,
 }: DomainCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
   const IconComponent = DOMAIN_ICONS[domain.id] || Sparkles;
   const plainDesc = DOMAIN_PLAIN_DESCRIPTIONS[domain.id] || domain.description;
 
@@ -567,49 +674,49 @@ function DomainCard({
   }, [domainWorkshops, selectedLevel]);
 
   return (
-    <div className="bg-white rounded-2xl border border-csl-gold/30 hover:border-csl-gold/70 transition-all duration-300 shadow-xs hover:shadow-md p-6 flex flex-col justify-between">
+    <div className="bg-white rounded-2xl md:rounded-3xl border border-csl-gold/30 hover:border-csl-gold/70 transition-all duration-300 shadow-xs hover:shadow-md p-4 sm:p-5 md:p-6 flex flex-col justify-between">
       <div>
         {/* Card Header: Icon, Number, Title, and Trending Badge */}
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-csl-gold/15 border border-csl-gold/30 flex items-center justify-center text-csl-blue shrink-0">
-              <IconComponent className="w-5 h-5" />
+        <div className="flex items-start justify-between gap-2.5 sm:gap-3 mb-2.5 sm:mb-3">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-csl-gold/15 border border-csl-gold/30 flex items-center justify-center text-csl-blue shrink-0">
+              <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <span className="text-[10px] font-mono font-bold text-csl-gold uppercase block leading-none mb-1">
+            <div className="min-w-0">
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold text-csl-gold uppercase block leading-none mb-0.5 sm:mb-1">
                 DOMAIN 0{domain.domainNumber}
               </span>
-              <h3 className="text-base sm:text-lg font-extrabold text-csl-text leading-snug">
+              <h3 className="text-sm sm:text-base md:text-lg font-extrabold text-csl-text leading-snug truncate sm:whitespace-normal">
                 {domain.title}
               </h3>
             </div>
           </div>
 
           {domain.trending && (
-            <span className="shrink-0 text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 border border-amber-500/30">
+            <span className="shrink-0 text-[9px] sm:text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 border border-amber-500/30">
               TRENDING
             </span>
           )}
         </div>
 
         {/* Plain-English Approachable Summary */}
-        <p className="text-xs sm:text-sm text-csl-muted font-medium leading-relaxed mb-4">
+        <p className="text-xs sm:text-sm text-csl-muted font-medium leading-relaxed mb-3 sm:mb-4 line-clamp-3 sm:line-clamp-none">
           {plainDesc}
         </p>
 
         {/* 3 Skill Level Tier Pills */}
-        <div className="flex flex-wrap items-center gap-2 mb-4">
-          <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-800 border border-emerald-500/30">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3.5 sm:mb-4">
+          <span className="text-[9px] sm:text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-800 border border-emerald-500/30">
             Basic (2)
           </span>
-          <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-800 border border-blue-500/30">
+          <span className="text-[9px] sm:text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-800 border border-blue-500/30">
             Intermediate (2)
           </span>
-          <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-800 border border-purple-500/30">
+          <span className="text-[9px] sm:text-[10px] font-bold font-mono px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-800 border border-purple-500/30">
             Advanced (2)
           </span>
-          <span className="text-[11px] text-csl-muted font-medium ml-auto">
-            6 Hands-on Modules
+          <span className="text-[10px] sm:text-[11px] text-csl-muted font-medium ml-auto">
+            6 Modules
           </span>
         </div>
 
@@ -621,13 +728,13 @@ function DomainCard({
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25 }}
-              className="overflow-hidden pt-3 border-t border-csl-gold/15 mb-4"
+              className="overflow-hidden pt-3 border-t border-csl-gold/15 mb-3 sm:mb-4"
             >
               {selectedLevel === 'All' ? (
-                <div className="space-y-4">
+                <div className="space-y-3.5 sm:space-y-4">
                   {/* Basic */}
                   <div>
-                    <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase block mb-1.5">
+                    <span className="text-[9px] sm:text-[10px] font-mono font-bold text-emerald-800 uppercase block mb-1 sm:mb-1.5">
                       BASIC LEVEL
                     </span>
                     <div className="space-y-1.5">
@@ -635,10 +742,10 @@ function DomainCard({
                         <div
                           key={w.id}
                           onClick={() => onSelectWorkshop(w)}
-                          className="p-2.5 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors"
+                          className="p-2.5 sm:p-3 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors active:scale-[0.99]"
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-csl-text leading-tight">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="text-xs font-bold text-csl-text leading-tight line-clamp-1 sm:line-clamp-none">
                               {w.title}
                             </span>
                           </div>
@@ -650,7 +757,7 @@ function DomainCard({
 
                   {/* Intermediate */}
                   <div>
-                    <span className="text-[10px] font-mono font-bold text-blue-800 uppercase block mb-1.5">
+                    <span className="text-[9px] sm:text-[10px] font-mono font-bold text-blue-800 uppercase block mb-1 sm:mb-1.5">
                       INTERMEDIATE LEVEL
                     </span>
                     <div className="space-y-1.5">
@@ -658,10 +765,10 @@ function DomainCard({
                         <div
                           key={w.id}
                           onClick={() => onSelectWorkshop(w)}
-                          className="p-2.5 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors"
+                          className="p-2.5 sm:p-3 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors active:scale-[0.99]"
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-csl-text leading-tight">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="text-xs font-bold text-csl-text leading-tight line-clamp-1 sm:line-clamp-none">
                               {w.title}
                             </span>
                           </div>
@@ -673,7 +780,7 @@ function DomainCard({
 
                   {/* Advanced */}
                   <div>
-                    <span className="text-[10px] font-mono font-bold text-purple-800 uppercase block mb-1.5">
+                    <span className="text-[9px] sm:text-[10px] font-mono font-bold text-purple-800 uppercase block mb-1 sm:mb-1.5">
                       ADVANCED LEVEL
                     </span>
                     <div className="space-y-1.5">
@@ -681,10 +788,10 @@ function DomainCard({
                         <div
                           key={w.id}
                           onClick={() => onSelectWorkshop(w)}
-                          className="p-2.5 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors"
+                          className="p-2.5 sm:p-3 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors active:scale-[0.99]"
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-csl-text leading-tight">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="text-xs font-bold text-csl-text leading-tight line-clamp-1 sm:line-clamp-none">
                               {w.title}
                             </span>
                           </div>
@@ -696,20 +803,20 @@ function DomainCard({
                 </div>
               ) : (
                 <div className="space-y-1.5">
-                  <span className="text-[10px] font-mono font-bold text-csl-blue uppercase block mb-1.5">
+                  <span className="text-[9px] sm:text-[10px] font-mono font-bold text-csl-blue uppercase block mb-1 sm:mb-1.5">
                     {selectedLevel.toUpperCase()} LEVEL WORKSHOPS
                   </span>
                   {visibleWorkshops.map((w) => (
                     <div
                       key={w.id}
                       onClick={() => onSelectWorkshop(w)}
-                      className="p-2.5 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors"
+                      className="p-2.5 sm:p-3 rounded-xl bg-csl-bg/60 hover:bg-csl-gold/15 border border-csl-gold/20 flex items-center justify-between gap-2 cursor-pointer transition-colors active:scale-[0.99]"
                     >
-                      <div className="flex items-center gap-2">
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${getLevelBadgeClass(w.level)}`}>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className={`text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded border shrink-0 ${getLevelBadgeClass(w.level)}`}>
                           {w.level}
                         </span>
-                        <span className="text-xs font-bold text-csl-text leading-tight">
+                        <span className="text-xs font-bold text-csl-text leading-tight truncate sm:whitespace-normal">
                           {w.title}
                         </span>
                       </div>
@@ -723,11 +830,11 @@ function DomainCard({
         </AnimatePresence>
       </div>
 
-      {/* Card Footer Actions */}
-      <div className="pt-4 border-t border-csl-gold/15 flex items-center justify-between gap-3">
+      {/* Card Footer Actions - Clean Responsive Row */}
+      <div className="pt-3 sm:pt-4 border-t border-csl-gold/15 flex items-center justify-between gap-2.5 sm:gap-3">
         <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="inline-flex items-center gap-1.5 text-xs font-extrabold text-csl-blue hover:text-csl-deep-blue cursor-pointer transition-colors"
+          onClick={onToggleExpand}
+          className="inline-flex items-center gap-1.5 text-xs font-extrabold text-csl-blue hover:text-csl-deep-blue cursor-pointer transition-colors py-1.5"
         >
           <span>{isExpanded ? 'Hide Topics' : 'Explore Topics'}</span>
           <ChevronDown
@@ -738,18 +845,11 @@ function DomainCard({
         </button>
 
         <button
-          onClick={() => {
-            // Open modal with the first workshop or toggle expand
-            if (!isExpanded) {
-              setIsExpanded(true);
-            } else if (domainWorkshops.length > 0) {
-              onSelectWorkshop(domainWorkshops[0]);
-            }
-          }}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-csl-blue text-white text-xs font-bold shadow-xs hover:bg-csl-deep-blue hover:scale-102 active:scale-98 transition-all cursor-pointer"
+          onClick={onToggleExpand}
+          className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl bg-csl-blue text-white text-xs font-bold shadow-xs hover:bg-csl-deep-blue hover:scale-102 active:scale-98 transition-all cursor-pointer whitespace-nowrap"
         >
           <BookOpen className="w-3.5 h-3.5" />
-          <span>View Curriculum</span>
+          <span>{isExpanded ? 'Collapse Curriculum' : 'View Curriculum'}</span>
         </button>
       </div>
     </div>

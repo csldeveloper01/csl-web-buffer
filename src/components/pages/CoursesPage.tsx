@@ -14,11 +14,19 @@ import {
   Users,
   Layers,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  BarChart3,
+  Database,
+  Cloud,
+  ShieldCheck,
+  Palette,
+  Briefcase,
+  Workflow
 } from 'lucide-react';
 import { YellowBox } from '../effects/YellowBox';
 import { useDeepLinkHighlight } from '../../hooks/useDeepLinkHighlight';
 import { CourseEnquiryForm } from '../sections/Courses/CourseEnquiryForm';
+import { CustomDropdown } from '../ui/CustomDropdown';
 import { 
   coursesCatalog, 
   CourseItem, 
@@ -39,6 +47,20 @@ export type CourseModule = CourseTopicModule;
 // @ts-ignore
 import iconBanner from '../../../Elements/COURSES/AI + Cloud + AWS = Future Skills.png';
 
+const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  'Development': Code2,
+  'Design': Palette,
+  'Data Science': Database,
+  'Data Analytics': BarChart3,
+  'Cloud': Cloud,
+  'AI/ML': Cpu,
+  'Testing & QA': CheckCircle2,
+  'Cybersecurity': ShieldCheck,
+  'Enterprise Systems': Workflow,
+  'Business Analysis': Briefcase,
+  'Marketing': Sparkles,
+};
+
 export function CoursesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedLevel, setSelectedLevel] = useState<string>('All Levels');
@@ -53,6 +75,15 @@ export function CoursesPage() {
     const matchLevel = selectedLevel === 'All Levels' || course.level === selectedLevel;
     return matchCategory && matchLevel;
   });
+
+  // Group filtered courses by category for mobile/tablet categorized view
+  const categoriesWithCourses = CATEGORY_OPTIONS
+    .filter((cat) => cat !== 'All')
+    .map((category) => ({
+      category,
+      courses: filteredCourses.filter((course) => course.category === category),
+    }))
+    .filter((group) => group.courses.length > 0);
 
   const featuredCourse = coursesCatalog[0]; // Full Stack Development with AI - Java
 
@@ -275,49 +306,128 @@ export function CoursesPage() {
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-6 w-full max-w-5xl mx-auto">
-            {CATEGORY_OPTIONS.map((cat) => {
-              const isActive = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? 'bg-csl-blue text-white shadow-md shadow-csl-blue/20 scale-105'
-                      : 'bg-white/80 text-csl-text hover:bg-white hover:text-csl-blue border border-csl-gold/25'
-                  }`}
-                >
-                  {cat}
-                </button>
-              );
-            })}
+          {/* Category & Level Filter Selectors */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 w-full max-w-2xl mx-auto relative z-30">
+            <div className="w-full sm:flex-1">
+              <label className="text-[10px] font-mono font-extrabold uppercase text-csl-gold tracking-wider block mb-1.5 text-left">
+                Filter by Category
+              </label>
+              <CustomDropdown
+                value={selectedCategory}
+                onChange={(val) => setSelectedCategory(val)}
+                options={CATEGORY_OPTIONS}
+                placeholder="All Categories"
+                rounded="rounded-xl"
+              />
+            </div>
+            <div className="w-full sm:w-48">
+              <label className="text-[10px] font-mono font-extrabold uppercase text-csl-gold tracking-wider block mb-1.5 text-left">
+                Skill Level
+              </label>
+              <CustomDropdown
+                value={selectedLevel}
+                onChange={(val) => setSelectedLevel(val)}
+                options={LEVEL_OPTIONS}
+                placeholder="All Levels"
+                rounded="rounded-xl"
+              />
+            </div>
           </div>
 
-          {/* Level Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-12 w-full max-w-2xl mx-auto">
-            <span className="text-xs font-bold text-csl-muted uppercase mr-2">Level:</span>
-            {LEVEL_OPTIONS.map((lvl) => {
-              const isActive = selectedLevel === lvl;
-              return (
-                <button
-                  key={lvl}
-                  onClick={() => setSelectedLevel(lvl)}
-                  className={`px-3 py-1.5 rounded-lg font-bold text-xs transition-all cursor-pointer ${
-                    isActive
-                      ? 'bg-csl-gold text-csl-text shadow-xs scale-105'
-                      : 'bg-csl-bg/80 text-csl-muted hover:text-csl-text border border-csl-gold/20'
-                  }`}
-                >
-                  {lvl}
-                </button>
-              );
-            })}
+          {/* ==================================================
+              MOBILE & TABLET: COMPACT CATEGORIZED COURSE LIST (lg:hidden)
+             ================================================== */}
+          <div className="lg:hidden w-full space-y-8 mb-4">
+            {categoriesWithCourses.length > 0 ? (
+              categoriesWithCourses.map((group) => {
+                const IconComponent = CATEGORY_ICONS[group.category] || BookOpen;
+
+                return (
+                  <div key={`mobile-cat-${group.category}`} className="w-full">
+                    {/* Category Header */}
+                    <div className="flex items-center gap-2.5 pb-2.5 mb-3 border-b border-csl-gold/25">
+                      <div className="w-6 h-6 rounded-md bg-csl-gold/15 border border-csl-gold/30 flex items-center justify-center text-csl-blue shrink-0">
+                        <IconComponent className="w-3.5 h-3.5" />
+                      </div>
+                      <h3 className="text-xs sm:text-sm font-mono font-extrabold uppercase text-csl-text tracking-wider">
+                        {group.category}
+                      </h3>
+                      <div className="h-[2px] w-6 bg-csl-gold rounded-full" />
+                      <span className="text-[11px] font-mono text-csl-muted font-bold ml-auto">
+                        {group.courses.length}
+                      </span>
+                    </div>
+
+                    {/* Compact Course Rows (1 column on mobile, 2 columns on tablet md:grid-cols-2) */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 w-full">
+                      {group.courses.map((course) => {
+                        const isHighlighted = highlightedId === course.id;
+
+                        return (
+                          <div
+                            key={`mobile-row-${course.id}`}
+                            id={`mobile-${course.id}`}
+                            data-deep-link-id={course.id}
+                            onClick={() => setActiveCourseDetails(course)}
+                            className={`group flex items-center justify-between p-2.5 sm:p-3 bg-white/95 rounded-2xl border transition-all duration-200 gap-3 cursor-pointer ${
+                              isHighlighted
+                                ? 'border-csl-blue ring-2 ring-csl-blue/20 bg-csl-blue/[0.02]'
+                                : 'border-csl-gold/30 hover:border-csl-blue/60 hover:bg-white shadow-xs hover:shadow-md'
+                            }`}
+                          >
+                            {/* LEFT: Small course thumbnail */}
+                            <div className="relative w-[76px] sm:w-[92px] h-[62px] sm:h-[72px] rounded-xl overflow-hidden shrink-0 bg-csl-bg border border-csl-gold/25">
+                              <img 
+                                src={course.image} 
+                                alt={course.title}
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                              />
+                            </div>
+
+                            {/* CENTER: Course title + short existing description */}
+                            <div className="flex flex-col flex-1 min-w-0 pr-1">
+                              <div className="flex items-center gap-1.5 mb-1">
+                                <span className="text-[9px] font-mono font-extrabold text-csl-gold leading-none">
+                                  {course.level}
+                                </span>
+                                <span className="text-[9px] text-csl-muted leading-none">•</span>
+                                <span className="text-[9px] font-medium text-csl-muted leading-none">
+                                  {course.format}
+                                </span>
+                              </div>
+                              <h4 className="text-xs sm:text-[13px] font-extrabold text-csl-text group-hover:text-csl-blue transition-colors leading-snug line-clamp-2 mb-0.5">
+                                {course.title}
+                              </h4>
+                              <p className="text-[10px] sm:text-[11px] text-csl-muted line-clamp-1 font-medium leading-relaxed">
+                                {course.description}
+                              </p>
+                            </div>
+
+                            {/* RIGHT: Arrow icon */}
+                            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-csl-gold/35 flex items-center justify-center text-csl-text group-hover:bg-csl-blue group-hover:text-white group-hover:border-csl-blue transition-all duration-200 shrink-0">
+                              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="text-center py-12 bg-white/80 rounded-2xl border border-csl-gold/25 p-6">
+                <p className="text-sm font-semibold text-csl-text mb-1">No courses found matching criteria.</p>
+                <p className="text-xs text-csl-muted">Try selecting a different category or level filter.</p>
+              </div>
+            )}
           </div>
 
-          {/* Course Grid Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+          {/* ==================================================
+              DESKTOP: EXISTING COURSE GRID CARDS (hidden lg:grid)
+             ================================================== */}
+          <div className="hidden lg:grid lg:grid-cols-3 gap-8 w-full">
             {filteredCourses.map((course) => {
               const isHighlighted = highlightedId === course.id;
 
@@ -778,31 +888,31 @@ function CourseDetailsModal({
                 <button
                   type="button"
                   onClick={() => toggleModule(modKey)}
-                  className="w-full p-4 flex items-center justify-between gap-3 text-left cursor-pointer hover:bg-csl-bg/60 transition-colors"
+                  className="w-full p-3 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-3 text-left cursor-pointer hover:bg-csl-bg/60 transition-colors"
                 >
-                  <div className="flex items-start sm:items-center gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-csl-gold/15 text-csl-text font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-csl-gold/30">
+                  <div className="flex items-start sm:items-center gap-2.5 sm:gap-3 min-w-0">
+                    <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-csl-gold/15 text-csl-text font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-csl-gold/30">
                       {mod.moduleNumber.replace('Module ', '')}
                     </span>
-                    <div>
-                      <div className="text-[10px] font-bold text-csl-gold uppercase font-mono">
+                    <div className="min-w-0">
+                      <div className="text-[9px] sm:text-[10px] font-bold text-csl-gold uppercase font-mono">
                         {mod.moduleNumber}
                       </div>
-                      <h5 className="text-sm font-bold text-csl-text leading-snug">
+                      <h5 className="text-xs sm:text-sm font-bold text-csl-text leading-snug line-clamp-2 sm:line-clamp-none">
                         {mod.title}
                       </h5>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                     {mod.duration && (
-                      <span className="text-xs font-semibold text-csl-muted hidden sm:inline-flex items-center gap-1">
+                      <span className="text-[11px] sm:text-xs font-semibold text-csl-muted hidden sm:inline-flex items-center gap-1">
                         <Clock className="w-3 h-3 text-csl-gold" />
                         {mod.duration}
                       </span>
                     )}
-                    <div className="w-7 h-7 rounded-full bg-csl-bg flex items-center justify-center text-csl-muted">
-                      {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-csl-bg flex items-center justify-center text-csl-muted">
+                      {isOpen ? <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                     </div>
                   </div>
                 </button>
@@ -817,13 +927,13 @@ function CourseDetailsModal({
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden border-t border-csl-gold/15 bg-csl-bg/40"
                     >
-                      <div className="p-4 flex flex-col gap-2.5">
+                      <div className="p-3 sm:p-4 flex flex-col gap-2.5">
                         {mod.technicalContent && (
                           <div>
-                            <span className="text-[10px] font-extrabold text-csl-muted uppercase tracking-wider block mb-1">
+                            <span className="text-[9px] sm:text-[10px] font-extrabold text-csl-muted uppercase tracking-wider block mb-1">
                               Technical Content
                             </span>
-                            <p className="text-xs text-csl-text font-medium leading-relaxed bg-white/90 p-3 rounded-xl border border-csl-gold/20">
+                            <p className="text-xs text-csl-text font-medium leading-relaxed bg-white/90 p-2.5 sm:p-3 rounded-xl border border-csl-gold/20 shadow-2xs">
                               {mod.technicalContent}
                             </p>
                           </div>
@@ -831,14 +941,14 @@ function CourseDetailsModal({
 
                         {mod.topics && mod.topics.length > 0 && (
                           <div>
-                            <span className="text-[10px] font-extrabold text-csl-blue uppercase tracking-wider block mb-1.5">
+                            <span className="text-[9px] sm:text-[10px] font-extrabold text-csl-blue uppercase tracking-wider block mb-1 sm:mb-1.5">
                               Topics Covered
                             </span>
-                            <div className="flex flex-wrap gap-1.5">
+                            <div className="flex flex-wrap gap-1 sm:gap-1.5">
                               {mod.topics.map((t, idx) => (
                                 <span 
                                   key={idx} 
-                                  className="px-2.5 py-1 rounded-lg bg-white border border-csl-gold/20 text-[11px] font-medium text-csl-text shadow-xs"
+                                  className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-white border border-csl-gold/20 text-[10px] sm:text-[11px] font-medium text-csl-text shadow-2xs"
                                 >
                                   {t}
                                 </span>
@@ -859,7 +969,7 @@ function CourseDetailsModal({
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-y-auto">
       {/* Backdrop */}
       <motion.div 
         initial={{ opacity: 0 }}
@@ -869,71 +979,72 @@ function CourseDetailsModal({
         className="fixed inset-0 bg-csl-deep-blue/60 backdrop-blur-md z-0"
       />
 
-      {/* Modal Body */}
+      {/* Modal Body - Mobile Native Layout */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 15 }}
         transition={{ duration: 0.3 }}
-        className="relative z-10 w-full max-w-3xl bg-csl-bg border border-csl-gold/30 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden my-auto max-h-[90vh] flex flex-col"
+        className="relative z-10 w-full max-w-3xl bg-csl-bg border border-csl-gold/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden my-auto max-h-[92vh] sm:max-h-[90vh] flex flex-col"
       >
-        {/* 1. COURSE HERO */}
-        <div className="flex items-start justify-between gap-4 pb-4 border-b border-csl-gold/20">
-          <div>
-            <div className="flex items-center gap-2.5 mb-2 flex-wrap">
-              <span className="px-3 py-0.5 rounded-full bg-csl-blue/10 text-csl-blue font-bold text-[11px] uppercase">
+        {/* 1. COURSE HERO (Responsive Header) */}
+        <div className="flex items-start justify-between gap-3 pb-3 sm:pb-4 border-b border-csl-gold/20">
+          <div className="min-w-0 pr-1">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 mb-1.5 sm:mb-2 flex-wrap">
+              <span className="px-2 sm:px-3 py-0.5 rounded-full bg-csl-blue/10 text-csl-blue font-bold text-[10px] sm:text-[11px] uppercase">
                 {course.category}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-csl-gold/20 text-csl-text font-bold text-[11px] uppercase">
+              <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-csl-gold/20 text-csl-text font-bold text-[10px] sm:text-[11px] uppercase">
                 {course.level}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[11px] uppercase border border-emerald-200">
+              <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[10px] sm:text-[11px] uppercase border border-emerald-200">
                 {course.format}
               </span>
-              <span className="text-xs font-bold text-csl-gold flex items-center gap-1">
-                <Star className="w-3.5 h-3.5 fill-csl-gold" />
+              <span className="text-[11px] sm:text-xs font-bold text-csl-gold flex items-center gap-1">
+                <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-csl-gold" />
                 {course.rating}
               </span>
-              <span className="text-xs font-semibold text-csl-muted flex items-center gap-1">
-                <Users className="w-3.5 h-3.5 text-csl-blue" />
-                {course.students} Enrolled
+              <span className="text-[11px] sm:text-xs font-semibold text-csl-muted hidden xs:flex items-center gap-1">
+                <Users className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-csl-blue" />
+                {course.students}
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-csl-text">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-csl-text leading-tight">
               {course.title}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-white border border-csl-gold/30 flex items-center justify-center text-csl-text hover:bg-csl-blue hover:text-white transition-all shrink-0 cursor-pointer"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-csl-gold/30 flex items-center justify-center text-csl-text hover:bg-csl-blue hover:text-white transition-all shrink-0 cursor-pointer shadow-2xs"
+            aria-label="Close modal"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto py-6 pr-2 flex flex-col gap-6">
+        <div className="flex-1 overflow-y-auto py-4 sm:py-6 pr-1 sm:pr-2 flex flex-col gap-4 sm:gap-6 scrollbar-thin">
           {/* 2. COURSE OVERVIEW */}
           <div>
-            <h4 className="text-xs font-extrabold text-csl-blue uppercase tracking-wider mb-2">
+            <h4 className="text-[11px] sm:text-xs font-extrabold text-csl-blue uppercase tracking-wider mb-1.5 sm:mb-2">
               Course Overview
             </h4>
-            <p className="text-sm text-csl-muted font-medium leading-relaxed bg-white/70 p-4 rounded-2xl border border-csl-gold/20">
+            <p className="text-xs sm:text-sm text-csl-muted font-medium leading-relaxed bg-white/75 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-csl-gold/20 shadow-2xs">
               {course.description}
             </p>
           </div>
 
-          {/* 3. LEARNING PATH (BASIC -> INTERMEDIATE -> ADVANCED) */}
+          {/* 3. LEARNING PATH & LEVEL TABS */}
           <div>
-            <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-              <h4 className="text-xs font-extrabold text-csl-blue uppercase tracking-wider">
-                Learning Path & Curriculum
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2 sm:gap-3">
+              <h4 className="text-[11px] sm:text-xs font-extrabold text-csl-blue uppercase tracking-wider">
+                Syllabus & Modules
               </h4>
-              <div className="flex items-center gap-1 text-[11px] font-bold">
+              <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none text-[10px] sm:text-[11px] font-bold">
                 <button
                   type="button"
                   onClick={() => setActiveTab('all')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer shrink-0 ${
                     activeTab === 'all' ? 'bg-csl-text text-white' : 'bg-white text-csl-muted hover:text-csl-text border border-csl-gold/20'
                   }`}
                 >
@@ -942,7 +1053,7 @@ function CourseDetailsModal({
                 <button
                   type="button"
                   onClick={() => setActiveTab('basic')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer shrink-0 ${
                     activeTab === 'basic' ? 'bg-emerald-600 text-white' : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                   }`}
                 >
@@ -951,7 +1062,7 @@ function CourseDetailsModal({
                 <button
                   type="button"
                   onClick={() => setActiveTab('intermediate')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer shrink-0 ${
                     activeTab === 'intermediate' ? 'bg-csl-blue text-white' : 'bg-blue-50 text-csl-blue border border-blue-200'
                   }`}
                 >
@@ -960,7 +1071,7 @@ function CourseDetailsModal({
                 <button
                   type="button"
                   onClick={() => setActiveTab('advanced')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer shrink-0 ${
                     activeTab === 'advanced' ? 'bg-purple-600 text-white' : 'bg-purple-50 text-purple-800 border border-purple-200'
                   }`}
                 >
@@ -970,7 +1081,7 @@ function CourseDetailsModal({
             </div>
 
             {/* 4. CURRICULUM SECTIONS (BASIC / INTERMEDIATE / ADVANCED) */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 sm:gap-6">
               {(activeTab === 'all' || activeTab === 'basic') &&
                 course.levels.basic.modules.length > 0 &&
                 renderLevelModules(course.levels.basic, 'basic')}
@@ -988,14 +1099,14 @@ function CourseDetailsModal({
           {/* 5. LEARNING OUTCOMES */}
           {course.learningOutcomes && course.learningOutcomes.length > 0 && (
             <div>
-              <h4 className="text-xs font-extrabold text-csl-blue uppercase tracking-wider mb-3">
+              <h4 className="text-[11px] sm:text-xs font-extrabold text-csl-blue uppercase tracking-wider mb-2 sm:mb-3">
                 Learning Outcomes
               </h4>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1.5 sm:gap-2">
                 {course.learningOutcomes.map((item, idx) => (
-                  <div key={idx} className="bg-csl-bg/80 border border-csl-gold/20 p-3 rounded-xl flex items-start gap-2.5 text-xs font-medium text-csl-text">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span>{item}</span>
+                  <div key={idx} className="bg-csl-bg/80 border border-csl-gold/20 p-2.5 sm:p-3 rounded-xl flex items-start gap-2 text-xs font-medium text-csl-text shadow-2xs">
+                    <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span className="leading-snug">{item}</span>
                   </div>
                 ))}
               </div>
@@ -1003,22 +1114,22 @@ function CourseDetailsModal({
           )}
         </div>
 
-        {/* 6. EXISTING COURSE ENQUIRY / CTA */}
-        <div className="pt-4 border-t border-csl-gold/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 text-xs font-semibold text-csl-muted">
-            <span>Format: <strong>{course.format}</strong></span>
+        {/* 6. COURSE FOOTER / CTA (Compact & Touch-Friendly) */}
+        <div className="pt-3 sm:pt-4 border-t border-csl-gold/20 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-semibold text-csl-muted w-full sm:w-auto justify-between sm:justify-start">
+            <span>Format: <strong className="text-csl-text">{course.format}</strong></span>
             <span>•</span>
-            <span>Students: <strong>{course.students}</strong></span>
+            <span>Students: <strong className="text-csl-text">{course.students}</strong></span>
             <span>•</span>
-            <span>Modules: <strong>{course.modules.length}</strong></span>
+            <span>Modules: <strong className="text-csl-text">{course.modules.length}</strong></span>
           </div>
 
           <button
             onClick={onEnroll}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white px-5 sm:px-8 py-3 rounded-xl font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all cursor-pointer active:scale-[0.98]"
           >
-            Enroll / Request Callback
-            <ArrowRight className="w-4 h-4" />
+            <span>Enroll / Request Callback</span>
+            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </div>
       </motion.div>

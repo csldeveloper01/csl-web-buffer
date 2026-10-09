@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { 
   Megaphone, 
-  Sparkles, 
   Users, 
-  UserPlus, 
   Code2, 
   Briefcase, 
   ArrowRight, 
@@ -18,10 +16,10 @@ import {
   ChevronDown,
   CheckCircle2,
   Clock,
-  CheckSquare,
   Brain,
   BarChart3,
-  Cloud
+  Headphones,
+  Palette
 } from 'lucide-react';
 import { YellowBox } from '../effects/YellowBox';
 import { CareerModal } from '../sections/Careers/CareerModal';
@@ -41,28 +39,210 @@ export interface CareerPosition {
   qualifications: string[];
   internshipStructure?: {
     duration: string;
-    training: string;
+    stages: string[];
+    note?: string;
   };
   opportunity?: string;
 }
 
 export const careerPositions: CareerPosition[] = [
   {
+    id: 'full-stack-devloper',
+    title: 'Full stack devloper',
+    category: 'Technical',
+    experience: 'Freshers',
+    vacancies: '2 Vacancies',
+    vacancyCount: 2,
+    icon: Code2,
+    summary:
+      'We are looking for a passionate and motivated Full Stack Development Intern to join our development team. This internship offers hands-on experience in building modern web applications using front-end and back-end technologies. Successful candidates will have the opportunity to transition into a full-time role based on performance. The ideal candidate should have a strong foundation in web development, problem-solving skills, and a willingness to learn new technologies while working on real-world projects in a collaborative environment.',
+    opportunity:
+      'Candidates who successfully complete the internship and demonstrate strong technical skills, learning ability, teamwork, and professionalism will be offered a full-time Software Developer position.',
+    responsibilities: [
+      'Develop and maintain responsive web applications using modern front-end and back-end technologies.',
+      'Build reusable, scalable, and maintainable code following industry best practices.',
+      'Collaborate with designers, developers, and project managers to deliver high-quality applications.',
+      'Develop RESTful APIs and integrate third-party APIs.',
+      'Work with databases to design, develop, and optimize data storage solutions.',
+      'Debug, test, and optimize applications for maximum performance.',
+      'Participate in code reviews and team discussions.',
+    ],
+    skills: [
+      'Strong knowledge of HTML5, CSS3, and JavaScript.',
+      'Experience with React.js, Angular, or Vue.js.',
+      'Knowledge of Node.js and Express.js, TypeScript.',
+      'Understanding of REST APIs and API integration.',
+      'Experience with MongoDB, MySQL, or PostgreSQL.',
+    ],
+    qualifications: [
+      "Bachelor's Degree in Computer Science, Information Technology, Software Engineering, or a related discipline.",
+      'Freshers are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      stages: [
+        'Month 1, 2: Technical Training',
+        'Month 3: Working on Live Project',
+        'Month 4: Indepth Development Tasks',
+        'Month 5: Working with Client',
+        'Month 6: Independent Project Exposure',
+      ],
+      note: 'Progression is performance-based and subject to successful completion of assigned tasks and evaluations.',
+    },
+  },
+  {
+    id: 'ai-ml-engineer-developer',
+    title: 'AI/ML Engineer Developer',
+    category: 'Technical',
+    experience: 'Freshers',
+    vacancies: '2 Vacancies',
+    vacancyCount: 2,
+    icon: Brain,
+    summary:
+      'We are looking for enthusiastic and passionate Artificial Intelligence & Machine Learning (AI/ML) Engineer Interns to join our technology team. This internship provides an excellent opportunity to work on real-world AI and Machine Learning projects, gain hands-on experience with industry-standard tools, and build intelligent solutions. Successful candidates who demonstrate strong technical skills, problem-solving ability, and consistent performance will have the opportunity to transition into a full-time AI/ML Engineer role.',
+    opportunity:
+      'Candidates who successfully complete the internship and demonstrate strong technical skills, learning ability, teamwork, and professionalism will be offered a full-time AI/ML Engineer Developer position.',
+    responsibilities: [
+      'Develop, train, and evaluate Machine Learning models.',
+      'Work on Artificial Intelligence solutions for real-world business problems.',
+      'Perform data collection, cleaning, preprocessing, and feature engineering.',
+      'Build predictive models using supervised and unsupervised learning algorithms.',
+      'Implement Deep Learning models using TensorFlow or PyTorch.',
+      'Work with Natural Language Processing (NLP) and Computer Vision applications.',
+      'Develop APIs to deploy Machine Learning models.',
+    ],
+    skills: [
+      'Strong understanding of Python Programming.',
+      'Knowledge of Machine Learning algorithms.',
+      'Understanding of Data Structures and Algorithms.',
+      'Familiarity with NumPy, Pandas, Matplotlib, and Scikit-learn.',
+      'Basic knowledge of TensorFlow or PyTorch.',
+      'Understanding of Statistics and Probability.',
+      'Knowledge of SQL and database concepts.',
+    ],
+    qualifications: [
+      "Bachelor's Degree in Computer Science, Information Technology, Software Engineering, or a related discipline.",
+      'Freshers are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      stages: [
+        'Month 1, 2: Technical Training',
+        'Month 3: Working on Live Project',
+        'Month 4: Indepth Development Tasks',
+        'Month 5: Working with Client',
+        'Month 6: Independent Project Exposure',
+      ],
+      note: 'Progression is performance-based and subject to successful completion of assigned tasks and evaluations.',
+    },
+  },
+  {
+    id: 'ui-ux-designer-graphic-designer',
+    title: 'UI/UX Designer & Graphic Designer',
+    category: 'Technical',
+    experience: 'Freshers',
+    vacancies: '2 Vacancies',
+    vacancyCount: 2,
+    icon: Palette,
+    summary:
+      'We are looking for a creative and enthusiastic UI/UX Design Intern to join our design team. This internship provides hands-on experience in designing intuitive, user-friendly, and visually appealing digital products. You will work closely with developers, product managers, and senior designers to create engaging user experiences for web and mobile applications. Candidates who successfully complete the internship and demonstrate strong design skills, creativity, and professionalism will have the opportunity to transition into a full-time UI/UX Designer role.',
+    opportunity:
+      'Candidates who successfully complete the internship and demonstrate strong technical skills, learning ability, teamwork, and professionalism will be offered a full-time UI/UX Designer position.',
+    responsibilities: [
+      'Design intuitive and user-friendly interfaces for web and mobile applications.',
+      'Conduct user research to understand user behavior and requirements.',
+      'Create user flows, wireframes, mockups, and interactive prototypes.',
+      'Develop visually appealing UI designs following modern design principles.',
+      'Collaborate with developers to ensure accurate implementation of designs.',
+      'Improve user experience by identifying usability issues and proposing solutions.',
+    ],
+    skills: [
+      'Basic understanding of UI/UX Design Principles.',
+      'Knowledge of Figma, Adobe XD, or Sketch.',
+      'Understanding of wireframing and prototyping.',
+      'Basic knowledge of typography, color theory, and layout design.',
+      'Familiarity with responsive and mobile-first design.',
+      'Understanding of user-centered design methodologies.',
+      'Basic knowledge of HTML and CSS is an added advantage.',
+    ],
+    qualifications: [
+      "Bachelor's Degree in Computer Science, Information Technology, Design, Multimedia, Visual Communication, or a related field.",
+      'Freshers with strong design skills and a creative portfolio are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      stages: [
+        'Month 1, 2: Technical Training',
+        'Month 3: Working on Live Project',
+        'Month 4: Indepth Development Tasks',
+        'Month 5: Working with Client',
+        'Month 6: Independent Project Exposure',
+      ],
+      note: 'Progression is performance-based and subject to successful completion of assigned tasks and evaluations.',
+    },
+  },
+  {
+    id: 'voice-process-executive',
+    title: 'Voice Process Executive',
+    category: 'Business',
+    experience: 'Freshers',
+    vacancies: '2 Vacancies',
+    vacancyCount: 2,
+    icon: Headphones,
+    summary:
+      'We are looking for enthusiastic and customer-focused Voice Process Executives to join our team. This internship provides hands-on experience in customer interaction, communication, client support, and business operations. The ideal candidate should possess excellent verbal communication skills, a positive attitude, and a willingness to learn. Successful candidates who demonstrate outstanding communication, customer handling, and performance during the internship will have the opportunity to transition into a full-time role.',
+    opportunity:
+      'Candidates who successfully complete the internship and demonstrate strong technical skills, learning ability, teamwork, and professionalism will be offered a full-time Voice Process Executive position.',
+    responsibilities: [
+      'Design intuitive and user-friendly interfaces for web and mobile applications.',
+      'Conduct user research to understand user behavior and requirements.',
+      'Create user flows, wireframes, mockups, and interactive prototypes.',
+      'Develop visually appealing UI designs following modern design principles.',
+      'Collaborate with developers to ensure accurate implementation of designs.',
+      'Improve user experience by identifying usability issues and proposing solutions.',
+    ],
+    skills: [
+      'Handle inbound and outbound customer calls professionally.',
+      'Understand customer requirements and provide accurate information.',
+      'Resolve customer queries and concerns effectively.',
+      'Maintain high standards of customer satisfaction and service quality.',
+      'Record customer interactions and update CRM systems accurately.',
+      'Follow communication scripts and company guidelines.',
+      'Coordinate with internal teams to resolve customer issues.',
+      'Meet daily, weekly, and monthly performance targets.',
+    ],
+    qualifications: [
+      "Bachelor's Degree in Computer Science, Information Technology, Design, Multimedia, Visual Communication, or a related field.",
+      'Freshers with strong design skills and a creative portfolio are encouraged to apply.',
+    ],
+    internshipStructure: {
+      duration: '6 Months',
+      stages: [
+        'Month 1, 2: Technical Training',
+        'Month 3: Working on Live Project',
+        'Month 4: Indepth Development Tasks',
+        'Month 5: Working with Client',
+        'Month 6: Independent Project Exposure',
+      ],
+      note: 'Progression is performance-based and subject to successful completion of assigned tasks and evaluations.',
+    },
+  },
+  {
     id: 'digital-marketing',
     title: 'Digital Marketing',
     category: 'Marketing',
-    experience: '6 months - 1 year',
+    experience: 'Freshers',
     vacancies: '2 Vacancies',
     vacancyCount: 2,
     icon: Megaphone,
     summary:
-      'We are looking for creative, enthusiastic, and self-motivated Digital Marketing Interns to join our marketing team. This internship provides hands-on experience in digital marketing strategies, social media management, SEO, paid advertising, content creation, and campaign execution. Candidates will work on live projects and gain practical exposure to modern digital marketing tools and techniques.',
+      'We are looking for creative, enthusiastic, and self-motivated Digital Marketing Interns to join our marketing team. This internship provides hands-on experience in digital marketing strategies, social media management, SEO, paid advertising, content creation, and campaign execution. Candidates will work on live projects and gain practical exposure to modern digital marketing tools and techniques. Successful candidates who demonstrate creativity, analytical skills, and consistent performance during the internship will have the opportunity to transition into a full-time Digital Marketing Executive role.',
     opportunity:
-      'Successful candidates who demonstrate creativity, analytical skills, and consistent performance during the internship will have the opportunity to transition into a full-time Digital Marketing Executive role.',
+      'Candidates who successfully complete the internship and demonstrate strong technical skills, learning ability, teamwork, and professionalism will be offered a full-time Voice Process Executive position.',
     responsibilities: [
       'Plan and execute digital marketing campaigns across multiple platforms.',
-      'Manage and optimize social media accounts including Instagram, Facebook, LinkedIn, YouTube, and X.',
-      'Create engaging content including posts, blogs, banners, and promotional materials.',
+      'Manage and optimize social media accounts (Instagram, Facebook, LinkedIn, YouTube, and X).',
+      'Create engaging content, including posts, blogs, banners, and promotional materials.',
       'Assist in Search Engine Optimization (SEO) and Search Engine Marketing (SEM) activities.',
       'Run and optimize paid advertising campaigns on Google Ads and Meta Ads.',
     ],
@@ -74,69 +254,33 @@ export const careerPositions: CareerPosition[] = [
       'Basic knowledge of Google Ads and Meta Ads Manager.',
     ],
     qualifications: [
-      "Master's Degree in Marketing, Business Administration, Computer Science, Information Technology, Mass Communication, or any related field.",
+      'Bachelor Degree, Computer Science, Information Technology, Mass Communication, or any related field.',
       'Freshers are encouraged to apply.',
     ],
     internshipStructure: {
       duration: '6 Months',
-      training: 'Month 1, 2: Training Period',
+      stages: [
+        'Month 1, 2: Training Period',
+        'Month 3: Live Project Execution',
+        'Month 4: Advanced Campaign Tasks',
+        'Month 5: Client Strategy & Optimization',
+        'Month 6: Independent Marketing Exposure',
+      ],
+      note: 'Progression is performance-based and subject to successful completion of assigned tasks and evaluations.',
     },
   },
   {
-    id: 'digital-marketing-intern',
-    title: 'Digital Marketing Intern',
-    category: 'Marketing',
-    experience: 'Freshers',
-    vacancies: '2 Vacancies',
-    vacancyCount: 2,
-    icon: Sparkles,
-    summary:
-      'We are looking for creative, enthusiastic, and self-motivated Digital Marketing Interns to join our marketing team. This internship provides hands-on experience in digital marketing strategies, social media management, SEO, paid advertising, content creation, and campaign execution. Candidates will work on live projects and gain practical exposure to modern digital marketing tools and techniques.',
-    opportunity:
-      'Successful candidates who demonstrate creativity, analytical skills, consistency, and professional growth during the internship will have the opportunity to transition into a full-time Digital Marketing Executive role.',
-    responsibilities: [
-      'Plan and execute digital marketing campaigns across multiple platforms.',
-      'Manage and optimize social media accounts including Instagram, Facebook, LinkedIn, YouTube, and X.',
-      'Create engaging content including social media posts, blogs, banners, promotional materials, and campaign creatives.',
-      'Assist with Search Engine Optimization (SEO) and Search Engine Marketing (SEM) activities.',
-      'Conduct basic keyword research and competitor analysis.',
-      'Run and optimize paid advertising campaigns on Google Ads and Meta Ads.',
-      'Monitor campaign performance and prepare basic marketing reports.',
-      'Assist in developing content calendars and marketing strategies.',
-      'Track digital marketing trends and identify opportunities for improving online visibility.',
-      'Collaborate with design, technology, and business teams for marketing initiatives.',
-    ],
-    skills: [
-      'Basic understanding of Digital Marketing concepts.',
-      'Knowledge of Social Media Marketing (SMM).',
-      'Basic understanding of SEO and SEM.',
-      'Familiarity with Google Analytics and Google Search Console.',
-      'Basic knowledge of Google Ads and Meta Ads Manager.',
-      'Good written and verbal communication skills.',
-      'Creativity and content-writing ability.',
-      'Basic analytical and research skills.',
-      'Willingness to learn and experiment with new marketing tools and strategies.',
-    ],
-    qualifications: [
-      "Bachelor's or Master's degree in Marketing, Business Administration, Computer Science, Information Technology, Mass Communication, or any related field.",
-      'Freshers are encouraged to apply.',
-      'Candidates with academic projects, certifications, or practical exposure to digital marketing are encouraged to apply.',
-    ],
-    internshipStructure: {
-      duration: '6 Months',
-      training: 'Month 1, 2: Training Period',
-    },
-  },
-  {
-    id: 'human-resources',
-    title: 'Human Resources / HR Operations',
+    id: 'hr-operations',
+    title: 'HR Operations',
     category: 'Human Resources',
-    experience: '6 months - 1 year',
+    experience: 'Freshers',
     vacancies: '2 Vacancies',
     vacancyCount: 2,
     icon: Users,
     summary:
       'We are looking for an organized and proactive HR Operations professional/intern to support day-to-day HR activities, employee coordination, recruitment support, documentation, and HR administration. The ideal candidate should have good communication skills, attention to detail, and a strong interest in building a career in Human Resources.',
+    opportunity:
+      'Candidates who successfully complete the internship and demonstrate strong technical skills, learning ability, teamwork, and professionalism will be offered a full-time Voice Process Executive position.',
     responsibilities: [
       'Support day-to-day HR operations and employee coordination.',
       'Assist with recruitment coordination and interview scheduling.',
@@ -165,300 +309,147 @@ export const careerPositions: CareerPosition[] = [
     ],
     internshipStructure: {
       duration: '6 Months',
-      training: 'Month 1, 2: Technical Training',
+      stages: [
+        'Month 1, 2: Technical Training',
+        'Month 3: Live Project Operations',
+        'Month 4: Indepth HR Tasks',
+        'Month 5: Employee & Team Coordination',
+        'Month 6: Independent HR Operations Exposure',
+      ],
+      note: 'Progression is performance-based and subject to successful completion of assigned tasks and evaluations.',
     },
   },
   {
-    id: 'hr-intern',
-    title: 'HR Intern',
-    category: 'Human Resources',
-    experience: 'Freshers',
-    vacancies: '2 Vacancies',
-    vacancyCount: 2,
-    icon: UserPlus,
-    summary:
-      'We are looking for organized, proactive, and enthusiastic HR Interns to join our Human Resources team. This internship provides hands-on experience in recruitment, employee coordination, onboarding, HR documentation, employee engagement, and day-to-day HR operations. Candidates will gain practical exposure to professional HR processes and will have the opportunity to work closely with employees and internal teams.',
-    opportunity:
-      'Successful candidates who demonstrate strong communication skills, learning ability, organizational skills, teamwork, and professionalism during the internship will have the opportunity to transition into a full-time HR Executive role.',
-    responsibilities: [
-      'Support day-to-day HR operations and employee coordination.',
-      'Assist with recruitment activities including candidate sourcing and screening.',
-      'Coordinate interview scheduling and candidate communication.',
-      'Assist with employee onboarding and joining formalities.',
-      'Maintain employee records, attendance, and leave details.',
-      'Prepare and maintain HR documents and employee records.',
-      'Coordinate HR communication with employees and internal teams.',
-      'Assist in implementing HR policies, procedures, and processes.',
-      'Support employee engagement activities and internal HR initiatives.',
-      'Prepare basic HR reports and documentation.',
-      'Assist with maintaining recruitment trackers and candidate databases.',
-      'Support employee feedback and internal communication activities.',
-      'Maintain confidentiality of employee and organizational information.',
-    ],
-    skills: [
-      'Basic understanding of Human Resources concepts.',
-      'Good verbal and written communication skills.',
-      'Strong coordination and organizational skills.',
-      'Basic knowledge of recruitment and HR processes.',
-      'Proficiency in MS Office / Google Workspace.',
-      'Good documentation and record-keeping skills.',
-      'Attention to detail and time management.',
-      'Ability to communicate professionally with candidates and employees.',
-      'Professional attitude and willingness to learn.',
-    ],
-    qualifications: [
-      "Bachelor's or Master's degree in Human Resources, Business Administration, Management, or a related field.",
-      'Freshers are encouraged to apply.',
-      'Candidates with HR projects, certifications, or internship experience are encouraged to apply.',
-    ],
-    internshipStructure: {
-      duration: '6 Months',
-      training: 'Month 1, 2: Training Period',
-    },
-  },
-  {
-    id: 'full-stack-developer',
-    title: 'Full Stack Developer',
+    id: 'python-college-trainer-dev',
+    title: 'Python College Trainer & Dev',
     category: 'Technical',
     experience: 'Freshers',
     vacancies: '2 Vacancies',
     vacancyCount: 2,
     icon: Code2,
     summary:
-      'We are looking for enthusiastic, motivated, and self-driven Full Stack Developer Interns to join our technology team. This internship provides hands-on experience in frontend and backend development, database management, API development, debugging, testing, and deployment. Candidates will work on live software projects and gain practical exposure to modern web development technologies and development workflows.',
+      'We are looking for an analytical and detail-oriented Data Analyst Intern to support data collection, analysis, reporting, and business insights. The ideal candidate should have strong analytical thinking, basic technical knowledge, and an interest in using data to support business decisions.',
     opportunity:
-      'Successful candidates who demonstrate strong technical skills, problem-solving ability, learning ability, teamwork, and consistent performance during the internship will have the opportunity to transition into a full-time Full Stack Developer role.',
+      'Candidates who successfully complete the internship and demonstrate strong technical skills, learning ability, teamwork, and professionalism will be offered a full-time Voice Process Executive position.',
     responsibilities: [
-      'Develop responsive and user-friendly web applications.',
-      'Build and maintain frontend interfaces using modern web technologies.',
-      'Develop backend services, APIs, and application logic.',
-      'Integrate frontend applications with backend APIs and databases.',
-      'Design, create, and manage database structures.',
-      'Write clean, maintainable, and reusable code.',
-      'Debug and resolve application issues and technical problems.',
-      'Perform testing and validation of application features.',
-      'Collaborate with UI/UX designers and other developers to implement application requirements.',
-      'Participate in code reviews and follow development best practices.',
-      'Assist with application deployment and maintenance.',
-      'Work with Git and version-control workflows.',
-      'Learn and implement new technologies based on project requirements.',
-      'Document technical implementations and development processes.',
+      'Collect, clean, and analyze data.',
+      'Identify trends, patterns, and insights.',
+      'Prepare reports and dashboards.',
+      'Create data visualizations.',
+      'Validate and maintain data accuracy.',
+      'Support data-driven business decisions.',
+      'Work with teams on data requirements.',
     ],
     skills: [
-      'Basic understanding of web development concepts.',
-      'Knowledge of HTML, CSS, and JavaScript.',
-      'Basic understanding of frontend and backend development.',
-      'Familiarity with at least one programming language such as Python, JavaScript, Java, or similar.',
-      'Basic understanding of databases and SQL.',
-      'Familiarity with REST APIs and API integration.',
-      'Basic knowledge of Git and GitHub.',
-      'Understanding of responsive web design.',
-      'Basic debugging and problem-solving skills.',
-      'Willingness to learn new frameworks and technologies.',
+      'Basic understanding of Data Analyst concepts.',
+      'Analytical and problem-solving skills.',
+      'Basic knowledge of Python, SQL & Excel.',
+      'Familiarity with Power BI/Tableau.',
+      'Data visualization and reporting skills.',
+      'Good communication and attention to detail.',
     ],
     qualifications: [
-      "Bachelor's or Master's degree in Computer Science, Information Technology, Software Engineering, or a related field.",
-      'Freshers are encouraged to apply.',
-      'Candidates with academic projects, personal projects, GitHub repositories, or relevant certifications are encouraged to apply.',
+      "Bachelor's degree in Computer Science, IT, Statistics, Mathematics, Data Science, or related fields.",
+      'Freshers with relevant projects or internship experience are encouraged to apply.',
     ],
     internshipStructure: {
       duration: '6 Months',
-      training: 'Month 1, 2: Technical Training',
+      stages: [
+        'Month 1, 2: Technical Training',
+        'Month 3: Working on Live Project',
+        'Month 4: Indepth Development Tasks',
+        'Month 5: Working with Client',
+        'Month 6: Independent Project Exposure',
+      ],
+      note: 'Progression is performance-based and subject to successful completion of assigned tasks and evaluations.',
     },
   },
   {
-    id: 'business-development-executive',
-    title: 'Business Development Executive',
-    category: 'Business',
-    experience: 'Fresher',
-    vacancies: '3 Vacancies',
-    vacancyCount: 3,
-    icon: Briefcase,
-    summary:
-      'We are looking for enthusiastic, confident, and self-motivated Business Development Executive Interns to join our business development team. This internship provides hands-on experience in lead generation, market research, client communication, sales coordination, business analysis, and customer relationship management. Candidates will gain practical exposure to the business development process and will work with internal teams to understand client requirements, identify business opportunities, and support the growth of the organization.',
-    opportunity:
-      'Successful candidates who demonstrate strong communication skills, business understanding, learning ability, teamwork, and consistent performance during the internship will have the opportunity to transition into a full-time Business Development Executive role.',
-    responsibilities: [
-      'Identify and research potential clients and business opportunities.',
-      'Generate and maintain leads through online and offline channels.',
-      'Conduct market research and competitor analysis.',
-      'Communicate with potential clients through calls, emails, LinkedIn, and other professional channels.',
-      'Understand client requirements and coordinate with internal teams.',
-      'Assist in preparing business proposals, presentations, and quotations.',
-      'Schedule and coordinate client meetings and follow-ups.',
-      'Maintain lead and customer information in CRM systems or internal trackers.',
-      'Follow up with prospective clients and maintain professional relationships.',
-      'Support the sales team in achieving business development targets.',
-      'Track sales activities and prepare basic business development reports.',
-      'Research industry trends and identify potential markets.',
-      'Assist in developing strategies for client acquisition and business growth.',
-      'Coordinate with marketing, technology, and management teams for business initiatives.',
-    ],
-    skills: [
-      'Basic understanding of Business Development and Sales concepts.',
-      'Excellent verbal and written communication skills.',
-      'Strong interpersonal and relationship-building skills.',
-      'Good presentation and negotiation skills.',
-      'Basic understanding of lead generation and sales processes.',
-      'Good research and analytical skills.',
-      'Proficiency in MS Office / Google Workspace.',
-      'Ability to communicate professionally with clients and prospects.',
-      'Good follow-up and time-management skills.',
-      'Professional attitude and willingness to learn.',
-    ],
-    qualifications: [
-      "Bachelor's or Master's degree in Business Administration, Marketing, Management, Commerce, Computer Science, Information Technology, or a related field.",
-      'Freshers are encouraged to apply.',
-      'Candidates with sales, marketing, business development projects, certifications, or internship experience are encouraged to apply.',
-    ],
-    internshipStructure: {
-      duration: '6 Months',
-      training: 'Month 1, 2: Training Period',
-    },
-  },
-  {
-    id: 'software-testing',
-    title: 'Software Testing',
+    id: 'data-analyst',
+    title: 'Data Analyst',
     category: 'Technical',
-    experience: 'Freshers / 0-1 year',
+    experience: 'Freshers',
     vacancies: '2 Vacancies',
     vacancyCount: 2,
-    icon: CheckSquare,
+    icon: BarChart3,
     summary:
-      'We are looking for detail-oriented and analytical Software Testing / QA Interns to join our engineering team. Candidates will gain hands-on experience in manual testing methodologies, test case design, defect tracking, automated testing frameworks, and API validation across modern web applications.',
+      'We are looking for an analytical and detail-oriented Data Analyst Intern to support data collection, analysis, reporting, and business insights. The ideal candidate should have strong analytical thinking, basic technical knowledge, and an interest in using data to support business decisions.',
     opportunity:
-      'Successful candidates demonstrating rigorous testing acumen, automation proficiency, and problem-solving skills will have the opportunity to transition into a full-time QA / Test Automation Engineer role.',
+      'Candidates who successfully complete the internship and demonstrate strong technical skills, learning ability, teamwork, and professionalism will be offered a full-time Voice Process Executive position.',
     responsibilities: [
-      'Design, review, and execute manual and automated test cases.',
-      'Perform functional, regression, integration, and UI testing on web and mobile applications.',
-      'Log, track, and verify defects using issue-tracking platforms.',
-      'Conduct API testing using Postman and automated test suites.',
-      'Work closely with developers to understand application requirements and isolate bugs.',
-      'Participate in release readiness verification and documentation of test reports.',
+      'Collect, clean, and analyze data.',
+      'Identify trends, patterns, and insights.',
+      'Prepare reports and dashboards.',
+      'Create data visualizations.',
+      'Validate and maintain data accuracy.',
+      'Support data-driven business decisions.',
+      'Work with teams on data requirements.',
     ],
     skills: [
-      'Understanding of SDLC, STLC, and software testing lifecycles.',
-      'Knowledge of manual testing concepts and test case authoring.',
-      'Familiarity with test automation tools (Selenium, Cypress, or Playwright).',
-      'Basic knowledge of API testing using Postman.',
-      'Good analytical, debugging, and defect-reporting skills.',
-      'Familiarity with Git and bug tracking workflows.',
+      'Basic understanding of Data Analyst concepts.',
+      'Analytical and problem-solving skills.',
+      'Basic knowledge of Python, SQL & Excel.',
+      'Familiarity with Power BI/Tableau.',
+      'Data visualization and reporting skills.',
+      'Good communication and attention to detail.',
     ],
     qualifications: [
-      "Bachelor's or Master's degree in Computer Science, Information Technology, MCA, or related disciplines.",
-      'Freshers and candidates with testing certifications (ISTQB, Selenium) are encouraged to apply.',
+      "Bachelor's degree in Computer Science, IT, Statistics, Mathematics, Data Science, or related fields.",
+      'Freshers with relevant projects or internship experience are encouraged to apply.',
     ],
     internshipStructure: {
       duration: '6 Months',
-      training: 'Month 1, 2: Technical Training Period',
-    },
-  },
-  {
-    id: 'ai-ml-architect',
-    title: 'AI/ML Architect',
-    category: 'Technical',
-    experience: 'Freshers / Junior',
-    vacancies: '2 Vacancies',
-    vacancyCount: 2,
-    icon: Brain,
-    summary:
-      'We are looking for innovative and research-minded AI/ML candidates to architect machine learning pipelines, deep learning models, generative AI architectures, and intelligent agent workflows. You will work on real-world datasets, neural architectures, and enterprise AI integrations.',
-    opportunity:
-      'Successful candidates will have the opportunity to transition into a full-time AI/ML Architect or Applied AI Engineer role building intelligent autonomous software systems.',
-    responsibilities: [
-      'Design, develop, and benchmark machine learning and deep learning models.',
-      'Architect RAG (Retrieval-Augmented Generation) pipelines and Agentic AI workflows.',
-      'Preprocess, clean, and analyze complex unstructured and structured datasets.',
-      'Integrate AI/ML models into scalable production web services via REST APIs.',
-      'Evaluate model performance, latency, accuracy, and token optimization.',
-      'Document model architectures, system designs, and experiment results.',
-    ],
-    skills: [
-      'Strong proficiency in Python, NumPy, Pandas, and Scikit-Learn.',
-      'Experience with deep learning frameworks (PyTorch or TensorFlow).',
-      'Understanding of LLMs, Prompt Engineering, RAG architectures, and Vector Databases.',
-      'Knowledge of model deployment, FastAPI/Flask, and containerization.',
-      'Solid mathematical foundation in linear algebra, calculus, and probability.',
-    ],
-    qualifications: [
-      "Bachelor's or Master's degree in Computer Science, AI, Data Science, Mathematics, or related field.",
-      'Candidates with AI projects, Kaggle experience, or published work are highly preferred.',
-    ],
-    internshipStructure: {
-      duration: '6 Months',
-      training: 'Month 1, 2: Advanced AI Training Period',
+      stages: [
+        'Month 1, 2: Technical Training',
+        'Month 3: Working on Live Project',
+        'Month 4: Indepth Development Tasks',
+        'Month 5: Working with Client',
+        'Month 6: Independent Project Exposure',
+      ],
+      note: 'Progression is performance-based and subject to successful completion of assigned tasks and evaluations.',
     },
   },
   {
     id: 'business-analyst',
     title: 'Business Analyst',
     category: 'Business',
-    experience: 'Freshers / 0-1 year',
+    experience: 'Freshers',
     vacancies: '2 Vacancies',
     vacancyCount: 2,
-    icon: BarChart3,
+    icon: Briefcase,
     summary:
-      'We are looking for structured, inquisitive Business Analyst candidates to bridge business requirements and engineering deliverables. You will collaborate with stakeholders, map out workflow diagrams, document system specifications, and analyze business intelligence metrics.',
+      'We are looking for a Business Analyst who can analyse business requirements, translate them into actionable insights, and help teams improve processes and deliver better outcomes.',
     opportunity:
-      'Successful candidates who show strong analytical acumen, clear communication, and stakeholder management will be offered full-time placement as an Associate Business Analyst.',
+      'Candidates who successfully complete the internship and demonstrate strong technical skills, learning ability, teamwork, and professionalism will be offered a full-time Voice Process Executive position.',
     responsibilities: [
-      'Gather, analyze, and document business and functional software requirements.',
-      'Create process flows, use cases, user stories, and wireframe prototypes.',
-      'Collaborate with development and product teams to ensure requirement alignment.',
-      'Perform data analysis, reporting, and dashboard creation for key metrics.',
-      'Facilitate sprint planning, backlog grooming, and requirement walkthroughs.',
-      'Assist in user acceptance testing (UAT) and validate deliverable quality.',
+      'Gather and analyse business requirements.',
+      'Analyse existing business processes and identify areas for improvement.',
+      'Prepare functional documentation and business requirement documents.',
+      'Collaborate with technical and product teams.',
+      'Perform data analysis and prepare reports.',
+      'Support project planning, coordination, and delivery.',
     ],
     skills: [
-      'Basic understanding of Business Analysis methodologies, Agile, and Scrum.',
-      'Strong analytical thinking, problem-solving, and requirements documentation skills.',
-      'Proficiency in Excel, SQL, and business visualization tools (Power BI, Tableau).',
-      'Excellent verbal and written communication and presentation skills.',
-      'Familiarity with Jira, Confluence, and process flow modeling tools.',
+      'Advanced Microsoft Excel.',
+      'Data analysis and interpretation.',
+      'Business requirement documentation.',
+      'Strong analytical and problem-solving abilities.',
+      'Good communication and teamwork skills.',
     ],
     qualifications: [
-      "Bachelor's or Master's degree in Business Administration, Computer Science, IT, Commerce, or related disciplines.",
-      'Freshers with analytical projects or certifications are encouraged to apply.',
+      "Bachelor's degree in Computer Science, IT or related fields.",
+      'Freshers with relevant projects or internship experience are encouraged to apply.',
     ],
     internshipStructure: {
       duration: '6 Months',
-      training: 'Month 1, 2: Business Analysis Training Period',
-    },
-  },
-  {
-    id: 'devops-engineer',
-    title: 'DevOps Engineer',
-    category: 'Technical',
-    experience: 'Freshers / 0-1 year',
-    vacancies: '2 Vacancies',
-    vacancyCount: 2,
-    icon: Cloud,
-    summary:
-      'We are looking for motivated DevOps Engineer candidates to assist in cloud infrastructure automation, CI/CD pipeline development, containerization, and system reliability engineering. You will work with cloud platforms, Linux environments, and modern deployment tools.',
-    opportunity:
-      'Outstanding performers with solid automation skills and cloud systems knowledge will transition into a full-time Cloud & DevOps Engineer role.',
-    responsibilities: [
-      'Build and maintain automated continuous integration and continuous delivery (CI/CD) pipelines.',
-      'Containerize applications using Docker and manage container lifecycles.',
-      'Assist in provisioning cloud infrastructure on AWS and Linux server management.',
-      'Monitor system performance, application uptime, and logging metrics.',
-      'Implement security best practices and automated deployment scripts.',
-      'Collaborate with developers to streamline deployment and environment configurations.',
-    ],
-    skills: [
-      'Solid foundation in Linux administration and bash/shell scripting.',
-      'Understanding of Docker containerization and Kubernetes concepts.',
-      'Experience with CI/CD tools (GitHub Actions, GitLab CI, or Jenkins).',
-      'Basic knowledge of AWS cloud services (EC2, S3, RDS, IAM).',
-      'Familiarity with Git and version-control workflows.',
-    ],
-    qualifications: [
-      "Bachelor's or Master's degree in Computer Science, IT, Computer Engineering, or related fields.",
-      'Freshers with cloud/DevOps projects or AWS certifications are encouraged to apply.',
-    ],
-    internshipStructure: {
-      duration: '6 Months',
-      training: 'Month 1, 2: Cloud & DevOps Training Period',
+      stages: [
+        'Month 1, 2: Technical Training',
+        'Month 3: Live Project Analysis',
+        'Month 4: Advanced Process Tasks',
+        'Month 5: Client & Stakeholder Work',
+        'Month 6: Independent Project Exposure',
+      ],
+      note: 'Progression is performance-based and subject to successful completion of assigned tasks and evaluations.',
     },
   },
 ];
@@ -916,19 +907,26 @@ export function CareersPage() {
                                   <span className="text-xs font-bold text-csl-text uppercase tracking-wider block mb-1.5">
                                     Internship Structure
                                   </span>
-                                  <div className="flex flex-col gap-1.5 text-xs sm:text-sm text-csl-muted font-medium">
+                                  <div className="flex flex-col gap-2 text-xs sm:text-sm text-csl-muted font-medium">
                                     <div className="flex items-center gap-2">
                                       <Clock className="w-4 h-4 text-csl-gold shrink-0" />
                                       <span className="text-csl-text/90">
                                         <strong className="text-csl-text">Duration:</strong> {pos.internshipStructure.duration}
                                       </span>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                      <CheckCircle className="w-4 h-4 text-csl-blue shrink-0" />
-                                      <span className="text-csl-text/90">
-                                        <strong className="text-csl-text">Training:</strong> {pos.internshipStructure.training}
-                                      </span>
-                                    </div>
+                                    {pos.internshipStructure.stages && pos.internshipStructure.stages.length > 0 && (
+                                      <ul className="flex flex-col gap-1 pl-6 list-disc list-outside text-csl-text/85 text-xs sm:text-[13px]">
+                                        {pos.internshipStructure.stages.map((stage, stIdx) => (
+                                          <li key={stIdx}>{stage}</li>
+                                        ))}
+                                      </ul>
+                                    )}
+                                    {pos.internshipStructure.note && (
+                                      <p className="text-[11px] sm:text-xs text-csl-muted italic pt-1">
+                                        <strong className="text-csl-text not-italic font-bold">Note: </strong>
+                                        {pos.internshipStructure.note}
+                                      </p>
+                                    )}
                                   </div>
                                 </div>
                               )}

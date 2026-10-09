@@ -19,8 +19,7 @@ export function InternshipDetails() {
       subtitle: 'Flexible delivery formats',
       badge: 'Learning Mode',
       items: [
-        { label: 'Online Mode', desc: 'Interactive live sessions & remote guidance' },
-        { label: 'Offline Mode', desc: 'In-person lab training at Creator Space Lab' },
+        { label: 'Hybrid Mode', desc: 'Flexible blend of in-person lab training and remote guidance' },
       ],
     },
     {

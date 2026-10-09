@@ -20,7 +20,7 @@ import { YellowBox } from '../effects/YellowBox';
 // @ts-ignore
 import heroAboutVisual from '../../../Elements/ABOUT/AI INNOVATION.png';
 // @ts-ignore
-import cslEmblem from '../../../Elements/LOGOS/CSL-C.png';
+import cslEmblem from '../../../Elements/LOGOS/CSL -BOOK.png';
 
 // ==================================================
 // COUNT-UP ANIMATION COMPONENT FOR METRICS
