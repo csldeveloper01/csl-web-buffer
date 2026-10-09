@@ -105,7 +105,7 @@ const successStories = [
     {
       name: 'Sakshi Pandey',
       role: 'Python Developer',
-      package: '4.5 LPA',
+      package: '5 LPA',
       achievement: 'Career growth achieved',
       timeline: 'Placed in 4 months',
       image: imgSakshi,
@@ -113,15 +113,7 @@ const successStories = [
     {
       name: 'Adarsh',
       role: 'Python Developer',
-      package: '4.5 LPA',
-      achievement: 'Career growth achieved',
-      timeline: 'Placed in 4 months',
-      image: imgAdar,
-    },
-    {
-      name: 'Manasa',
-      role: 'Python Developer',
-      package: '4.5 LPA',
+      package: '5 LPA',
       achievement: 'Career growth achieved',
       timeline: 'Placed in 4 months',
       image: imgMana,
@@ -129,7 +121,7 @@ const successStories = [
     {
       name: 'Yuvraj Sonar',
       role: 'Python Developer',
-      package: '4.5 LPA',
+      package: '5 LPA',
       achievement: 'Career growth achieved',
       timeline: 'Placed in 4 months',
       image: imgYuv,
