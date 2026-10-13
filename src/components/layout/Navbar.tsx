@@ -102,6 +102,8 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isMobileCoursesOpen, setIsMobileCoursesOpen] = useState(false);
+  const [isCareersOpen, setIsCareersOpen] = useState(false);
+  const [isMobileCareersOpen, setIsMobileCareersOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   const [currentPath, setCurrentPath] = useState(
@@ -109,7 +111,12 @@ export function Navbar() {
   );
   const [isScrolled, setIsScrolled] = useState(false);
   const coursesCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const careersCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Environment-based external assessment app URL (Vite client env convention)
+  const rawAssessmentUrl = import.meta.env.VITE_ONLINE_ASSESSMENT_URL;
+  const isAssessmentUrlValid = typeof rawAssessmentUrl === 'string' && /^https?:\/\/.+/i.test(rawAssessmentUrl.trim());
+  const assessmentUrl = isAssessmentUrlValid ? rawAssessmentUrl.trim() : '';
 
   const openCoursesMenu = () => {
     if (coursesCloseTimer.current) {
@@ -117,6 +124,7 @@ export function Navbar() {
       coursesCloseTimer.current = null;
     }
     setIsCoursesOpen(true);
+    setIsCareersOpen(false);
   };
 
   const closeCoursesMenuWithDelay = () => {
@@ -127,9 +135,27 @@ export function Navbar() {
     }, 160);
   };
 
+  const openCareersMenu = () => {
+    if (careersCloseTimer.current) {
+      clearTimeout(careersCloseTimer.current);
+      careersCloseTimer.current = null;
+    }
+    setIsCareersOpen(true);
+    setIsCoursesOpen(false);
+  };
+
+  const closeCareersMenuWithDelay = () => {
+    if (careersCloseTimer.current) clearTimeout(careersCloseTimer.current);
+    careersCloseTimer.current = setTimeout(() => {
+      setIsCareersOpen(false);
+      careersCloseTimer.current = null;
+    }, 160);
+  };
+
   useEffect(() => {
     return () => {
       if (coursesCloseTimer.current) clearTimeout(coursesCloseTimer.current);
+      if (careersCloseTimer.current) clearTimeout(careersCloseTimer.current);
     };
   }, []);
 
@@ -149,6 +175,8 @@ export function Navbar() {
       setCurrentPath(window.location.pathname);
       setIsCoursesOpen(false);
       setIsMobileCoursesOpen(false);
+      setIsCareersOpen(false);
+      setIsMobileCareersOpen(false);
       handleScroll();
     };
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -156,6 +184,8 @@ export function Navbar() {
         setIsMenuOpen(false);
         setIsCoursesOpen(false);
         setIsMobileCoursesOpen(false);
+        setIsCareersOpen(false);
+        setIsMobileCareersOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -230,11 +260,44 @@ export function Navbar() {
     setIsMenuOpen(false);
     setIsCoursesOpen(false);
     setIsMobileCoursesOpen(false);
+    setIsCareersOpen(false);
+    setIsMobileCareersOpen(false);
     if (window.location.pathname !== '/courses') {
       window.history.pushState({}, '', '/courses');
       window.dispatchEvent(new PopStateEvent('popstate'));
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateToCareersOpenings = () => {
+    setActiveSection(null);
+
+    setIsMenuOpen(false);
+    setIsCoursesOpen(false);
+    setIsMobileCoursesOpen(false);
+    setIsCareersOpen(false);
+    setIsMobileCareersOpen(false);
+
+    if (window.location.pathname !== '/careers') {
+      window.history.pushState({}, '', '/careers#openings');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+      setTimeout(() => {
+        const el = document.getElementById('openings');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const el = document.getElementById('openings');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
   };
 
   const activeNavItems = isStandalonePage ? standaloneNavItems : homeNavItems;
@@ -361,6 +424,95 @@ export function Navbar() {
                     )}
                   </AnimatePresence>
                 </div>
+              ) : item.label === 'Careers' ? (
+                /* CAREERS — Custom Dropdown Trigger (Openings & Online Assessment) */
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={openCareersMenu}
+                  onMouseLeave={closeCareersMenuWithDelay}
+                >
+                  <button
+                    onClick={handleNavigateToCareersOpenings}
+                    onMouseEnter={openCareersMenu}
+                    aria-expanded={isCareersOpen}
+                    aria-haspopup="true"
+                    className={`group flex items-center gap-2.5 font-bold text-sm lg:text-[15px] transition-colors cursor-pointer ${
+                      currentPath === '/careers' || isCareersOpen
+                        ? 'text-csl-blue'
+                        : 'text-csl-text hover:text-csl-blue'
+                    }`}>
+                    {item.label}
+                    <span className="w-1.5 h-1.5 rounded-[1px] bg-csl-gold transition-all shadow-xs opacity-80 group-hover:opacity-100 group-hover:scale-125" />
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${isCareersOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+
+                  {/* Custom Dropdown Menu */}
+                  <AnimatePresence>
+                    {isCareersOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                        transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-64"
+                        onMouseEnter={openCareersMenu}
+                        onMouseLeave={closeCareersMenuWithDelay}
+                      >
+                        <div className="relative overflow-hidden rounded-2xl border border-csl-gold/30 bg-white/95 backdrop-blur-xl p-2 shadow-xl shadow-csl-blue/10">
+                          {/* Subtle CSL Glow */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-csl-blue/5 via-transparent to-csl-gold/10 pointer-events-none" />
+
+                          <div className="relative flex flex-col gap-1">
+                            {/* 1. Openings */}
+                            <button
+                              onClick={handleNavigateToCareersOpenings}
+                              className="group/link flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-left text-xs md:text-sm font-semibold text-csl-text hover:bg-csl-blue/10 hover:text-csl-blue transition-all cursor-pointer"
+                            >
+                              <div className="flex items-center gap-2.5">
+                                <Briefcase className="w-4 h-4 text-csl-blue shrink-0" />
+                                <span>Openings</span>
+                              </div>
+                              <ChevronRight className="w-3.5 h-3.5 opacity-60 group-hover/link:opacity-100 group-hover/link:translate-x-0.5 transition-all text-csl-blue" />
+                            </button>
+
+                            {/* 2. Online Assessment */}
+                            {isAssessmentUrlValid ? (
+                              <a
+                                href={assessmentUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => setIsCareersOpen(false)}
+                                className="group/link flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-left text-xs md:text-sm font-semibold text-csl-text hover:bg-csl-blue/10 hover:text-csl-blue transition-all cursor-pointer"
+                              >
+                                <div className="flex items-center gap-2.5">
+                                  <CheckSquare className="w-4 h-4 text-csl-gold shrink-0" />
+                                  <span>Online Assessment</span>
+                                </div>
+                                <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover/link:opacity-100 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all text-csl-blue" />
+                              </a>
+                            ) : (
+                              <div
+                                title="Online Assessment URL is not configured. Set VITE_ONLINE_ASSESSMENT_URL in .env"
+                                className="flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-left text-xs md:text-sm font-semibold text-csl-muted/50 bg-gray-50/60 cursor-not-allowed select-none"
+                              >
+                                <div className="flex items-center gap-2.5">
+                                  <CheckSquare className="w-4 h-4 text-csl-muted/40 shrink-0" />
+                                  <span>Online Assessment</span>
+                                </div>
+                                <span className="text-[10px] uppercase font-bold text-csl-muted/60 tracking-wider">
+                                  Unavailable
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               ) : (
                   <button
                     key={item.label}
@@ -380,6 +532,8 @@ export function Navbar() {
                         setIsMenuOpen(false);
                         setIsCoursesOpen(false);
                         setIsMobileCoursesOpen(false);
+                        setIsCareersOpen(false);
+                        setIsMobileCareersOpen(false);
                         if (window.location.pathname !== path) {
                           window.history.pushState({}, '', path);
                           window.dispatchEvent(new PopStateEvent('popstate'));
@@ -594,6 +748,108 @@ export function Navbar() {
                                 </div>
                               </div>
                             ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : section.label === 'Careers' ? (
+                  /* CAREERS — Expandable Section with Openings & Online Assessment */
+                  <div
+                    key={section.label}
+                    className={`col-span-1 md:col-span-2 flex flex-col backdrop-blur-md rounded-2xl transition-all duration-300 overflow-hidden ${
+                      currentPath === '/careers'
+                        ? 'border-2 border-csl-blue bg-white/95 shadow-sm'
+                        : isMobileCareersOpen
+                        ? 'border border-csl-gold/70 bg-white/95 shadow-md shadow-csl-gold/10'
+                        : 'border border-csl-gold/25 bg-white/75 hover:bg-white/90'
+                    }`}
+                  >
+                    <button
+                      onClick={() => setIsMobileCareersOpen((prev) => !prev)}
+                      aria-expanded={isMobileCareersOpen}
+                      className="flex flex-col text-left p-3 sm:p-3.5 cursor-pointer"
+                    >
+                      <div className="flex items-center justify-between w-full mb-0.5">
+                        <span className={`flex items-center gap-2 text-sm font-bold transition-colors ${
+                          currentPath === '/careers' ? 'text-csl-blue' : 'text-csl-text group-hover:text-csl-blue'
+                        }`}>
+                          <Briefcase className="w-3.5 h-3.5 text-csl-blue" />
+                          {section.label}
+                        </span>
+                        <span className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono font-bold text-csl-blue">
+                            0{idx + 1}
+                          </span>
+                          <ChevronDown
+                            className={`w-3.5 h-3.5 text-csl-blue transition-transform duration-300 ${
+                              isMobileCareersOpen ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-medium text-csl-muted leading-tight">
+                        {section.desc}
+                      </span>
+                    </button>
+
+                    {/* Expandable Careers Options */}
+                    <AnimatePresence initial={false}>
+                      {isMobileCareersOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-3 pb-3 flex flex-col gap-2">
+                            {/* 1. Openings */}
+                            <button
+                              onClick={() => {
+                                handleNavigateToCareersOpenings();
+                              }}
+                              className="flex items-center justify-between w-full p-2.5 rounded-xl bg-white/90 border border-csl-gold/20 text-csl-text hover:text-csl-blue hover:bg-csl-blue/10 transition-all cursor-pointer text-xs font-semibold"
+                            >
+                              <div className="flex items-center gap-2">
+                                <Briefcase className="w-3.5 h-3.5 text-csl-blue" />
+                                <span>Openings</span>
+                              </div>
+                              <ChevronRight className="w-3.5 h-3.5 text-csl-blue" />
+                            </button>
+
+                            {/* 2. Online Assessment */}
+                            {isAssessmentUrlValid ? (
+                              <a
+                                href={assessmentUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => {
+                                  setIsMenuOpen(false);
+                                  setIsMobileCareersOpen(false);
+                                }}
+                                className="flex items-center justify-between w-full p-2.5 rounded-xl bg-white/90 border border-csl-gold/20 text-csl-text hover:text-csl-blue hover:bg-csl-blue/10 transition-all cursor-pointer text-xs font-semibold"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <CheckSquare className="w-3.5 h-3.5 text-csl-gold" />
+                                  <span>Online Assessment</span>
+                                </div>
+                                <ArrowUpRight className="w-3.5 h-3.5 text-csl-blue" />
+                              </a>
+                            ) : (
+                              <div
+                                title="Online Assessment URL is not configured. Set VITE_ONLINE_ASSESSMENT_URL in .env"
+                                className="flex items-center justify-between w-full p-2.5 rounded-xl bg-gray-50/70 border border-gray-200/50 text-csl-muted/50 cursor-not-allowed select-none text-xs font-semibold"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <CheckSquare className="w-3.5 h-3.5 text-csl-muted/40" />
+                                  <span>Online Assessment</span>
+                                </div>
+                                <span className="text-[10px] uppercase font-bold text-csl-muted/60 tracking-wider">
+                                  Unavailable
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </motion.div>
                       )}
