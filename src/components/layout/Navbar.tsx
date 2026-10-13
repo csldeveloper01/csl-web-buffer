@@ -311,7 +311,7 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className={`fixed top-0 inset-x-0 w-full z-50 px-3.5 xs:px-4.5 sm:px-6 py-2 sm:py-2.5 md:px-8 lg:px-12 flex items-center justify-between bg-csl-bg border border-csl-gold/20 rounded-2xl ${isScrolled ? 'shadow-md' : ''}`}
+          className={`fixed top-0 inset-x-0 w-full z-50 px-3.5 xs:px-4.5 sm:px-6 py-2.5 xs:py-3 sm:py-2.5 md:px-8 lg:px-12 min-h-[52px] sm:min-h-0 flex items-center justify-between bg-csl-bg border border-csl-gold/20 rounded-2xl ${isScrolled ? 'shadow-md' : ''}`}
         >
           {/* Left side: Logo */}
           <div className="flex items-center shrink-0">
@@ -560,7 +560,7 @@ export function Navbar() {
 
           {/* Mobile/Tablet Header Actions: [ Student Portal ] then [ Custom Menu Icon ] */}
           <div className="hidden custom1195:flex items-center justify-end gap-1.5 xs:gap-2 sm:gap-2.5 ml-auto shrink-0">
-            {/* Student Portal Button FIRST */}
+            {/* Student Portal Text + Arrow */}
             <button
               onClick={() => {
                 window.history.pushState({}, '', '/student-portal');
@@ -570,10 +570,10 @@ export function Navbar() {
                   behavior: 'instant',
                 });
               }}
-              className="group inline-flex items-center justify-center gap-1 xs:gap-1.5 h-8.5 px-2.5 xs:px-3 rounded-lg font-bold text-[10px] xs:text-[11px] bg-gradient-to-r from-csl-deep-blue to-csl-blue text-white shadow-xs hover:shadow-md hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 cursor-pointer shrink-0 leading-none whitespace-nowrap"
+              className="group inline-flex items-center justify-center gap-1 xs:gap-1.5 py-1 px-1.5 font-bold text-[11px] xs:text-xs text-csl-blue hover:text-csl-deep-blue transition-colors duration-200 cursor-pointer shrink-0 leading-none whitespace-nowrap"
             >
               <span>Student Portal</span>
-              <ArrowUpRight className="w-3 xs:w-3.5 h-3 xs:h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-csl-blue group-hover:text-csl-deep-blue transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
 
             {/* Custom Bold Sharp 2x2 Outlined Square Boxes Icon */}
@@ -682,21 +682,13 @@ export function Navbar() {
                       className="flex flex-col text-left p-3 sm:p-3.5 cursor-pointer"
                     >
                       <div className="flex items-center justify-between w-full mb-0.5">
-                        <span className={`flex items-center gap-2 text-sm font-bold transition-colors ${
+                        <span className={`text-sm font-bold transition-colors ${
                           currentPath === '/courses' ? 'text-csl-blue' : 'text-csl-text group-hover:text-csl-blue'
                         }`}>
-                          <BookOpen className="w-3.5 h-3.5 text-csl-blue" />
                           {section.label}
                         </span>
-                        <span className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono font-bold text-csl-blue">
-                            0{idx + 1}
-                          </span>
-                          <ChevronDown
-                            className={`w-3.5 h-3.5 text-csl-blue transition-transform duration-300 ${
-                              isMobileCoursesOpen ? 'rotate-180' : ''
-                            }`}
-                          />
+                        <span className="text-[10px] font-mono font-bold text-csl-blue">
+                          0{idx + 1}
                         </span>
                       </div>
                       <span className="text-[11px] font-medium text-csl-muted leading-tight">
@@ -771,21 +763,13 @@ export function Navbar() {
                       className="flex flex-col text-left p-3 sm:p-3.5 cursor-pointer"
                     >
                       <div className="flex items-center justify-between w-full mb-0.5">
-                        <span className={`flex items-center gap-2 text-sm font-bold transition-colors ${
+                        <span className={`text-sm font-bold transition-colors ${
                           currentPath === '/careers' ? 'text-csl-blue' : 'text-csl-text group-hover:text-csl-blue'
                         }`}>
-                          <Briefcase className="w-3.5 h-3.5 text-csl-blue" />
                           {section.label}
                         </span>
-                        <span className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono font-bold text-csl-blue">
-                            0{idx + 1}
-                          </span>
-                          <ChevronDown
-                            className={`w-3.5 h-3.5 text-csl-blue transition-transform duration-300 ${
-                              isMobileCareersOpen ? 'rotate-180' : ''
-                            }`}
-                          />
+                        <span className="text-[10px] font-mono font-bold text-csl-blue">
+                          0{idx + 1}
                         </span>
                       </div>
                       <span className="text-[11px] font-medium text-csl-muted leading-tight">
