@@ -175,7 +175,7 @@ export function Footer() {
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20">
         
         {/* Upper Asymmetrical Row: Branding + Navigation + Contact */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1.3fr] gap-8 lg:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_1.05fr] xl:grid-cols-[1.25fr_1.15fr] gap-8 lg:gap-10 xl:gap-14 items-start">
           
           {/* Left Column: CSL Branding + Contact & Socials */}
           <div className="flex flex-col">
@@ -208,17 +208,17 @@ export function Footer() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 items-stretch">
                 {/* Contact Info */}
-                <div className="w-full min-w-0 h-full rounded-xl border border-csl-blue/10 bg-white/45 px-4 py-3.5">
+                <div className="w-full min-w-0 h-full rounded-xl border border-csl-blue/10 bg-white/45 px-3.5 sm:px-4 py-3.5 flex flex-col box-border">
                   <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-csl-blue mb-2">
                     Contact Info
                   </span>
 
-                  <div className="flex flex-col gap-0.5">
+                  <div className="flex flex-col gap-1 min-w-0">
                     <a
                       href="https://wa.me/918056052806"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors"
+                      className="text-xs sm:text-[13px] md:text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors"
                     >
                       +91 80560 52806
                     </a>
@@ -227,7 +227,7 @@ export function Footer() {
                       href="https://wa.me/919500802806"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors"
+                      className="text-xs sm:text-[13px] md:text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors"
                     >
                       +91 95008 02806
                     </a>
@@ -236,7 +236,7 @@ export function Footer() {
                       href="https://wa.me/919680100306"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors"
+                      className="text-xs sm:text-[13px] md:text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors"
                     >
                       +91 96801 00306
                     </a>
@@ -244,22 +244,22 @@ export function Footer() {
                 </div>
 
                 {/* Email */}
-                <div className="w-full min-w-0 h-full rounded-xl border border-csl-blue/10 bg-white/45 px-4 py-3.5">
+                <div className="w-full min-w-0 h-full rounded-xl border border-csl-blue/10 bg-white/45 px-3.5 sm:px-4 py-3.5 flex flex-col box-border">
                   <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-csl-blue mb-2">
                     Email
                   </span>
 
-                  <div className="flex flex-col gap-0.5 min-w-0">
+                  <div className="flex flex-col gap-1.5 min-w-0">
                     <a
                       href="mailto:hr.info@creatorspacelab.org.in"
-                      className="text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors break-words"
+                      className="text-xs sm:text-[12.5px] lg:text-[11.5px] xl:text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors [overflow-wrap:anywhere] leading-snug"
                     >
                       hr.info@creatorspacelab.org.in
                     </a>
 
                     <a
                       href="mailto:hr@creatorspacelab.org.in"
-                      className="text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors break-words"
+                      className="text-xs sm:text-[12.5px] lg:text-[11.5px] xl:text-sm font-semibold text-csl-text hover:text-csl-blue transition-colors [overflow-wrap:anywhere] leading-snug"
                     >
                       hr@creatorspacelab.org.in
                     </a>

@@ -63,6 +63,38 @@ const successStories = [
     image: imgMuaz,
   },
   {
+      name: 'Sakshi Pandey',
+      role: 'Python Developer',
+      package: '5 LPA',
+      achievement: 'Career growth achieved',
+      timeline: 'Placed in 4 months',
+      image: imgSakshi,
+    },
+        {
+      name: 'Yuvraj Sonar',
+      role: 'Python Developer',
+      package: '5 LPA',
+      achievement: 'Career growth achieved',
+      timeline: 'Placed in 4 months',
+      image: imgYuv,
+    },
+    {
+      name: 'Manasa',
+      role: 'Python Developer',
+      package: '5 LPA',
+      achievement: 'Career growth achieved',
+      timeline: 'Placed in 4 months',
+      image: imgMana,
+    },
+    {
+      name: 'Adarsh',
+      role: 'Python Developer',
+      package: '4.5 LPA',
+      achievement: 'Career growth achieved',
+      timeline: 'Placed in 4 months',
+      image: imgAdar,
+    },
+  {
     name: 'Supriya',
     role: 'Designer',
     package: '3 LPA',
@@ -101,31 +133,7 @@ const successStories = [
     achievement: 'Career growth achieved',
     timeline: 'Placed in 1 month',
     image: imgEzhil,
-  },
-    {
-      name: 'Sakshi Pandey',
-      role: 'Python Developer',
-      package: '5 LPA',
-      achievement: 'Career growth achieved',
-      timeline: 'Placed in 4 months',
-      image: imgSakshi,
-    },
-    {
-      name: 'Adarsh',
-      role: 'Python Developer',
-      package: '5 LPA',
-      achievement: 'Career growth achieved',
-      timeline: 'Placed in 4 months',
-      image: imgMana,
-    },
-    {
-      name: 'Yuvraj Sonar',
-      role: 'Python Developer',
-      package: '5 LPA',
-      achievement: 'Career growth achieved',
-      timeline: 'Placed in 4 months',
-      image: imgYuv,
-    }
+  }
 ];
 
 export function SuccessStoriesSection() {

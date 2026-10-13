@@ -16,8 +16,21 @@ import { InternshipApplicationForm } from '../sections/Internships/InternshipApp
 // @ts-ignore
 import heroStandaloneVisual from '../../../Elements/INTERNSHIPS/INTERNSHIPS - Standalone.png';
 
+export type InternshipMode = 'Online' | 'Offline' | 'Hybrid' | 'Online / Offline' | 'Online / Hybrid' | 'Offline / Hybrid' | 'All Modes';
+
+export interface InternshipTrack {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  techs: string[];
+  duration: string;
+  mode: InternshipMode;
+  projects: string[];
+}
+
 // 8 Official Internship Domains from CSL Brochure
-const tracksData = [
+const tracksData: InternshipTrack[] = [
   {
     id: '01',
     title: 'Artificial Intelligence & Machine Learning Engineering',

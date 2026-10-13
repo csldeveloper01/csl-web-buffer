@@ -26,6 +26,8 @@ interface WorkshopDomainGridProps {
 export const DOMAIN_ICONS: Record<string, any> = {
   Cpu,
   Layers,
+  'full-stack-java': Layers,
+  'full-stack-python': Layers,
   BarChart3,
   Cloud,
   ShieldCheck,
@@ -69,10 +71,10 @@ export function WorkshopDomainGrid({ onSelectDomain, selectedDomainId, highlight
           <div></div>
         </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-csl-text section-heading tracking-tight mb-4">
-          11 Industry <span className="text-csl-blue">Specialization Domains</span>
+          Industry <span className="text-csl-blue">Specialization Domains</span>
         </h2>
         <p className="text-csl-muted font-medium text-sm md:text-base max-w-2xl section-subheading">
-          Explore our complete catalog of 66 hands-on workshops across 11 high-growth technology domains, designed for collegiate symposiums, faculty development, and student career acceleration.
+          Explore our complete catalog of {WORKSHOP_DOMAINS.length * 6} hands-on workshops across {WORKSHOP_DOMAINS.length} high-growth technology domains, designed for collegiate symposiums, faculty development, and student career acceleration.
         </p>
       </div>
 

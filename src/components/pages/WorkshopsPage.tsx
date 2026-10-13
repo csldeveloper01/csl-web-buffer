@@ -88,7 +88,7 @@ export function WorkshopsPage() {
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-csl-gold/20 via-csl-gold/10 to-csl-blue/15 border border-csl-gold/40 px-4 py-2 rounded-xl mb-4 shadow-xs">
               <Sparkles className="w-4 h-4 text-csl-gold" />
               <span className="text-xs sm:text-sm font-extrabold text-csl-text font-mono">
-                11 Domains • Guided Hands-On Learning • Beginner to Advanced
+                12 Domains • Guided Hands-On Learning • Beginner to Advanced
               </span>
             </div>
 
@@ -99,11 +99,11 @@ export function WorkshopsPage() {
             {/* Micro Stats Pills */}
             <div className="grid grid-cols-3 gap-3 w-full max-w-lg mb-8">
               <div className="p-3 bg-white/80 rounded-xl border border-csl-gold/30 shadow-2xs">
-                <span className="text-lg sm:text-xl font-mono font-extrabold text-csl-blue block">11</span>
+                <span className="text-lg sm:text-xl font-mono font-extrabold text-csl-blue block">12</span>
                 <span className="text-[11px] font-semibold text-csl-muted uppercase tracking-wider">Tech Domains</span>
               </div>
               <div className="p-3 bg-white/80 rounded-xl border border-csl-gold/30 shadow-2xs">
-                <span className="text-lg sm:text-xl font-mono font-extrabold text-csl-gold block">66+</span>
+                <span className="text-lg sm:text-xl font-mono font-extrabold text-csl-gold block">72+</span>
                 <span className="text-[11px] font-semibold text-csl-muted uppercase tracking-wider">Workshops</span>
               </div>
               <div className="p-3 bg-white/80 rounded-xl border border-csl-gold/30 shadow-2xs">

@@ -39,18 +39,19 @@ interface WorkshopExplorerProps {
 }
 
 const DOMAIN_OPTIONS: DropdownOption[] = [
-  { value: 'all', label: 'All 11 Domains' },
+  { value: 'all', label: `All ${WORKSHOP_DOMAINS.length} Domains` },
   { value: 'ai-ml', label: '01. AI/ML with Automation' },
-  { value: 'full-stack', label: '02. Full Stack Development with AI & Automation' },
-  { value: 'data-analyst', label: '03. Data Analyst with AI & Automation' },
-  { value: 'data-science', label: '04. Data Science & Machine Learning' },
-  { value: 'cyber-security', label: '05. Cybersecurity & Ethical Hacking' },
-  { value: 'cloud-devops', label: '06. DevOps with AWS' },
-  { value: 'mobile-dev', label: '07. Full Stack + Mobile Development' },
-  { value: 'software-testing', label: '08. Software Testing with Automation' },
-  { value: 'business-analyst', label: '09. Business Analyst' },
-  { value: 'crm-cloud', label: '10. ServiceNow, Salesforce & CRM' },
-  { value: 'ui-ux', label: '11. UI/UX Design' },
+  { value: 'full-stack-java', label: '02. Full Stack Development with AI & Automation — Java' },
+  { value: 'full-stack-python', label: '03. Full Stack Development with AI & Automation — Python' },
+  { value: 'data-analyst', label: '04. Data Analyst with AI & Automation' },
+  { value: 'data-science', label: '05. Data Science & Machine Learning' },
+  { value: 'cyber-security', label: '06. Cybersecurity & Ethical Hacking' },
+  { value: 'cloud-devops', label: '07. DevOps with AWS' },
+  { value: 'mobile-dev', label: '08. Full Stack + Mobile Development' },
+  { value: 'software-testing', label: '09. Software Testing with Automation' },
+  { value: 'business-analyst', label: '10. Business Analyst' },
+  { value: 'crm-cloud', label: '11. ServiceNow, Salesforce & CRM' },
+  { value: 'ui-ux', label: '12. UI/UX Design' },
 ];
 
 const LEVEL_OPTIONS: DropdownOption[] = [
@@ -62,7 +63,8 @@ const LEVEL_OPTIONS: DropdownOption[] = [
 
 const DOMAIN_ICONS: Record<string, any> = {
   'ai-ml': Cpu,
-  'full-stack': Layers,
+  'full-stack-java': Layers,
+  'full-stack-python': Layers,
   'data-analyst': BarChart3,
   'data-science': Database,
   'cyber-security': ShieldCheck,
@@ -77,7 +79,8 @@ const DOMAIN_ICONS: Record<string, any> = {
 // Plain-English beginner-friendly summaries for each domain
 const DOMAIN_PLAIN_DESCRIPTIONS: Record<string, string> = {
   'ai-ml': 'Learn how AI helps computers understand information, recognize patterns, and make intelligent decisions.',
-  'full-stack': 'Learn how websites and applications are built from the user interface to the systems working behind the scenes.',
+  'full-stack-java': 'Learn enterprise web application development with React, Java, Spring Boot REST APIs, and AI integrations.',
+  'full-stack-python': 'Learn modern web application development with React, Python, Flask/FastAPI REST APIs, and AI integrations.',
   'data-analyst': 'Learn how businesses use data to understand what is happening and make better decisions.',
   'data-science': 'Learn how to analyze complex data, discover hidden trends, and build automated prediction models.',
   'cyber-security': 'Learn how digital systems are protected from threats, attacks, and unauthorized access.',
@@ -187,7 +190,7 @@ export function WorkshopExplorer({
             Explore <span className="text-csl-blue">Workshops</span>
           </h2>
           <p className="text-csl-muted font-medium text-sm md:text-base max-w-xl section-subheading">
-            Browse our 11 industry specialization domains. Select any domain to inspect its 6 hands-on workshops structured from Basic to Advanced.
+            Browse our {WORKSHOP_DOMAINS.length} industry specialization domains. Select any domain to inspect its 6 hands-on workshops structured from Basic to Advanced.
           </p>
         </div>
 
@@ -232,7 +235,7 @@ export function WorkshopExplorer({
               </h3>
             </div>
             <span className="text-[11px] sm:text-xs text-csl-muted font-medium">
-              11 Domains • 66 Specialized Modules
+              {WORKSHOP_DOMAINS.length} Domains • {ALL_WORKSHOPS.length} Specialized Modules
             </span>
           </div>
 
@@ -382,7 +385,7 @@ export function WorkshopExplorer({
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
-              <span>All 11 Domains</span>
+              <span>All {WORKSHOP_DOMAINS.length} Domains</span>
             </button>
             {WORKSHOP_DOMAINS.map((dom) => (
               <button
@@ -395,14 +398,14 @@ export function WorkshopExplorer({
                     : 'bg-white/90 text-csl-muted hover:text-csl-text border border-csl-gold/25 hover:border-csl-gold/60'
                 }`}
               >
-                0{dom.domainNumber}. {dom.shortTitle}
+                {dom.domainNumber < 10 ? `0${dom.domainNumber}` : dom.domainNumber}. {dom.shortTitle}
               </button>
             ))}
           </div>
         )}
 
         {/* ==================================================
-            4. MAIN PRESENTATION: SEARCH RESULTS / 11 DOMAIN DIRECTORY
+            4. MAIN PRESENTATION: SEARCH RESULTS / 12 DOMAIN DIRECTORY
            ================================================== */}
 
         {/* CASE A: USER SEARCHED KEYWORD */}
@@ -451,12 +454,12 @@ export function WorkshopExplorer({
             <div className="flex items-center justify-between mb-6 px-1">
               <div>
                 <span className="text-xs font-mono font-extrabold uppercase text-csl-gold tracking-wider block">
-                  {displayedDomains.length === 1 ? 'SELECTED DOMAIN WORKSHOPS' : '11 DOMAIN WORKSHOPS'}
+                  {displayedDomains.length === 1 ? 'SELECTED DOMAIN WORKSHOPS' : `${WORKSHOP_DOMAINS.length} DOMAIN WORKSHOPS`}
                 </span>
                 <span className="text-xs text-csl-muted font-medium">
                   {displayedDomains.length === 1
                     ? 'Hands-on curriculum structured across Basic, Intermediate, and Advanced tiers'
-                    : 'Structured curriculum across 11 domains with hands-on deliverables'}
+                    : `Structured curriculum across ${WORKSHOP_DOMAINS.length} domains with hands-on deliverables`}
                 </span>
               </div>
               <span className="text-xs font-mono font-bold text-csl-blue">
@@ -684,7 +687,7 @@ function DomainCard({
             </div>
             <div className="min-w-0">
               <span className="text-[9px] sm:text-[10px] font-mono font-bold text-csl-gold uppercase block leading-none mb-0.5 sm:mb-1">
-                DOMAIN 0{domain.domainNumber}
+                DOMAIN {domain.domainNumber < 10 ? `0${domain.domainNumber}` : domain.domainNumber}
               </span>
               <h3 className="text-sm sm:text-base md:text-lg font-extrabold text-csl-text leading-snug truncate sm:whitespace-normal">
                 {domain.title}
