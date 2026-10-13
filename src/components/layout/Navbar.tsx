@@ -453,11 +453,11 @@ export function Navbar() {
                   <AnimatePresence>
                     {isCareersOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 6, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                        initial={{ opacity: 0, y: 6, x: '-50%', scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, x: '-50%', scale: 1 }}
+                        exit={{ opacity: 0, y: 6, x: '-50%', scale: 0.98 }}
                         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-64"
+                        className="absolute left-1/2 top-full pt-2 z-50 w-64 origin-top"
                         onMouseEnter={openCareersMenu}
                         onMouseLeave={closeCareersMenuWithDelay}
                       >
